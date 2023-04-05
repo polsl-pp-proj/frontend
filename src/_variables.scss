@@ -1,5 +1,6 @@
 :root {
     --background-100: rgba(25, 25, 25, 1);
+    --background-0: rgba(25, 25, 25, 0);
     --deep-background-100: rgba(12, 12, 12, 1);
     --black-50: rgba(0, 0, 0, 0.5);
 
@@ -26,4 +27,14 @@
     --ff: Montserrat, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
         Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
         "Segoe UI Symbol";
+
+    --padding: 32px;
+
+    @media screen and (min-width: 768px) {
+        --padding: 40px;
+    }
+
+    @media screen and (min-width: 1280px) {
+        --padding: 50px;
+    }
 }
