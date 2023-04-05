@@ -12,6 +12,7 @@ import { ProjectCardComponent } from './components/cards/project-card/project-ca
 import { RecentPaymentCardComponent } from './components/cards/recent-payment-card/recent-payment-card.component';
 import { SelectComponent } from './components/forms/select/select.component';
 import { TextAreaComponent } from './components/forms/text-area/text-area.component';
+import { IconVaultModule } from './modules/icon-vault/icon-vault.module';
 
 @NgModule({
     declarations: [
@@ -26,7 +27,7 @@ import { TextAreaComponent } from './components/forms/text-area/text-area.compon
         SelectComponent,
         TextAreaComponent,
     ],
-    imports: [BrowserModule, AppRoutingModule],
+    imports: [BrowserModule, AppRoutingModule, IconVaultModule],
     providers: [],
     bootstrap: [AppComponent],
 })
