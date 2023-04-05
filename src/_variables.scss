@@ -1,0 +1,27 @@
+:root {
+    --background-100: rgba(25, 25, 25, 1);
+    --deep-background-100: rgba(12, 12, 12, 1);
+    --black-50: rgba(0, 0, 0, 0.5);
+
+    --primary-100: rgba(0, 124, 238, 1);
+    --primary-50: rgba(0, 124, 238, 0.5);
+    --primary-25: rgba(0, 124, 238, 0.25);
+
+    --secondary-100: rgba(0, 64, 122, 1);
+    --secondary-25: rgba(0, 64, 122, 0.25);
+    --secondary-25-solid: rgba(
+        19,
+        35,
+        50,
+        1
+    ); // var(--secondary-accent-25) as rendered over var(--background-color-100)
+
+    --tetriary-100: rgba(87, 174, 255, 1);
+
+    --danger: rgba(255, 83, 83, 1);
+    --success: rgb(104, 185, 99);
+
+    --ff: Montserrat, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+        "Segoe UI Symbol";
+}
