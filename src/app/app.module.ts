@@ -13,6 +13,7 @@ import { RecentPaymentCardComponent } from './components/cards/recent-payment-ca
 import { SelectComponent } from './components/forms/select/select.component';
 import { TextAreaComponent } from './components/forms/text-area/text-area.component';
 import { IconVaultModule } from './modules/icon-vault/icon-vault.module';
+import { ModalModule } from './modules/modal/modal.module';
 
 @NgModule({
     declarations: [
@@ -27,7 +28,7 @@ import { IconVaultModule } from './modules/icon-vault/icon-vault.module';
         SelectComponent,
         TextAreaComponent,
     ],
-    imports: [BrowserModule, AppRoutingModule, IconVaultModule],
+    imports: [BrowserModule, AppRoutingModule, IconVaultModule, ModalModule],
     providers: [],
     bootstrap: [AppComponent],
 })
