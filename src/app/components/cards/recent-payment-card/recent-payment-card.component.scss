@@ -1,0 +1,35 @@
+:host {
+    display: block;
+}
+
+.content-wrapper {
+    border-radius: calc(var(--el-height) / 2);
+    padding: 1.25rem;
+    background-color: var(--deep-background-100);
+    max-width: 16.875rem;
+}
+
+.name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.amount {
+    color: var(--money);
+    font-weight: 500;
+    font-style: italic;
+    font-size: 2rem;
+    text-align: right;
+}
+
+@media screen and (min-width: 768px) {
+    .content-wrapper {
+        padding: 1rem;
+        max-width: 13.5rem;
+    }
+
+    .amount {
+        font-size: 1.6rem;
+    }
+}
