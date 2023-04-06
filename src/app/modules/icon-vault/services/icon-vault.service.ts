@@ -23,7 +23,9 @@ export class IconVaultService {
                     );
                 })
                 .catch((e) => {
-                    throw new Error('Requested icon does not exist');
+                    this.icons[icon].error(
+                        new Error(`Requested icon '${icon}' does not exist`)
+                    );
                 });
         }
 
