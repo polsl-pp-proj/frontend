@@ -19,17 +19,19 @@ export class ModalService {
     }
 
     updateModalState(name: string, state: 'open' | 'close') {
-        if (this.modalState.has(name)) {
-            const modalStateSubject = <BehaviorSubject<boolean>>(
-                this.modalState.get(name)
-            );
-            modalStateSubject.next(state === 'open');
+        const modalStateSubject = this.modalState.get(name);
+        if (modalStateSubject) {
+            if (modalStateSubject.value !== (state === 'open')) {
+                modalStateSubject.next(state === 'open');
 
-            const html = <HTMLHtmlElement>window.document.querySelector('html');
-            if (state === 'open') {
-                html.style.overflowY = 'hidden';
-            } else if (this.openModalsNumber === 0) {
-                html.style.overflowY = 'unset';
+                const html = <HTMLHtmlElement>(
+                    window.document.querySelector('html')
+                );
+                if (state === 'open') {
+                    html.style.overflowY = 'hidden';
+                } else if (this.openModalsNumber === 0) {
+                    html.style.overflowY = 'unset';
+                }
             }
             return;
         }
