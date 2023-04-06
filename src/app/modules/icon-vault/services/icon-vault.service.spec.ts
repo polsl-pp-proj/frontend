@@ -25,7 +25,7 @@ describe('IconVaultService', () => {
             spyOn(service as any, 'createSubjectForIcon').and.callThrough();
             spyOn(service as any, 'importIcon').and.callFake(() => {
                 timer(0).subscribe(() => {
-                    (service as any).icons[icon].next(
+                    service['icons'][icon].next(
                         domSanitizer.bypassSecurityTrustHtml(iconData)
                     );
                 });
@@ -33,10 +33,8 @@ describe('IconVaultService', () => {
 
             service.getIcon(icon).subscribe({
                 next: (value) => {
-                    expect(
-                        (service as any).createSubjectForIcon
-                    ).toHaveBeenCalled();
-                    expect((service as any).importIcon).toHaveBeenCalled();
+                    expect(service['createSubjectForIcon']).toHaveBeenCalled();
+                    expect(service['importIcon']).toHaveBeenCalled();
                     expect(value).toEqual(
                         domSanitizer.bypassSecurityTrustHtml(iconData)
                     );
@@ -57,10 +55,8 @@ describe('IconVaultService', () => {
                     fail(value);
                 },
                 error: (error) => {
-                    expect(
-                        (service as any).createSubjectForIcon
-                    ).toHaveBeenCalled();
-                    expect((service as any).importIcon).toHaveBeenCalled();
+                    expect(service['createSubjectForIcon']).toHaveBeenCalled();
+                    expect(service['importIcon']).toHaveBeenCalled();
                     expect(error).toBeDefined();
                     done();
                 },
@@ -72,7 +68,7 @@ describe('IconVaultService', () => {
             spyOn(service as any, 'createSubjectForIcon').and.callThrough();
             spyOn(service as any, 'importIcon').and.callFake(() => {
                 timer(0).subscribe(() => {
-                    (service as any).icons[icon].next(
+                    service['icons'][icon].next(
                         domSanitizer.bypassSecurityTrustHtml(iconData)
                     );
                 });
@@ -82,11 +78,9 @@ describe('IconVaultService', () => {
             service.getIcon(icon).subscribe({
                 next: (value) => {
                     expect(
-                        (service as any).createSubjectForIcon
+                        service['createSubjectForIcon']
                     ).toHaveBeenCalledTimes(1);
-                    expect((service as any).importIcon).toHaveBeenCalledTimes(
-                        1
-                    );
+                    expect(service['importIcon']).toHaveBeenCalledTimes(1);
                     expect(value).toBeDefined();
                     expect(value).toEqual(
                         domSanitizer.bypassSecurityTrustHtml(iconData)
