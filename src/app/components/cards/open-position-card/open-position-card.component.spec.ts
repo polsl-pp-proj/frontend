@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { OpenPositionCardComponent } from './open-position-card.component';
 import { By } from '@angular/platform-browser';
+import { ButtonComponent } from '../../forms/button/button.component';
 
 describe('OpenPositionCardComponent', () => {
     let component: OpenPositionCardComponent;
@@ -9,7 +10,7 @@ describe('OpenPositionCardComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [OpenPositionCardComponent],
+            declarations: [OpenPositionCardComponent, ButtonComponent],
         }).compileComponents();
 
         fixture = TestBed.createComponent(OpenPositionCardComponent);
