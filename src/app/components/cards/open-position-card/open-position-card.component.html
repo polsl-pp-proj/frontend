@@ -1,1 +1,14 @@
-<p>open-position-card works!</p>
+<div class="content-wrapper">
+    <h2 class="name">{{ positionName }}</h2>
+    <p class="description">
+        {{ positionDescription }}
+    </p>
+    <ul class="requirements">
+        <li *ngFor="let requirement of positionRequirements">
+            {{ requirement }}
+        </li>
+    </ul>
+    <app-button class="join-btn" type="color" (click)="join.emit()"
+        >Dołącz</app-button
+    >
+</div>
