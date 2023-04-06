@@ -52,6 +52,39 @@ describe('ModalService', () => {
             expect(service['modalState'].get(modalName)!.getValue()).toBeTrue();
         });
 
+        it('should update the modal state if it is different', () => {
+            const modalName = 'test-modal';
+            service.registerModal(modalName).subscribe();
+            spyOn(
+                service['modalState'].get(modalName)!,
+                'next'
+            ).and.callThrough();
+            service.updateModalState(modalName, 'open');
+            service.updateModalState(modalName, 'close');
+            service.updateModalState(modalName, 'open');
+
+            expect(
+                service['modalState'].get(modalName)!.next
+            ).toHaveBeenCalledTimes(3);
+        });
+
+        it('should not update the modal state if it is the same', () => {
+            const modalName = 'test-modal';
+            service.registerModal(modalName).subscribe();
+            spyOn(
+                service['modalState'].get(modalName)!,
+                'next'
+            ).and.callThrough();
+            service.updateModalState(modalName, 'open');
+            service.updateModalState(modalName, 'close');
+            service.updateModalState(modalName, 'close');
+            service.updateModalState(modalName, 'close');
+
+            expect(
+                service['modalState'].get(modalName)!.next
+            ).toHaveBeenCalledTimes(2);
+        });
+
         it('should update associated subject with modal state', () => {
             const modalName = 'test-modal';
             service.registerModal(modalName);
