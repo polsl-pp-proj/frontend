@@ -1,12 +1,12 @@
 :host {
     display: block;
+    max-width: 16.875rem;
 }
 
 .content-wrapper {
     border-radius: calc(var(--el-height) / 2);
-    padding: 1.25rem;
+    padding: var(--card-padding);
     background-color: var(--deep-background-100);
-    max-width: 16.875rem;
 }
 
 .name {
@@ -30,8 +30,7 @@
 }
 
 @media screen and (min-width: 768px) {
-    .content-wrapper {
-        padding: 1rem;
+    :host {
         max-width: 13.5rem;
     }
 
