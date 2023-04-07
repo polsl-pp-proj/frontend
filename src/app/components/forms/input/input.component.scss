@@ -52,6 +52,8 @@
                         var(--input-background, --background-100) inset;
                     flex-shrink: 0;
                     margin-right: 0.75rem;
+                    background-color: var(--secondary-0);
+                    transition: background-color 0.2s ease-out;
                 }
 
                 @media screen and (min-width: 768px) {
@@ -87,6 +89,7 @@
     padding: 0.5rem 1rem;
     font-size: 1rem;
     color: var(--foreground-100);
+    transition: border 0.2s ease-out;
 
     &.field-multiline {
         resize: vertical;
