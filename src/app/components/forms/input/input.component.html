@@ -8,10 +8,22 @@
         [placeholder]="placeholder"
         [disabled]="disabled"
         [readOnly]="readOnly"
-        class="field"
+        class="field field-singleline"
         [value]="value"
         (input)="onInput($event)"
         (blur)="onTouched()"
+        *ngIf="type !== 'multiline'"
     />
+    <textarea
+        [id]="name"
+        [placeholder]="placeholder"
+        [disabled]="disabled"
+        [readOnly]="readOnly"
+        class="field field-multiline"
+        (input)="onInput($event)"
+        (blur)="onTouched()"
+        *ngIf="type === 'multiline'"
+        >{{ value }}</textarea
+    >
     <p class="error-message" *ngIf="displayErrors">{{ errorMessage }}</p>
 </div>

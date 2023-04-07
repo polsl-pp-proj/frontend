@@ -32,7 +32,8 @@ export class InputComponent implements ControlValueAccessor {
         | 'text'
         | 'time'
         | 'url'
-        | 'week' = 'text';
+        | 'week'
+        | 'multiline' = 'text';
     @Input() placeholder = '';
     @Input() value = '';
     @Input() disabled = false;

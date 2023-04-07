@@ -11,7 +11,6 @@ import { OpenPositionCardComponent } from './components/cards/open-position-card
 import { ProjectCardComponent } from './components/cards/project-card/project-card.component';
 import { RecentPaymentCardComponent } from './components/cards/recent-payment-card/recent-payment-card.component';
 import { SelectComponent } from './components/forms/select/select.component';
-import { TextAreaComponent } from './components/forms/text-area/text-area.component';
 import { IconVaultModule } from './modules/icon-vault/icon-vault.module';
 import { ModalModule } from './modules/modal/modal.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -27,7 +26,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         ProjectCardComponent,
         RecentPaymentCardComponent,
         SelectComponent,
-        TextAreaComponent,
     ],
     imports: [
         BrowserModule,
