@@ -1,1 +1,17 @@
-<p>input works!</p>
+<div class="content-wrapper">
+    <label class="label" [for]="name">
+        {{ label }}
+    </label>
+    <input
+        [id]="name"
+        [type]="type"
+        [placeholder]="placeholder"
+        [disabled]="disabled"
+        [readOnly]="readOnly"
+        class="field"
+        [value]="value"
+        (input)="onInput($event)"
+        (blur)="onTouched()"
+    />
+    <p class="error-message" *ngIf="displayErrors">{{ errorMessage }}</p>
+</div>

@@ -1,0 +1,63 @@
+:host {
+    display: block;
+
+    &.ng-dirty {
+        &.ng-invalid {
+            .field {
+                border-color: var(--danger);
+            }
+        }
+
+        &.ng-valid {
+            .field:focus {
+                border-color: var(--success);
+            }
+        }
+    }
+}
+
+.content-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.label {
+    font-size: 1rem;
+    margin-left: calc(var(--input-height) / 2);
+    font-weight: 600;
+    margin-bottom: 0.3125rem;
+}
+
+.field {
+    height: var(--input-height);
+    background-color: transparent;
+    border: 4px solid var(--primary-100);
+    border-radius: calc(var(--input-height) / 2);
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    color: var(--foreground-100);
+}
+
+.error-message {
+    margin-top: 0.3125rem;
+    font-size: 0.75rem;
+    color: var(--danger);
+    font-weight: 600;
+    margin-left: calc(var(--input-height) / 2);
+}
+
+.field:focus {
+    outline: none;
+}
+
+.field:-webkit-autofill,
+.field:-webkit-autofill:focus,
+.field:-webkit-autofill:hover,
+.field:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px var(--input-background, --background-100)
+        inset !important;
+    -webkit-text-fill-color: var(--foreground-100) !important;
+    background-color: transparent !important;
+    transition: background-color 5000s ease-in-out 0s;
+}

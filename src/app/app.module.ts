@@ -14,6 +14,7 @@ import { SelectComponent } from './components/forms/select/select.component';
 import { TextAreaComponent } from './components/forms/text-area/text-area.component';
 import { IconVaultModule } from './modules/icon-vault/icon-vault.module';
 import { ModalModule } from './modules/modal/modal.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
     declarations: [
@@ -28,7 +29,14 @@ import { ModalModule } from './modules/modal/modal.module';
         SelectComponent,
         TextAreaComponent,
     ],
-    imports: [BrowserModule, AppRoutingModule, IconVaultModule, ModalModule],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        IconVaultModule,
+        ModalModule,
+        FormsModule,
+        ReactiveFormsModule,
+    ],
     providers: [],
     bootstrap: [AppComponent],
 })
