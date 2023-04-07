@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BaseModalComponent } from './components/modals/base-modal/base-modal.component';
 import { ButtonComponent } from './components/forms/button/button.component';
-import { CheckboxComponent } from './components/forms/checkbox/checkbox.component';
 import { InputComponent } from './components/forms/input/input.component';
 import { OpenPositionCardComponent } from './components/cards/open-position-card/open-position-card.component';
 import { ProjectCardComponent } from './components/cards/project-card/project-card.component';
@@ -20,7 +19,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         AppComponent,
         BaseModalComponent,
         ButtonComponent,
-        CheckboxComponent,
         InputComponent,
         OpenPositionCardComponent,
         ProjectCardComponent,

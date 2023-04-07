@@ -18,7 +18,6 @@ import {
     ],
 })
 export class InputComponent implements ControlValueAccessor {
-    @Input() label!: string;
     @Input() name!: string;
     @Input() type:
         | 'date'
@@ -33,9 +32,10 @@ export class InputComponent implements ControlValueAccessor {
         | 'time'
         | 'url'
         | 'week'
-        | 'multiline' = 'text';
+        | 'multiline'
+        | 'checkbox' = 'text';
     @Input() placeholder = '';
-    @Input() value = '';
+    @Input() value: string | boolean = '';
     @Input() disabled = false;
     @Input() readOnly = false;
     @Input() displayErrors: boolean = true;
@@ -49,8 +49,9 @@ export class InputComponent implements ControlValueAccessor {
     }
 
     onInput(event: Event): void {
-        const value = ((event as InputEvent).currentTarget as HTMLInputElement)
-            .value;
+        const value = ((event as InputEvent).currentTarget as HTMLInputElement)[
+            this.type === 'checkbox' ? 'checked' : 'value'
+        ];
         this.value = value;
         this.onChange(value);
     }
