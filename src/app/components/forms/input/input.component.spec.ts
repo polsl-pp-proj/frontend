@@ -103,6 +103,15 @@ describe('InputComponent', () => {
         expect(component.onChange).toHaveBeenCalledWith('test');
     });
 
+    it('should call onChange when checkbox is checked', () => {
+        component.type = 'checkbox';
+        spyOn(component, 'onChange');
+        const inputEl = fixture.nativeElement.querySelector('input');
+        inputEl.checked = true;
+        inputEl.dispatchEvent(new Event('input'));
+        expect(component.onChange).toHaveBeenCalledWith(true);
+    });
+
     it('should call onTouched when input is blurred', () => {
         spyOn(component, 'onTouched');
         const inputEl = fixture.nativeElement.querySelector('input');
