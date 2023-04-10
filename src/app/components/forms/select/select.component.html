@@ -1,1 +1,28 @@
-<p>select works!</p>
+<div class="content-wrapper">
+    <label class="label" [for]="name">
+        <span><ng-content></ng-content></span>
+    </label>
+    <select
+        [id]="name"
+        [name]="'insel-' + name"
+        [disabled]="disabled"
+        [multiple]="multiple"
+        class="field"
+        [ngModel]="value"
+        (ngModelChange)="onModelChange($event)"
+        (blur)="onTouched()"
+    >
+        <option *ngIf="!multiple && resetText !== ''" [ngValue]="null">
+            {{ resetText }}
+        </option>
+        <option
+            *ngFor="let option of options"
+            [ngValue]="option.value"
+            [disabled]="option.disabled ?? false"
+            [selected]="option.selected ?? false"
+        >
+            {{ option.text }}
+        </option>
+    </select>
+</div>
+<p class="error-message" *ngIf="displayErrors">{{ errorMessage }}</p>
