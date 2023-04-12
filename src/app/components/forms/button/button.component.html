@@ -1,0 +1,25 @@
+<button
+    class="button"
+    [ngClass]="{
+        'button-clear': type === 'clear',
+        'button-translucent': type === 'translucent',
+        'button-color': type === 'color',
+        'button-icon-only': iconOnly
+    }"
+>
+    <i
+        *ngIf="icon && (iconPosition === 'before' || iconOnly)"
+        class="button-icon"
+        [ngClass]="{
+            'button-icon-before': iconPosition === 'before' && !iconOnly,
+            'button-icon-only': iconOnly
+        }"
+        [innerHTML]="icon"
+    ></i>
+    <span class="button-text" #textContent><ng-content></ng-content></span>
+    <i
+        *ngIf="icon && iconPosition === 'after'"
+        class="button-icon button-icon-after"
+        [innerHTML]="icon"
+    ></i>
+</button>

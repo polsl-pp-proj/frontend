@@ -1,0 +1,44 @@
+<div
+    class="content-wrapper"
+    [ngClass]="{ 'checkbox-wrapper': type === 'checkbox' }"
+>
+    <input
+        [id]="name"
+        [type]="type"
+        [disabled]="disabled"
+        [readOnly]="readOnly"
+        class="field field-checkbox"
+        value="true"
+        [checked]="value"
+        (input)="onInput($event)"
+        (blur)="onTouched()"
+        *ngIf="type === 'checkbox'"
+    />
+    <label class="label" [for]="name">
+        <span><ng-content></ng-content></span>
+    </label>
+    <input
+        [id]="name"
+        [type]="type"
+        [placeholder]="placeholder"
+        [disabled]="disabled"
+        [readOnly]="readOnly"
+        class="field field-singleline"
+        [value]="value"
+        (input)="onInput($event)"
+        (blur)="onTouched()"
+        *ngIf="!['multiline', 'checkbox'].includes(type)"
+    />
+    <textarea
+        [id]="name"
+        [placeholder]="placeholder"
+        [disabled]="disabled"
+        [readOnly]="readOnly"
+        class="field field-multiline"
+        (input)="onInput($event)"
+        (blur)="onTouched()"
+        *ngIf="type === 'multiline'"
+        >{{ value }}</textarea
+    >
+</div>
+<p class="error-message" *ngIf="displayErrors">{{ errorMessage }}</p>

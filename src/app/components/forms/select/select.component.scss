@@ -1,0 +1,72 @@
+:host {
+    display: block;
+
+    &.ng-dirty {
+        &.ng-invalid {
+            .field {
+                border-color: var(--danger);
+            }
+        }
+
+        &.ng-valid {
+            .field:focus {
+                border-color: var(--success);
+            }
+        }
+    }
+}
+
+.content-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.label {
+    font-size: 1rem;
+    margin-left: calc(var(--input-height) / 2);
+    font-weight: 600;
+    margin-bottom: 0.3125rem;
+}
+
+.field {
+    appearance: none;
+    height: var(--input-height);
+    background-color: transparent;
+    border: 4px solid var(--primary-100);
+    border-radius: calc(var(--input-height) / 2);
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    color: var(--foreground-100);
+    transition: border 0.2s ease-out;
+
+    &[multiple] {
+        padding: 0;
+        height: 6rem;
+        overflow-y: auto;
+
+        option {
+            padding: 0.15rem 1rem;
+
+            &:checked {
+                background-color: var(--secondary-100);
+                color: var(--foreground-100);
+            }
+
+            &:first-child {
+                padding-top: 0.2rem;
+            }
+            &:last-child {
+                padding-bottom: 0.2rem;
+            }
+        }
+    }
+}
+
+.error-message {
+    margin-top: 0.3125rem;
+    font-size: 0.75rem;
+    color: var(--danger);
+    font-weight: 600;
+    margin-left: calc(var(--input-height) / 2);
+}

@@ -68,6 +68,11 @@ h3 {
     font-size: 1.25rem;
 }
 
+ol,
+ul {
+    padding-inline-start: 30px;
+}
+
 @media screen and (min-width: 768px) {
     html,
     body {
