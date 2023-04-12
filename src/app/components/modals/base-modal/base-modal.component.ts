@@ -4,6 +4,7 @@ import {
     HostBinding,
     HostListener,
     Input,
+    OnDestroy,
     OnInit,
     Output,
 } from '@angular/core';
@@ -17,7 +18,7 @@ import { ModalService } from 'src/app/modules/modal/services/modal.service';
     templateUrl: './base-modal.component.html',
     styleUrls: ['./base-modal.component.scss'],
 })
-export class BaseModalComponent implements OnInit {
+export class BaseModalComponent implements OnInit, OnDestroy {
     @HostBinding('class.open')
     open: boolean = false;
 
@@ -56,6 +57,9 @@ export class BaseModalComponent implements OnInit {
                     this.closed.emit();
                 }
             });
+    }
+    ngOnDestroy(): void {
+        this.modalService.unregisterModal(this.modalName);
     }
 
     @HostListener('click')
