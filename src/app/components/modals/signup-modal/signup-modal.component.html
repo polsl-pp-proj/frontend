@@ -4,17 +4,53 @@
     transitionDuration="200ms"
     [closable]="true"
 >
-    <div class="parent">
-        <div class="div1"><app-input>Imię</app-input></div>
-        <div class="div2"><app-input>Nazwisko</app-input></div>
-        <div class="div3"><app-input>Adres E-mail</app-input></div>
-        <div class="div4"><app-input>Hasło</app-input></div>
-        <div class="div5"><app-input>Powtórz hasło</app-input></div>
-        <div class="div6">
-            <app-input type="checkbox"
-                >Akceptuję regulamin i politykę prywatności serwisu.</app-input
-            >
+    <form [formGroup]="signupForm">
+        <div class="parent">
+            <div class="div1">
+                <app-input
+                    name="firstName"
+                    [formControl]="signupForm.controls.firstName"
+                    >Imię</app-input
+                >
+            </div>
+            <div class="div2">
+                <app-input
+                    name="lastName"
+                    [formControl]="signupForm.controls.lastName"
+                    >Nazwisko</app-input
+                >
+            </div>
+            <div class="div3">
+                <app-input
+                    name="emailAddress"
+                    [formControl]="signupForm.controls.emailAddress"
+                    >Adres E-mail</app-input
+                >
+            </div>
+            <div class="div4">
+                <app-input
+                    name="password"
+                    [formControl]="signupForm.controls.password"
+                    >Hasło</app-input
+                >
+            </div>
+            <div class="div5">
+                <app-input
+                    name="repeatPassword"
+                    [formControl]="signupForm.controls.repeatPassword"
+                    >Powtórz hasło</app-input
+                >
+            </div>
+            <div class="div6">
+                <app-input
+                    type="checkbox"
+                    name="acceptRules"
+                    [formControl]="signupForm.controls.acceptRules"
+                    >Akceptuję regulamin i politykę prywatności
+                    serwisu.</app-input
+                >
+            </div>
         </div>
-    </div>
-    <app-button type="color">Zarejestruj się</app-button>
+        <app-button type="color">Zarejestruj się</app-button>
+    </form>
 </app-base-modal>
