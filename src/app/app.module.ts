@@ -14,6 +14,7 @@ import { IconVaultModule } from './modules/icon-vault/icon-vault.module';
 import { ModalModule } from './modules/modal/modal.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PageComponent } from './views/page/page.component';
+import { SignupModalComponent } from './components/modals/signup-modal/signup-modal.component';
 
 @NgModule({
     declarations: [
@@ -26,6 +27,8 @@ import { PageComponent } from './views/page/page.component';
         RecentPaymentCardComponent,
         SelectComponent,
         PageComponent,
+        SignupModalComponent,
+
     ],
     imports: [
         BrowserModule,
