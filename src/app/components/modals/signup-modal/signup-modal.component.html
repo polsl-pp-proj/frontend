@@ -1,0 +1,77 @@
+<app-base-modal
+    modalTitle="Zarejestruj się"
+    modalName="signup-modal"
+    transitionDuration="200ms"
+    [closable]="true"
+>
+    <form [formGroup]="signupForm">
+        <div class="parent">
+            <div class="div1">
+                <app-input
+                    name="firstName"
+                    [errors]="signupForm.controls.firstName.errors"
+                    [errorMessages]="{ required: 'Podaj swoje imię' }"
+                    [formControl]="signupForm.controls.firstName"
+                    >Imię</app-input
+                >
+            </div>
+            <div class="div2">
+                <app-input
+                    name="lastName"
+                    [errors]="signupForm.controls.lastName.errors"
+                    [errorMessages]="{ required: 'Podaj swoje nazwisko' }"
+                    [formControl]="signupForm.controls.lastName"
+                    >Nazwisko</app-input
+                >
+            </div>
+            <div class="div3">
+                <app-input
+                    name="emailAddress"
+                    [formControl]="signupForm.controls.emailAddress"
+                    [errors]="signupForm.controls.emailAddress.errors"
+                    [errorMessages]="{
+                        required: 'Podaj swój adres email',
+                        email: 'Podaj poprawny adres email'
+                    }"
+                    >Adres E-mail</app-input
+                >
+            </div>
+            <div class="div4">
+                <app-input
+                    name="password"
+                    type="password"
+                    [formControl]="signupForm.controls.password"
+                    [errors]="signupForm.controls.password.errors"
+                    [errorMessages]="{ required: 'Podaj swoje hasło' }"
+                    >Hasło</app-input
+                >
+            </div>
+            <div class="div5">
+                <app-input
+                    name="repeatPassword"
+                    type="password"
+                    [formControl]="signupForm.controls.repeatPassword"
+                    [errors]="signupForm.controls.repeatPassword.errors"
+                    [errorMessages]="{ required: 'Powtórz swoje hasło' }"
+                    >Powtórz hasło</app-input
+                >
+            </div>
+            <div class="div6">
+                <app-input
+                    type="checkbox"
+                    name="acceptRules"
+                    [formControl]="signupForm.controls.acceptRules"
+                    [errors]="signupForm.controls.acceptRules.errors"
+                    [errorMessages]="{
+                        required: 'Zaakceptuj regulamin i politykę prywatności'
+                    }"
+                    >Akceptuję regulamin i politykę prywatności
+                    serwisu.</app-input
+                >
+            </div>
+        </div>
+        <app-button type="color" [disabled]="signupForm.invalid"
+            >Zarejestruj się</app-button
+        >
+    </form>
+</app-base-modal>
