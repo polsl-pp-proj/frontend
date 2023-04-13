@@ -13,6 +13,7 @@ import { SelectComponent } from './components/forms/select/select.component';
 import { IconVaultModule } from './modules/icon-vault/icon-vault.module';
 import { ModalModule } from './modules/modal/modal.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PageComponent } from './views/page/page.component';
 
 @NgModule({
     declarations: [
@@ -24,6 +25,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         ProjectCardComponent,
         RecentPaymentCardComponent,
         SelectComponent,
+        PageComponent,
     ],
     imports: [
         BrowserModule,
