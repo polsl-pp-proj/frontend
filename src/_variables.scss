@@ -32,6 +32,8 @@
         "Segoe UI Symbol";
 
     --padding: 32px;
+    --navbar-padding: 25px;
+    --page-padding: var(--padding);
 
     --button-height: 44px;
     --el-height: 64px;
@@ -41,8 +43,12 @@
     --input-height: 44px;
     --checkbox-height: 24px;
 
+    --max-page-width: 1792px;
+
     @media screen and (min-width: 768px) {
         --padding: 40px;
+        --navbar-padding: var(--padding);
+        --page-padding: 10vw;
 
         --button-height: 52px;
         --el-height: 72px;
@@ -54,5 +60,6 @@
 
     @media screen and (min-width: 1280px) {
         --padding: 50px;
+        --page-padding: 15vw;
     }
 }

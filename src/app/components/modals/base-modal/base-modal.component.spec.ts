@@ -47,6 +47,11 @@ describe('BaseModalComponent', () => {
                 }
                 throw new Error('Modal does not exist');
             },
+            unregisterModal: (name) => {
+                modalServiceStub.subject.next(false);
+                modalServiceStub.subject.complete();
+                modalServiceStub.subject.unsubscribe();
+            },
         };
 
         await TestBed.configureTestingModule({
