@@ -17,6 +17,7 @@ export class ButtonComponent implements AfterViewInit {
     @Input() type: 'clear' | 'translucent' | 'color' = 'clear';
     @Input() icon?: SafeHtml | null = undefined;
     @Input() iconPosition: 'before' | 'after' = 'before';
+    @Input() disabled = false;
     private viewInitialized = false;
 
     @ViewChild('textContent', { read: ElementRef })
