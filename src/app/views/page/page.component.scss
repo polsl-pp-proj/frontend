@@ -1,0 +1,54 @@
+header {
+    ::ng-deep {
+        h1 {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-items: center;
+
+            .keep-together {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                align-items: center;
+
+                & > * {
+                    &:not(:last-child) {
+                        margin-right: 0.5em;
+                    }
+                }
+
+                app-select,
+                app-input {
+                    min-width: 256px;
+                }
+            }
+
+            & > * {
+                &:not(:last-child) {
+                    margin-right: 0.5em;
+                }
+                margin-bottom: 0.25em;
+            }
+        }
+    }
+}
+
+:host {
+    display: block;
+    padding-top: calc(var(--el-height) + 2 * var(--navbar-padding));
+    min-height: calc(100vh);
+    padding-bottom: min(var(--page-padding), 5rem);
+}
+
+header,
+main {
+    margin: 0 auto;
+    width: calc(100% - 2 * var(--page-padding));
+    max-width: var(--max-page-width);
+}
+
+header {
+    margin-bottom: var(--padding);
+    max-width: var(--max-page-width);
+}
