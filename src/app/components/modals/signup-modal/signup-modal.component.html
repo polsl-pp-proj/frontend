@@ -1,0 +1,20 @@
+<app-base-modal
+    modalTitle="Zarejestruj się"
+    modalName="signup-modal"
+    transitionDuration="200ms"
+    [closable]="true"
+>
+    <div class="parent">
+        <div class="div1"><app-input>Imię</app-input></div>
+        <div class="div2"><app-input>Nazwisko</app-input></div>
+        <div class="div3"><app-input>Adres E-mail</app-input></div>
+        <div class="div4"><app-input>Hasło</app-input></div>
+        <div class="div5"><app-input>Powtórz hasło</app-input></div>
+        <div class="div6">
+            <app-input type="checkbox"
+                >Akceptuję regulamin i politykę prywatności serwisu.</app-input
+            >
+        </div>
+        <app-button type="color">Zarejestruj się</app-button>
+    </div>
+</app-base-modal>
