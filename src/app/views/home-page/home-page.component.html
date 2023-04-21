@@ -1,0 +1,10 @@
+<div class="container">
+    <h1>Ostatnio dodane</h1>
+</div> 
+
+<div class="container">
+    <div *ngFor="let project of test_projects">
+        <app-project-card class="card" projectName={{project.name}} projectDescription={{project.description}} imageUrl={{project.image_url}}></app-project-card>
+    </div>
+    
+</div>
