@@ -56,7 +56,9 @@
             <li><app-button>Projekty</app-button></li>
             <li><app-button>O nas</app-button></li>
             <span>
-                <li *ngIf="logged"><app-button>Moje organizacje</app-button></li>
+                <li *ngIf="logged">
+                    <app-button>Moje organizacje</app-button>
+                </li>
                 <li *ngIf="logged"><app-button>Moje konto</app-button></li>
             </span>
         </ul>
