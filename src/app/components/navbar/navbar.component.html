@@ -1,0 +1,103 @@
+<div class="nav-wrapper">
+    <nav>
+        <div class="left-nav-container">
+            <div class="burger">
+                <app-button
+                    *ngIf="!expandedLeftMenu"
+                    type="color"
+                    [icon]="burgerIcon"
+                    (click)="expandedLeftMenu = !expandedLeftMenu"
+                ></app-button>
+                <app-button
+                    *ngIf="expandedLeftMenu"
+                    type="color"
+                    [icon]="xIcon"
+                    (click)="expandedLeftMenu = !expandedLeftMenu"
+                ></app-button>
+            </div>
+            <div class="logo">
+                <img src="assets/img/logotype.svg" />
+            </div>
+            <div>
+                <div>
+                    <ul class="nav-links">
+                        <li><app-button>Strona główna</app-button></li>
+                        <li><app-button>Projekty</app-button></li>
+                        <li><app-button>O nas</app-button></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="right-nav-container">
+            <app-button class="dropdown-button" *ngIf="logged">
+                <img
+                    src="assets/img/icons/ion_dropdown.svg"
+                    (click)="expandedRightMenu = !expandedRightMenu"
+                />
+            </app-button>
+            <app-button class="profile-button" *ngIf="logged">
+                <img
+                    src="assets/img/icons/ion_x.svg"
+                    (click)="expandedRightMenu = !expandedRightMenu"
+                />
+            </app-button>
+            <app-button
+                *ngIf="!logged"
+                class="login-button"
+                type="color"
+                (click)="logged = !logged"
+                >Zaloguj się</app-button
+            >
+        </div>
+    </nav>
+    <div [ngClass]="{ expandedLeft: expandedLeftMenu }" class="left-menu">
+        <ul class="nav-links-left-top">
+            <li><app-button>Strona główna</app-button></li>
+            <li><app-button>Projekty</app-button></li>
+            <li><app-button>O nas</app-button></li>
+            <li *ngIf="logged"><app-button>Moje organizacje</app-button></li>
+            <li *ngIf="logged"><app-button>Moje konto</app-button></li>
+        </ul>
+        <ul class="nav-links-left-bottom">
+            <li *ngIf="!logged">
+                <app-button type="color" (click)="logged = !logged"
+                    >Zaloguj się</app-button
+                >
+            </li>
+            <li *ngIf="logged">
+                <app-button type="color">Moderuj</app-button>
+            </li>
+            <li *ngIf="logged">
+                <app-button type="color" (click)="logged = !logged"
+                    >Wyloguj się</app-button
+                >
+            </li>
+        </ul>
+    </div>
+
+    <div [ngClass]="{ expandedRight: expandedRightMenu }" class="right-menu">
+        <ul class="nav-links-right-top">
+            <li><app-button>Moje organizacje</app-button></li>
+            <li><app-button>Moje konto</app-button></li>
+        </ul>
+        <ul class="nav-links-right-bottom">
+            <li *ngIf="!logged">
+                <app-button type="color" (click)="logged = !logged"
+                    >Zaloguj się</app-button
+                >
+            </li>
+            <li *ngIf="logged">
+                <app-button type="color">Moderuj</app-button>
+            </li>
+            <li *ngIf="logged">
+                <app-button
+                    type="color"
+                    (click)="
+                        logged = !logged; expandedRightMenu = !expandedRightMenu
+                    "
+                    >Wyloguj się</app-button
+                >
+            </li>
+        </ul>
+    </div>
+</div>
