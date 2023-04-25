@@ -1,5 +1,6 @@
 :host {
     display: block;
+    width: fit-content;
 }
 
 .button {
@@ -27,6 +28,19 @@
         pointer-events: none;
     }
 
+    i {
+        width: 1.8375rem;
+        height: 1.8375rem;
+
+        &.button-icon-before {
+            margin-right: 0.5rem;
+        }
+
+        &.button-icon-after {
+            margin-left: 0.5rem;
+        }
+    }
+
     &.button-clear {
         background-color: rgba(255, 255, 255, 0);
 
@@ -52,14 +66,7 @@
     }
 
     &.button-icon-only {
-        padding: 0.7rem;
-    }
-
-    &.button-icon-before {
-        margin-right: 0.5rem;
-    }
-
-    &.button-icon-after {
-        margin-left: 0.5rem;
+        padding: 0;
+        width: var(--button-height);
     }
 }
