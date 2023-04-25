@@ -13,12 +13,16 @@ import {
     BodilessRequestMethod,
     BodilyRequestMethod,
 } from '../types/request-method.type';
+import { UrlService } from './url.service';
 
 @Injectable({
     providedIn: 'root',
 })
 export class CoreApiService {
-    constructor(private readonly httpClient: HttpClient) {}
+    constructor(
+        private readonly httpClient: HttpClient,
+        private readonly urlService: UrlService
+    ) {}
 
     request<RS, RQ = unknown>(
         route: Omit<GeneralApiRoute, 'method'> & {
@@ -70,7 +74,7 @@ export class CoreApiService {
         const authToken = ''; // TODO: get auth token from AuthService
 
         let httpRequest: HttpRequest<RQ>;
-        let observe: 'body' | 'events' | 'response';
+        let options: ApiOptions;
 
         switch (route.method) {
             case 'DELETE':
@@ -78,24 +82,40 @@ export class CoreApiService {
             case 'HEAD':
             case 'JSONP':
             case 'OPTIONS': {
+                options = bodyOrOptions as ApiOptions;
                 httpRequest = new HttpRequest(
                     route.method,
-                    route.path,
-                    bodyOrOptions as ApiOptions
+                    options.addHost
+                        ? this.urlService.getBoundAPIRouteWithHost(
+                              route.path,
+                              options.routeParams
+                          )
+                        : this.urlService.bindRouteParams(
+                              route.path,
+                              options.routeParams
+                          ),
+                    options
                 );
-                observe = (bodyOrOptions as ApiOptions).observe;
                 break;
             }
             case 'PATCH':
             case 'POST':
             case 'PUT': {
+                options = bodilyOptions!;
                 httpRequest = new HttpRequest<RQ>(
                     route.method,
-                    route.path,
+                    options.addHost
+                        ? this.urlService.getBoundAPIRouteWithHost(
+                              route.path,
+                              options.routeParams
+                          )
+                        : this.urlService.bindRouteParams(
+                              route.path,
+                              options.routeParams
+                          ),
                     bodyOrOptions as RQ,
-                    bodilyOptions
+                    options
                 );
-                observe = bodilyOptions!.observe;
                 break;
             }
         }
@@ -109,7 +129,7 @@ export class CoreApiService {
             });
         }
 
-        if (observe === 'body') {
+        if (options.observe === 'body') {
             return this.httpClient.request<RS>(httpRequest).pipe(
                 filter((httpEvent: HttpEvent<RS>) => {
                     return httpEvent.type === HttpEventType.Response;
@@ -118,7 +138,7 @@ export class CoreApiService {
                     return (httpEvent as HttpResponse<RS>).body;
                 })
             ) as Observable<RS>;
-        } else if (observe === 'response') {
+        } else if (options.observe === 'response') {
             return this.httpClient.request<RS>(httpRequest).pipe(
                 filter((httpEvent: HttpEvent<RS>) => {
                     return httpEvent.type === HttpEventType.Response;

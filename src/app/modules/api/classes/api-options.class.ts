@@ -5,9 +5,15 @@ export class ApiOptions {
     context?: HttpContext;
     reportProgress?: boolean;
     params?: HttpParams;
+    routeParams?: { [key: string]: string | number };
     responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
     withCredentials?: boolean;
+    addHost: boolean = true;
     observe: 'body' | 'events' | 'response' = 'body';
+
+    constructor(options?: Partial<ApiOptions>) {
+        Object.assign(this, options);
+    }
 }
 
 export type ApiOptionsBody = ApiOptions & {

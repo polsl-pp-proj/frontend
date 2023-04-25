@@ -10,6 +10,7 @@ import {
     ApiOptionsBody,
     ApiOptionsResponse,
 } from '../classes/api-options.class';
+import { environment } from 'src/environments/environment';
 
 describe('CoreApiService', () => {
     let service: CoreApiService;
@@ -41,13 +42,17 @@ describe('CoreApiService', () => {
                 method: 'GET',
                 path: '/test',
             };
-            const options: ApiOptionsBody = { observe: 'body' };
+            const options = new ApiOptions({
+                observe: 'body',
+            }) as ApiOptionsBody;
 
             service.request<any>(route, options).subscribe((response) => {
                 expect(response).toEqual(expectedResponse);
             });
 
-            const httpRequest = httpMock.expectOne('/test');
+            const httpRequest = httpMock.expectOne(
+                `${environment.apiUrl}/test`
+            );
             expect(httpRequest.request.method).toBe('GET');
             httpRequest.flush(expectedResponse);
         });
@@ -60,7 +65,9 @@ describe('CoreApiService', () => {
                 authorized: false,
             };
             const body = { username: 'testuser', password: 'testpassword' };
-            const options: ApiOptionsBody = { observe: 'body' };
+            const options = new ApiOptions({
+                observe: 'body',
+            }) as ApiOptionsBody;
 
             service
                 .request<any, any>(route, body, options)
@@ -68,7 +75,9 @@ describe('CoreApiService', () => {
                     expect(response).toEqual(expectedResponse);
                 });
 
-            const httpRequest = httpMock.expectOne('/test');
+            const httpRequest = httpMock.expectOne(
+                `${environment.apiUrl}/test`
+            );
             expect(httpRequest.request.method).toBe('POST');
             expect(httpRequest.request.body).toEqual(body);
             httpRequest.flush(expectedResponse);
@@ -82,7 +91,9 @@ describe('CoreApiService', () => {
                 authorized: false,
             };
             const body = { username: 'testuser', password: 'testpassword' };
-            const options: ApiOptionsBody = { observe: 'body' };
+            const options = new ApiOptions({
+                observe: 'body',
+            }) as ApiOptionsBody;
 
             service
                 .request<any, any>(route, body, options)
@@ -90,7 +101,9 @@ describe('CoreApiService', () => {
                     expect(response).toEqual(expectedResponse);
                 });
 
-            const httpRequest = httpMock.expectOne('/test');
+            const httpRequest = httpMock.expectOne(
+                `${environment.apiUrl}/test`
+            );
             expect(httpRequest.request.method).toBe('PUT');
             expect(httpRequest.request.body).toEqual(body);
             httpRequest.flush(expectedResponse);
@@ -103,13 +116,17 @@ describe('CoreApiService', () => {
                 path: '/test',
                 authorized: false,
             };
-            const options: ApiOptionsBody = { observe: 'body' };
+            const options = new ApiOptions({
+                observe: 'body',
+            }) as ApiOptionsBody;
 
             service.request<any>(route, options).subscribe((response) => {
                 expect(response).toEqual(expectedResponse);
             });
 
-            const httpRequest = httpMock.expectOne('/test');
+            const httpRequest = httpMock.expectOne(
+                `${environment.apiUrl}/test`
+            );
             expect(httpRequest.request.method).toBe('DELETE');
             httpRequest.flush(expectedResponse);
         });
@@ -121,9 +138,9 @@ describe('CoreApiService', () => {
                 authorized: true,
             };
 
-            const options: ApiOptionsResponse = {
+            const options = new ApiOptions({
                 observe: 'response',
-            };
+            }) as ApiOptionsResponse;
 
             const expectedResponse = {
                 data: 'test data',
@@ -133,7 +150,9 @@ describe('CoreApiService', () => {
                 expect(response.body).toEqual(expectedResponse);
             });
 
-            const request = httpMock.expectOne(`${route.path}`);
+            const request = httpMock.expectOne(
+                `${environment.apiUrl}${route.path}`
+            );
             expect(request.request.method).toBe('GET');
             expect(request.request.headers.has('Authorization')).toBeTrue();
             request.flush(expectedResponse);
@@ -148,9 +167,9 @@ describe('CoreApiService', () => {
 
             const requestBody = { name: 'Test', value: 123 };
 
-            const options: ApiOptionsResponse = {
+            const options = new ApiOptions({
                 observe: 'response',
-            };
+            }) as ApiOptionsResponse;
 
             const expectedResponse = {
                 data: 'test data',
@@ -162,7 +181,9 @@ describe('CoreApiService', () => {
                     expect(response.body).toEqual(expectedResponse);
                 });
 
-            const request = httpMock.expectOne(`${route.path}`);
+            const request = httpMock.expectOne(
+                `${environment.apiUrl}${route.path}`
+            );
             expect(request.request.method).toBe('POST');
             expect(request.request.headers.has('Authorization')).toBeTrue();
             expect(request.request.body).toEqual(requestBody);
@@ -178,9 +199,9 @@ describe('CoreApiService', () => {
 
             const requestBody = { name: 'Test', value: 123 };
 
-            const options: ApiOptionsResponse = {
+            const options = new ApiOptions({
                 observe: 'response',
-            };
+            }) as ApiOptionsResponse;
 
             const expectedResponse = {
                 data: 'test data',
@@ -192,7 +213,9 @@ describe('CoreApiService', () => {
                     expect(response.body).toEqual(expectedResponse);
                 });
 
-            const request = httpMock.expectOne(`${route.path}`);
+            const request = httpMock.expectOne(
+                `${environment.apiUrl}${route.path}`
+            );
             expect(request.request.method).toBe('PUT');
             expect(request.request.headers.has('Authorization')).toBeTrue();
             expect(request.request.body).toEqual(requestBody);
