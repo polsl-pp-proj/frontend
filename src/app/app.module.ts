@@ -17,6 +17,7 @@ import { NotFoundPageComponent } from './views/not-found-page/not-found-page.com
 import { PageComponent } from './views/page/page.component';
 import { SignupModalComponent } from './components/modals/signup-modal/signup-modal.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { LoginModalComponent } from './components/modals/login-modal/login-modal.component';
 
 @NgModule({
     declarations: [
@@ -32,6 +33,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
         PageComponent,
         SignupModalComponent,
         NavbarComponent
+        LoginModalComponent,
     ],
     imports: [
         BrowserModule,
