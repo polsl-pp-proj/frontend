@@ -19,6 +19,7 @@ import { SignupModalComponent } from './components/modals/signup-modal/signup-mo
 import { SearchPageComponent } from './views/search-page/search-page.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { LoginModalComponent } from './components/modals/login-modal/login-modal.component';
+import { JoinTeamModalComponent } from './components/modals/join-team-modal/join-team-modal.component';
 
 @NgModule({
     declarations: [
@@ -36,6 +37,7 @@ import { LoginModalComponent } from './components/modals/login-modal/login-modal
         SearchPageComponent,
         NavbarComponent,
         LoginModalComponent,
+        JoinTeamModalComponent,
     ],
     imports: [
         BrowserModule,
