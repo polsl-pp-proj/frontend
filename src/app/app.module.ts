@@ -16,6 +16,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NotFoundPageComponent } from './views/not-found-page/not-found-page.component';
 import { PageComponent } from './views/page/page.component';
 import { SignupModalComponent } from './components/modals/signup-modal/signup-modal.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
 import { LoginModalComponent } from './components/modals/login-modal/login-modal.component';
 
 @NgModule({
@@ -31,6 +32,7 @@ import { LoginModalComponent } from './components/modals/login-modal/login-modal
         NotFoundPageComponent,
         PageComponent,
         SignupModalComponent,
+        NavbarComponent
         LoginModalComponent,
     ],
     imports: [
