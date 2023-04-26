@@ -17,6 +17,7 @@ import { NotFoundPageComponent } from './views/not-found-page/not-found-page.com
 import { PageComponent } from './views/page/page.component';
 import { SignupModalComponent } from './components/modals/signup-modal/signup-modal.component';
 import { AuthModule } from './modules/auth/auth.module';
+import { IntercomModule } from './modules/intercom/intercom.module';
 
 @NgModule({
     declarations: [
@@ -40,6 +41,7 @@ import { AuthModule } from './modules/auth/auth.module';
         FormsModule,
         ReactiveFormsModule,
         AuthModule,
+        IntercomModule,
     ],
     providers: [],
     bootstrap: [AppComponent],
