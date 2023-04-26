@@ -34,7 +34,7 @@ import { LoginModalComponent } from './components/modals/login-modal/login-modal
         PageComponent,
         SignupModalComponent,
         SearchPageComponent,
-        NavbarComponent
+        NavbarComponent,
         LoginModalComponent,
     ],
     imports: [
