@@ -18,6 +18,9 @@ import { PageComponent } from './views/page/page.component';
 import { SignupModalComponent } from './components/modals/signup-modal/signup-modal.component';
 import { AuthModule } from './modules/auth/auth.module';
 import { IntercomModule } from './modules/intercom/intercom.module';
+import { SearchPageComponent } from './views/search-page/search-page.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { LoginModalComponent } from './components/modals/login-modal/login-modal.component';
 
 @NgModule({
     declarations: [
@@ -32,6 +35,9 @@ import { IntercomModule } from './modules/intercom/intercom.module';
         NotFoundPageComponent,
         PageComponent,
         SignupModalComponent,
+        SearchPageComponent,
+        NavbarComponent,
+        LoginModalComponent,
     ],
     imports: [
         BrowserModule,
