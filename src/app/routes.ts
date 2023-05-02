@@ -46,6 +46,8 @@ const customRouteMatcher = (
 };
 
 export const routes: Routes = [
+    { path: 'category', component: CategoryPageComponent },
+    { path: 'about', component: AboutPageComponent },
     { path: '404', component: NotFoundPageComponent },
     {
         path: '',
