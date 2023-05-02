@@ -17,6 +17,7 @@ import { NotFoundPageComponent } from './views/not-found-page/not-found-page.com
 import { PageComponent } from './views/page/page.component';
 import { SignupModalComponent } from './components/modals/signup-modal/signup-modal.component';
 import { AboutPageComponent } from './views/about-page/about-page.component';
+import { OrganisationPageComponent } from './views/organisation-page/organisation-page.component';
 
 @NgModule({
     declarations: [
@@ -32,6 +33,7 @@ import { AboutPageComponent } from './views/about-page/about-page.component';
         PageComponent,
         SignupModalComponent,
         AboutPageComponent,
+        OrganisationPageComponent,
     ],
     imports: [
         BrowserModule,
