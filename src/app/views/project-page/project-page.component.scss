@@ -1,0 +1,59 @@
+.swiper-img {
+    width: 320px;
+    height: 168px;
+}
+
+.summary-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 32px;
+    width: 100vw;
+    background-color: var(--secondary-25);
+    border-radius: calc(var(--el-height) / 2);
+    align-items: center;
+}
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h3 {
+    align-self: flex-start;
+}
+
+.button-container {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-top: 32px;
+}
+
+app-button {
+    width: 256px;
+}
+
+.gathered-funds-container {
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top: 30px;
+    align-self: center;
+    width: 256px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 32px;
+}
+
+.money {
+    align-self: flex-end;
+    color: var(--money);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 32px;
+}

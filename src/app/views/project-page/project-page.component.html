@@ -1,0 +1,30 @@
+<app-page>
+    <h1 pageHeader>{{ projectDto.name }}</h1>
+    <div class="main-container">
+        <h3>{{ projectDto.projectGroupName }}</h3>
+        <div class="summary-container">
+            <swiper-container
+                initial-slide="0"
+                slides-per-view="1"
+                navigation="true"
+                autoHeight="true"
+            >
+                <swiper-slide *ngFor="let asset of projectDto.assets">
+                    <img class="swiper-img" [src]="asset.url" />
+                </swiper-slide>
+            </swiper-container>
+            <div class="button-container">
+                <app-button type="color">Wesprzyj</app-button>
+                <app-button type="translucent">Skontaktuj sie</app-button>
+                <app-button type="translucent">Dodaj do ulubionych</app-button>
+            </div>
+            <div class="gathered-funds-container">
+                <h2>Zebrana kwota</h2>
+                <h3>Ostatnie 30 dni:</h3>
+                <div class="money">2137 zł</div>
+                <h3>Ogólnie:</h3>
+                <div class="money">6969 zł</div>
+            </div>
+        </div>
+    </div>
+</app-page>

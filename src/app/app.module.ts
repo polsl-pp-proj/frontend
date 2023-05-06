@@ -1,6 +1,4 @@
-import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BaseModalComponent } from './components/modals/base-modal/base-modal.component';
@@ -19,6 +17,8 @@ import { SignupModalComponent } from './components/modals/signup-modal/signup-mo
 import { SearchPageComponent } from './views/search-page/search-page.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { LoginModalComponent } from './components/modals/login-modal/login-modal.component';
+import { ProjectPageComponent } from './views/project-page/project-page.component';
+import { AfterViewInit, CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 
 @NgModule({
     declarations: [
@@ -36,6 +36,7 @@ import { LoginModalComponent } from './components/modals/login-modal/login-modal
         SearchPageComponent,
         NavbarComponent,
         LoginModalComponent,
+        ProjectPageComponent,
     ],
     imports: [
         BrowserModule,
@@ -47,5 +48,8 @@ import { LoginModalComponent } from './components/modals/login-modal/login-modal
     ],
     providers: [],
     bootstrap: [AppComponent],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class AppModule {}
+export class AppModule{
+    
+}
