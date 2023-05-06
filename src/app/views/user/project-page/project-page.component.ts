@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { ProjectDto } from 'src/app/dtos/project-dto';
 import { AssetType } from 'src/app/enums/asset-type.enum';
+import Swiper from 'swiper';
 
 @Component({
     selector: 'app-project-page',
@@ -18,32 +19,47 @@ export class ProjectPageComponent {
         assets: [
             {
                 title: 'zdj',
-                url: 'https://img.freepik.com/premium-photo/mug-beer-with-thick-foam_159938-839.jpg?w=740',
+                url: 'https://placehold.co/1200x630',
                 type: AssetType.Image,
             },
             {
                 title: 'zdj',
-                url: 'https://img.freepik.com/premium-photo/mug-beer-with-thick-foam_159938-839.jpg?w=740',
+                url: 'https://placehold.co/1200x630',
                 type: AssetType.Image,
             },
             {
                 title: 'zdj',
-                url: 'https://img.freepik.com/premium-photo/mug-beer-with-thick-foam_159938-839.jpg?w=740',
+                url: 'https://placehold.co/1200x630',
                 type: AssetType.Image,
             },
             {
                 title: 'zdj',
-                url: 'https://img.freepik.com/premium-photo/mug-beer-with-thick-foam_159938-839.jpg?w=740',
+                url: 'https://placehold.co/1200x630',
                 type: AssetType.Image,
             },
             {
                 title: 'zdj',
-                url: 'https://img.freepik.com/premium-photo/mug-beer-with-thick-foam_159938-839.jpg?w=740',
+                url: 'https://placehold.co/1200x630',
                 type: AssetType.Image,
             },
             {
                 title: 'zdj',
-                url: 'https://img.freepik.com/premium-photo/mug-beer-with-thick-foam_159938-839.jpg?w=740',
+                url: 'https://placehold.co/1200x630',
+                type: AssetType.Image,
+            },
+            {
+                title: 'zdj',
+                url: 'https://placehold.co/1200x630',
+                type: AssetType.Image,
+            },
+            {
+                title: 'zdj',
+                url: 'https://placehold.co/1200x630',
+                type: AssetType.Image,
+            },
+            {
+                title: 'zdj',
+                url: 'https://placehold.co/1200x630',
                 type: AssetType.Image,
             },
         ],
@@ -59,6 +75,5 @@ export class ProjectPageComponent {
         updatedAt: 122,
     };
 
-    constructor() {
-    }
+    constructor() {}
 }

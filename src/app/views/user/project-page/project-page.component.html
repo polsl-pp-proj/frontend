@@ -7,10 +7,24 @@
                 initial-slide="0"
                 slides-per-view="1"
                 navigation="true"
-                autoHeight="true"
+                auto-height="true"
+                thumbs-swiper=".thumbnail-swiper"
             >
                 <swiper-slide *ngFor="let asset of projectDto.assets">
                     <img class="swiper-img" [src]="asset.url" />
+                </swiper-slide>
+            </swiper-container>
+            <swiper-container  
+                initial-slide="0"
+                navigation="true"
+                slides-per-view="auto"
+                class="thumbnail-swiper"
+                slides-offset-before="50"
+                slides-offset-after="50"
+                space-between="25"
+            >
+                <swiper-slide *ngFor="let asset of projectDto.assets" class="thumbnail-swiper-slide">
+                    <img class="swiper-thumb-img" [src]="asset.url" />
                 </swiper-slide>
             </swiper-container>
             <div class="button-container">
