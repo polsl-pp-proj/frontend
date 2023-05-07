@@ -176,6 +176,7 @@ nav {
     }
 
     .logo {
+        cursor: pointer;
         margin-left: calc((var(--el-height) - var(--button-height)) / 2);
     }
 
@@ -190,3 +191,4 @@ nav {
             }
     }
 }
+
