@@ -17,6 +17,7 @@ import { SignupModalComponent } from './components/modals/signup-modal/signup-mo
 import { SearchPageComponent } from './views/user/search-page/search-page.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { LoginModalComponent } from './components/modals/login-modal/login-modal.component';
+import { JoinTeamModalComponent } from './components/modals/join-team-modal/join-team-modal.component';
 import { ProjectPageComponent } from './views/user/project-page/project-page.component';
 import { AfterViewInit, CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { UserComponent } from './views/user/user.component';
@@ -37,6 +38,7 @@ import { UserComponent } from './views/user/user.component';
         SearchPageComponent,
         NavbarComponent,
         LoginModalComponent,
+        JoinTeamModalComponent,
         ProjectPageComponent,
         UserComponent,
     ],
