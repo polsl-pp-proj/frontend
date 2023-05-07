@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SafeHtml } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { IconVaultService } from 'src/app/modules/icon-vault/services/icon-vault.service';
 
 @Component({
@@ -15,7 +16,10 @@ export class NavbarComponent implements OnInit {
     expandedLeftMenu: boolean = false;
     expandedRightMenu: boolean = false;
 
-    constructor(private readonly iconVaultService: IconVaultService) {}
+    constructor(
+        private readonly iconVaultService: IconVaultService,
+        private readonly router: Router
+    ) {}
 
     ngOnInit(): void {
         this.iconVaultService
