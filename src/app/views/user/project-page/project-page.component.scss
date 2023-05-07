@@ -1,3 +1,5 @@
+@use "sass:math";
+
 app-page ::ng-deep {
     header {
         margin-bottom: 0;
@@ -8,17 +10,31 @@ app-page ::ng-deep {
     width: 100%;
 }
 
+.top {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
 .summary-container {
     display: flex;
     flex-direction: column;
-    margin-top: 32px;
+    margin-top: var(--padding);
     width: 100vw;
     background-color: var(--secondary-25);
     border-radius: calc(var(--el-height) / 2);
     align-items: center;
+    margin-bottom: var(--padding)
 }
 
 .main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.aside {
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -71,6 +87,10 @@ swiper-container {
     display: none;
 }
 
+.main-swiper {
+    border-radius: calc(var(--el-height) / 2);
+}
+
 .swiper-thumb-img {
     height: 7.9rem;
 }
@@ -84,8 +104,72 @@ swiper-container {
     }
 }
 
+.project-description {
+    font-size: 1.3rem;
+    margin-bottom: var(--padding)
+}
+
+.open-positions {
+    width: 100%;
+    display: flex;
+    flex-direction: column; 
+}
+
+.open-positions-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: var(--padding);
+    gap: var(--padding)
+}
+
+.main-swiper-wrapper {
+    width: 100%;
+}
+
+.recent-payments {
+    width: 100%;
+    margin-top: var(--padding);
+    display: flex;
+    flex-direction: column;
+}
+
+.recent-payments-container {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: var(--padding);
+    gap: var(--padding)
+}
+
+app-recent-payment-card {
+    width: 270px;
+}
+
+@media only screen and (min-width: 768px) {
+    .summary-container {
+        width: 100%;
+    }
+}
+
+
 @media only screen and (min-width: 1800px) {
     .thumbnail-swiper {
         display: initial;
+        margin-bottom: var(--padding);
+    }
+
+    .main-swiper-wrapper {
+        width: #{math.div(2,3) * 100%};
+    }
+
+    .top {
+        flex-direction: row;
     }
 }
+
+
