@@ -1,6 +1,4 @@
-import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BaseModalComponent } from './components/modals/base-modal/base-modal.component';
@@ -16,9 +14,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NotFoundPageComponent } from './views/not-found-page/not-found-page.component';
 import { PageComponent } from './views/page/page.component';
 import { SignupModalComponent } from './components/modals/signup-modal/signup-modal.component';
-import { SearchPageComponent } from './views/search-page/search-page.component';
+import { SearchPageComponent } from './views/user/search-page/search-page.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { LoginModalComponent } from './components/modals/login-modal/login-modal.component';
+import { ProjectPageComponent } from './views/user/project-page/project-page.component';
+import { AfterViewInit, CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { UserComponent } from './views/user/user.component';
 
 @NgModule({
     declarations: [
@@ -36,6 +37,8 @@ import { LoginModalComponent } from './components/modals/login-modal/login-modal
         SearchPageComponent,
         NavbarComponent,
         LoginModalComponent,
+        ProjectPageComponent,
+        UserComponent,
     ],
     imports: [
         BrowserModule,
@@ -47,5 +50,6 @@ import { LoginModalComponent } from './components/modals/login-modal/login-modal
     ],
     providers: [],
     bootstrap: [AppComponent],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule {}
