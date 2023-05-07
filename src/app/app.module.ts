@@ -20,6 +20,7 @@ import { LoginModalComponent } from './components/modals/login-modal/login-modal
 import { ProjectPageComponent } from './views/user/project-page/project-page.component';
 import { AfterViewInit, CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { UserComponent } from './views/user/user.component';
+import { ResetPasswordModalComponent } from './components/modals/reset-password-modal/reset-password-modal.component';
 
 @NgModule({
     declarations: [
@@ -39,6 +40,7 @@ import { UserComponent } from './views/user/user.component';
         LoginModalComponent,
         ProjectPageComponent,
         UserComponent,
+        ResetPasswordModalComponent,
     ],
     imports: [
         BrowserModule,
