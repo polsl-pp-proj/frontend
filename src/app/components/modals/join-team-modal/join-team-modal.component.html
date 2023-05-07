@@ -1,0 +1,35 @@
+<app-base-modal
+    modalTitle="Dołącz do projektu"
+    modalName="join-team-modal"
+    transitionDuration="200ms"
+    [closable]="true"
+>
+    <div class="container">
+        <div class="description">
+            Wysyłasz zgłoszenie możliwości dołączenia do zespołu projektu
+            <span class="projectName">{{ this.projectName }}</span>
+            jako
+            <span class="positionName">{{ this.positionName }}</span>
+        </div>
+        <form [formGroup]="joinProjectForm">
+            <div class="input-container">
+                <app-input
+                    name="candidateSummary"
+                    [formControl]="joinProjectForm.controls.candidateSummary"
+                    [displayErrors]="false"
+                    [type]="'multiline'"
+                    >Powiedz coś o sobie i swoim doświadczeniu</app-input
+                >
+                <div class="char-counter">
+                    {{ this.inputSize }}/{{ this.maxInputSize }}
+                </div>
+            </div>
+        </form>
+        <app-button
+            type="color"
+            [disabled]="!joinProjectForm.valid"
+            (click)="sendJoinRequest()"
+            >Wyślij zgłoszenie</app-button
+        >
+    </div>
+</app-base-modal>

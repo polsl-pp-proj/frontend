@@ -17,10 +17,12 @@ import { SignupModalComponent } from './components/modals/signup-modal/signup-mo
 import { SearchPageComponent } from './views/user/search-page/search-page.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { LoginModalComponent } from './components/modals/login-modal/login-modal.component';
+import { JoinTeamModalComponent } from './components/modals/join-team-modal/join-team-modal.component';
 import { ProjectPageComponent } from './views/user/project-page/project-page.component';
 import { AfterViewInit, CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { UserComponent } from './views/user/user.component';
 import { RejectProjectModalComponent } from './components/modals/reject-project-modal/reject-project-modal.component';
+import { ResetPasswordModalComponent } from './components/modals/reset-password-modal/reset-password-modal.component';
 
 @NgModule({
     declarations: [
@@ -38,9 +40,11 @@ import { RejectProjectModalComponent } from './components/modals/reject-project-
         SearchPageComponent,
         NavbarComponent,
         LoginModalComponent,
+        JoinTeamModalComponent,
         ProjectPageComponent,
         UserComponent,
         RejectProjectModalComponent,
+        ResetPasswordModalComponent,
     ],
     imports: [
         BrowserModule,
