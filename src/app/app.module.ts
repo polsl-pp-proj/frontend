@@ -21,6 +21,7 @@ import { JoinTeamModalComponent } from './components/modals/join-team-modal/join
 import { ProjectPageComponent } from './views/user/project-page/project-page.component';
 import { AfterViewInit, CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { UserComponent } from './views/user/user.component';
+import { ResetPasswordModalComponent } from './components/modals/reset-password-modal/reset-password-modal.component';
 
 @NgModule({
     declarations: [
@@ -41,6 +42,7 @@ import { UserComponent } from './views/user/user.component';
         JoinTeamModalComponent,
         ProjectPageComponent,
         UserComponent,
+        ResetPasswordModalComponent,
     ],
     imports: [
         BrowserModule,
