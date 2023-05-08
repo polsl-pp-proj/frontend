@@ -29,18 +29,15 @@
             </div>
         </div>
         <div class="right-nav-container">
-            <app-button class="dropdown-button" *ngIf="logged">
-                <img
-                    src="assets/img/icons/ion_dropdown.svg"
-                    (click)="expandedRightMenu = !expandedRightMenu"
-                />
-            </app-button>
-            <app-button class="profile-button" *ngIf="logged">
-                <img
-                    src="assets/img/icons/ion_x.svg"
-                    (click)="expandedRightMenu = !expandedRightMenu"
-                />
-            </app-button>
+            <div
+                *ngIf="logged"
+                (click)="expandedRightMenu = !expandedRightMenu"
+                class="dropdown-button"
+                [ngClass]="{ expanded: expandedRightMenu }"
+            >
+                <img src="assets/img/icons/ion_dropdown.svg" />
+                <span class="profile-circle">PB</span>
+            </div>
             <app-button
                 *ngIf="!logged"
                 class="login-button"
