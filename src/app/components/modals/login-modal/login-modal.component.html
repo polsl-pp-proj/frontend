@@ -29,9 +29,11 @@
                 >Zaloguj</app-button
             >
         </div>
-        <div class="register-container">
-            <div class="no-account-label">Nie masz konta?</div>
-            <app-button type="translucent">Zarejestruj się</app-button>
-        </div>
     </form>
+    <div class="register-container">
+        <div class="no-account-label">Nie masz konta?</div>
+        <app-button type="translucent" (click)="openSignup()"
+            >Zarejestruj się</app-button
+        >
+    </div>
 </app-base-modal>

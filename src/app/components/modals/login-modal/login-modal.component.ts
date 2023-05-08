@@ -51,4 +51,8 @@ export class LoginModalComponent {
                 });
         }
     }
+
+    openSignup() {
+        this.modalService.updateModalState('signup-modal', 'open');
+    }
 }
