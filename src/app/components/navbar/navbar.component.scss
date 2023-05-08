@@ -144,6 +144,8 @@ nav {
         display: flex;
         justify-content: space-around;
         align-items: center;
+        user-select: none;
+        cursor: pointer;
     }
 
     .right-menu {
@@ -220,4 +222,3 @@ nav {
         }
     }
 }
-

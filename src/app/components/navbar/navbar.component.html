@@ -46,13 +46,13 @@
                 [ngClass]="{ expanded: expandedRightMenu }"
             >
                 <img src="assets/img/icons/ion_dropdown.svg" />
-                <span class="profile-circle">PB</span>
+                <span class="profile-circle">{{ initials }}</span>
             </div>
             <app-button
                 *ngIf="!logged"
                 class="login-button"
                 type="color"
-                (click)="logged = !logged"
+                (click)="openLogin()"
                 >Zaloguj się</app-button
             >
         </div>
@@ -71,7 +71,7 @@
         </ul>
         <ul class="nav-links-left-bottom">
             <li *ngIf="!logged">
-                <app-button type="color" (click)="logged = !logged"
+                <app-button type="color" (click)="openLogin()"
                     >Zaloguj się</app-button
                 >
             </li>
@@ -79,7 +79,7 @@
                 <app-button type="color">Moderuj</app-button>
             </li>
             <li *ngIf="logged">
-                <app-button type="color" (click)="logged = !logged"
+                <app-button type="color" (click)="logout()"
                     >Wyloguj się</app-button
                 >
             </li>
@@ -93,7 +93,7 @@
         </ul>
         <ul class="nav-links-right-bottom">
             <li *ngIf="!logged">
-                <app-button type="color" (click)="logged = !logged"
+                <app-button type="color" (click)="openLogin()"
                     >Zaloguj się</app-button
                 >
             </li>
@@ -103,9 +103,7 @@
             <li *ngIf="logged">
                 <app-button
                     type="color"
-                    (click)="
-                        logged = !logged; expandedRightMenu = !expandedRightMenu
-                    "
+                    (click)="logout(); expandedRightMenu = !expandedRightMenu"
                     >Wyloguj się</app-button
                 >
             </li>
