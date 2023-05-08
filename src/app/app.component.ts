@@ -1,7 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { IntercomService } from './modules/intercom/services/intercom.service';
 import { register } from 'swiper/element/bundle';
-import { ModalService } from './modules/modal/services/modal.service';
 
 @Component({
     selector: 'app-root',
