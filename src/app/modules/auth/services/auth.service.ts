@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AuthDataService } from './auth-data.service';
 import { AuthApiService } from '../modules/auth-api/services/auth-api.service';
-import { map, retry, tap } from 'rxjs';
+import { from, map, mergeMap, retry, tap } from 'rxjs';
 
 @Injectable({
     providedIn: 'root',
@@ -55,6 +55,12 @@ export class AuthService {
                     return;
                 })
             );
+    }
+
+    logout() {
+        return this.authApiService
+            .logout(this.authDataService.getTokens().refreshToken)
+            .pipe(mergeMap(() => from(this.authDataService.removeTokens())));
     }
 
     init() {

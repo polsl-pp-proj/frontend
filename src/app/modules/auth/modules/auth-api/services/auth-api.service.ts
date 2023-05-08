@@ -34,4 +34,15 @@ export class AuthApiService {
             }) as ApiOptionsBody
         );
     }
+
+    logout(refreshToken: string) {
+        return this.coreApiService.request<never, void>(
+            authApiRoutes.DELETE_logout,
+            new ApiOptions({
+                headers: new HttpHeaders({
+                    Authorization: `Bearer ${refreshToken}`,
+                }),
+            }) as ApiOptionsBody
+        );
+    }
 }
