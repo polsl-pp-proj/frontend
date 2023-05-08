@@ -1,6 +1,4 @@
-import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BaseModalComponent } from './components/modals/base-modal/base-modal.component';
@@ -18,9 +16,15 @@ import { PageComponent } from './views/page/page.component';
 import { SignupModalComponent } from './components/modals/signup-modal/signup-modal.component';
 import { AuthModule } from './modules/auth/auth.module';
 import { IntercomModule } from './modules/intercom/intercom.module';
-import { SearchPageComponent } from './views/search-page/search-page.component';
+import { SearchPageComponent } from './views/user/search-page/search-page.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { LoginModalComponent } from './components/modals/login-modal/login-modal.component';
+import { JoinTeamModalComponent } from './components/modals/join-team-modal/join-team-modal.component';
+import { ProjectPageComponent } from './views/user/project-page/project-page.component';
+import { AfterViewInit, CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { UserComponent } from './views/user/user.component';
+import { RejectProjectModalComponent } from './components/modals/reject-project-modal/reject-project-modal.component';
+import { ResetPasswordModalComponent } from './components/modals/reset-password-modal/reset-password-modal.component';
 
 @NgModule({
     declarations: [
@@ -38,6 +42,11 @@ import { LoginModalComponent } from './components/modals/login-modal/login-modal
         SearchPageComponent,
         NavbarComponent,
         LoginModalComponent,
+        JoinTeamModalComponent,
+        ProjectPageComponent,
+        UserComponent,
+        RejectProjectModalComponent,
+        ResetPasswordModalComponent,
     ],
     imports: [
         BrowserModule,
@@ -51,5 +60,6 @@ import { LoginModalComponent } from './components/modals/login-modal/login-modal
     ],
     providers: [],
     bootstrap: [AppComponent],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule {}
