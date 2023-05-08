@@ -1,17 +1,18 @@
 <app-base-modal
     modalTitle="Zaloguj się"
-    modalName="login-modal"
+    [modalName]="modalName"
     transitionDuration="200ms"
     [closable]="true"
+    (submit)="login()"
 >
     <form [formGroup]="loginForm">
         <app-input
-            name="emailAddress"
+            name="loginEmailAddress"
             [formControl]="loginForm.controls.emailAddress"
             >Adres E-mail</app-input
         >
         <app-input
-            name="password"
+            name="loginPassword"
             type="password"
             [formControl]="loginForm.controls.password"
             >Hasło</app-input
