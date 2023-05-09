@@ -3,7 +3,12 @@
     margin-left: auto;
     margin-right: auto;
     display: flex;
+    flex-direction: column;
     gap: calc(var(--padding) / 3 * 2);
+
+    &:nth-child(2n + 1) {
+        flex-direction: column-reverse;
+    }
 }
 
 .div_text {
@@ -14,4 +19,14 @@
 .div_image {
     align-self: center;
     flex-grow: 1;
+}
+
+@media screen and (min-width: 1280px) {
+    .container_flex {
+        flex-direction: row;
+
+        &:nth-child(2n + 1) {
+            flex-direction: row;
+        }
+    }
 }
