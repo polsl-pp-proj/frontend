@@ -1,0 +1,224 @@
+.nav-wrapper {
+    position: relative;
+}
+
+nav {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--black-50);
+    border-radius: calc(var(--el-height) / 2);
+    height: var(--el-height);
+    padding: calc((var(--el-height) - var(--button-height)) / 2);
+    backdrop-filter: blur(10px);
+    z-index: 6;
+}
+
+.left-nav-container {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.burger {
+    margin-right: 18px;
+    height: var(--button-height);
+    width: var(--button-height);
+}
+
+.left-menu {
+    width: 100%;
+    background-color: var(--black-50);
+    border-radius: calc(var(--el-height) / 2);
+    backdrop-filter: blur(10px);
+    top: 0;
+    left: 0;
+    position: absolute;
+    transition: opacity 0.2s ease-out;
+    opacity: 0%;
+    pointer-events: none;
+    padding-top: 102px;
+    padding-left: 60px;
+    padding-right: 60px;
+    padding-bottom: 37px;
+    z-index: 5;
+}
+
+.expandedLeft {
+    opacity: 100%;
+    pointer-events: all;
+}
+
+.login-button {
+    display: none;
+}
+
+.nav-links {
+    display: none;
+}
+
+.nav-links-left-top {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px;
+    list-style: none;
+
+    li {
+        margin-bottom: 12px;
+    }
+
+    span {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+.nav-links-left-bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px;
+    list-style: none;
+
+    li {
+        margin-bottom: 12px;
+    }
+}
+
+.right-nav-container {
+    display: none;
+}
+
+.right-menu {
+    display: none;
+}
+
+.dropdown-button {
+    display: flex;
+    flex-direction: row;
+
+    &.expanded {
+        img {
+            transform: rotate(180deg);
+        }
+    }
+
+    img {
+        transform: rotate(360deg);
+        transition: transform 0.2s ease-out;
+    }
+
+    .profile-circle {
+        margin-left: 10px;
+        border-radius: 100vw;
+        background-color: var(--secondary-100);
+        color: var(--tetriary-100);
+        display: flex;
+        font-weight: 700;
+        font-size: 0.8rem;
+        align-items: center;
+        justify-content: center;
+        height: var(--button-height);
+        width: var(--button-height);
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .nav-links-left-bottom {
+        display: none;
+    }
+
+    .nav-links-left-top span {
+        display: none;
+    }
+
+    .login-button {
+        display: inline;
+    }
+
+    .right-nav-container {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        user-select: none;
+        cursor: pointer;
+    }
+
+    .right-menu {
+        display: inline;
+        width: 340px;
+        background-color: var(--black-50);
+        border-radius: calc(var(--el-height) / 2);
+        backdrop-filter: blur(10px);
+        top: 0;
+        right: 0;
+        position: absolute;
+        transition: opacity 0.2s ease-out;
+        opacity: 0%;
+        pointer-events: none;
+        padding-top: 102px;
+        padding-left: 60px;
+        padding-right: 60px;
+        padding-bottom: 37px;
+        z-index: 5;
+    }
+
+    .expandedRight {
+        opacity: 100%;
+        pointer-events: all;
+    }
+
+    .nav-links-right-top {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0px;
+        list-style: none;
+
+        li {
+            margin-bottom: 12px;
+        }
+    }
+
+    .nav-links-right-bottom {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0px;
+        list-style: none;
+
+        li {
+            margin-bottom: 12px;
+        }
+    }
+}
+
+@media screen and (min-width: 1280px) {
+    .expandedLeft {
+        display: none;
+    }
+
+    .burger {
+        display: none;
+    }
+
+    .logo {
+        cursor: pointer;
+        margin-left: calc((var(--el-height) - var(--button-height)) / 2);
+    }
+
+    .nav-links {
+        display: flex;
+        flex-direction: row;
+        list-style: none;
+        li {
+            margin-bottom: 12px;
+            margin-top: 12px;
+            margin-left: 12px;
+        }
+    }
+}

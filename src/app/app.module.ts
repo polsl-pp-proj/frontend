@@ -1,6 +1,4 @@
-import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BaseModalComponent } from './components/modals/base-modal/base-modal.component';
@@ -17,6 +15,17 @@ import { NotFoundPageComponent } from './views/not-found-page/not-found-page.com
 import { PageComponent } from './views/page/page.component';
 import { SignupModalComponent } from './components/modals/signup-modal/signup-modal.component';
 import { HomePageComponent } from './views/home-page/home-page.component';
+import { AuthModule } from './modules/auth/auth.module';
+import { IntercomModule } from './modules/intercom/intercom.module';
+import { SearchPageComponent } from './views/user/search-page/search-page.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { LoginModalComponent } from './components/modals/login-modal/login-modal.component';
+import { JoinTeamModalComponent } from './components/modals/join-team-modal/join-team-modal.component';
+import { ProjectPageComponent } from './views/user/project-page/project-page.component';
+import { AfterViewInit, CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { UserComponent } from './views/user/user.component';
+import { RejectProjectModalComponent } from './components/modals/reject-project-modal/reject-project-modal.component';
+import { ResetPasswordModalComponent } from './components/modals/reset-password-modal/reset-password-modal.component';
 
 @NgModule({
     declarations: [
@@ -32,6 +41,14 @@ import { HomePageComponent } from './views/home-page/home-page.component';
         PageComponent,
         SignupModalComponent,
         HomePageComponent,
+        SearchPageComponent,
+        NavbarComponent,
+        LoginModalComponent,
+        JoinTeamModalComponent,
+        ProjectPageComponent,
+        UserComponent,
+        RejectProjectModalComponent,
+        ResetPasswordModalComponent,
     ],
     imports: [
         BrowserModule,
@@ -40,8 +57,11 @@ import { HomePageComponent } from './views/home-page/home-page.component';
         ModalModule,
         FormsModule,
         ReactiveFormsModule,
+        AuthModule,
+        IntercomModule,
     ],
     providers: [],
     bootstrap: [AppComponent],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule {}
