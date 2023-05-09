@@ -1,22 +1,12 @@
-.container {
-    width: 90%;
-    margin-right: auto;
-    margin-left: auto;
-    margin-top: 30px;
+.most-liked-header {
+    margin-top: var(--padding);
+    margin-bottom: var(--padding);
+}
+
+.project-container {
     display: flex;
+    flex-direction: row;
     flex-wrap: wrap;
-    justify-content: center;
-    
-}
-
-.container1 {
-    width: 90%;
-    margin-right: auto;
-    margin-left: auto;
-    margin-top: 30px;
-}
-
-.card {
-    margin-right: 15px;
-    margin-top: 15px;
+    justify-content: space-evenly;
+    gap: calc(var(--padding) / 2);
 }
