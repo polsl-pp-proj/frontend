@@ -1,16 +1,9 @@
-.container {
-    width: 80%;
-    margin-top: 50px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
 .container_flex {
-    width: 80%;
-    margin-top: 30px;
+    margin-top: var(--padding);
     margin-left: auto;
     margin-right: auto;
     display: flex;
+    gap: calc(var(--padding) / 3 * 2);
 }
 
 .div_text {
@@ -19,7 +12,6 @@
 }
 
 .div_image {
-    margin: 20px;
     align-self: center;
     flex-grow: 1;
 }
