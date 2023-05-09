@@ -1,0 +1,13 @@
+.project-cards-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--navbar-padding);
+}
+
+@media (max-width: 767px) {
+
+    .project-cards-container {
+        justify-content: center;
+    }
+}
