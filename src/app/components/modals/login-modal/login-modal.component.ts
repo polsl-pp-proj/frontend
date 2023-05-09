@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/modules/auth/services/auth.service';
+import { ModalService } from 'src/app/modules/modal/services/modal.service';
 
 @Component({
     selector: 'app-login-modal',
@@ -7,25 +9,50 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
     styleUrls: ['./login-modal.component.scss'],
 })
 export class LoginModalComponent {
+    modalName = 'login-modal';
     displayErrorMessage: boolean = false;
 
     loginForm = new FormGroup({
-        emailAddress: new FormControl<string>('', [
-            Validators.required,
-            Validators.email,
-        ]),
-        password: new FormControl<string>('', [Validators.required]),
+        emailAddress: new FormControl<string>('', {
+            validators: [Validators.required],
+            nonNullable: true,
+        }),
+        password: new FormControl<string>('', {
+            validators: [Validators.required],
+            nonNullable: true,
+        }),
     });
 
-    constructor() {
-        console.log(this.loginForm.valid);
-    }
+    constructor(
+        private readonly authService: AuthService,
+        private readonly modalService: ModalService
+    ) {}
 
     login() {
         if (!this.loginForm.valid) {
             this.displayErrorMessage = true;
         } else {
-            this.displayErrorMessage = false;
+            this.authService
+                .login(
+                    this.loginForm.value.emailAddress!,
+                    this.loginForm.value.password!
+                )
+                .subscribe({
+                    next: () => {
+                        this.displayErrorMessage = false;
+                        this.modalService.updateModalState(
+                            this.modalName,
+                            'close'
+                        );
+                    },
+                    error: () => {
+                        this.displayErrorMessage = true;
+                    },
+                });
         }
+    }
+
+    openSignup() {
+        this.modalService.updateModalState('signup-modal', 'open');
     }
 }

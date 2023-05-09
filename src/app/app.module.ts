@@ -14,6 +14,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NotFoundPageComponent } from './views/not-found-page/not-found-page.component';
 import { PageComponent } from './views/page/page.component';
 import { SignupModalComponent } from './components/modals/signup-modal/signup-modal.component';
+import { AuthModule } from './modules/auth/auth.module';
+import { IntercomModule } from './modules/intercom/intercom.module';
 import { SearchPageComponent } from './views/user/search-page/search-page.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { LoginModalComponent } from './components/modals/login-modal/login-modal.component';
@@ -53,6 +55,8 @@ import { ResetPasswordModalComponent } from './components/modals/reset-password-
         ModalModule,
         FormsModule,
         ReactiveFormsModule,
+        AuthModule,
+        IntercomModule,
     ],
     providers: [],
     bootstrap: [AppComponent],

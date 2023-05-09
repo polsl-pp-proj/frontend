@@ -1,5 +1,8 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { SignupService } from 'src/app/modules/auth/services/signup.service';
+import { ModalService } from 'src/app/modules/modal/services/modal.service';
 import { mustMatch } from 'src/app/validators/must-match.validator';
 
 @Component({
@@ -25,7 +28,32 @@ export class SignupModalComponent {
         { validators: mustMatch('password', 'repeatPassword', false) }
     );
 
-    onClick() {
-        console.log(this.signupForm.value);
+    constructor(
+        private readonly signupService: SignupService,
+        private readonly modalService: ModalService
+    ) {}
+
+    signup() {
+        if (this.signupForm.valid) {
+            this.signupService
+                .signup({
+                    firstName: this.signupForm.value.firstName!,
+                    lastName: this.signupForm.value.lastName!,
+                    emailAddress: this.signupForm.value.emailAddress!,
+                    password: this.signupForm.value.password!,
+                    consent: this.signupForm.value.acceptRules!,
+                })
+                .subscribe({
+                    next: () => {
+                        this.modalService.updateModalState(
+                            'signup-modal',
+                            'close'
+                        );
+                    },
+                    error: (error: HttpErrorResponse) => {
+                        // TODO: handle signup errors
+                    },
+                });
+        }
     }
 }

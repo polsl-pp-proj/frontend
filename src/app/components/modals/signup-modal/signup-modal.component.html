@@ -8,7 +8,7 @@
         <div class="parent">
             <div class="div1">
                 <app-input
-                    name="firstName"
+                    name="signupFirstName"
                     [errors]="signupForm.controls.firstName.errors"
                     [errorMessages]="{ required: 'Podaj swoje imię' }"
                     [formControl]="signupForm.controls.firstName"
@@ -17,7 +17,7 @@
             </div>
             <div class="div2">
                 <app-input
-                    name="lastName"
+                    name="signupLastName"
                     [errors]="signupForm.controls.lastName.errors"
                     [errorMessages]="{ required: 'Podaj swoje nazwisko' }"
                     [formControl]="signupForm.controls.lastName"
@@ -26,7 +26,7 @@
             </div>
             <div class="div3">
                 <app-input
-                    name="emailAddress"
+                    name="signupEmailAddress"
                     [formControl]="signupForm.controls.emailAddress"
                     [errors]="signupForm.controls.emailAddress.errors"
                     [errorMessages]="{
@@ -38,7 +38,7 @@
             </div>
             <div class="div4">
                 <app-input
-                    name="password"
+                    name="signupPassword"
                     type="password"
                     [formControl]="signupForm.controls.password"
                     [errors]="signupForm.controls.password.errors"
@@ -48,7 +48,7 @@
             </div>
             <div class="div5">
                 <app-input
-                    name="repeatPassword"
+                    name="signupRepeatPassword"
                     type="password"
                     [formControl]="signupForm.controls.repeatPassword"
                     [errors]="signupForm.controls.repeatPassword.errors"
@@ -59,7 +59,7 @@
             <div class="div6">
                 <app-input
                     type="checkbox"
-                    name="acceptRules"
+                    name="signupAcceptRules"
                     [formControl]="signupForm.controls.acceptRules"
                     [errors]="signupForm.controls.acceptRules.errors"
                     [errorMessages]="{
@@ -70,7 +70,10 @@
                 >
             </div>
         </div>
-        <app-button type="color" [disabled]="signupForm.invalid"
+        <app-button
+            type="color"
+            [disabled]="signupForm.invalid"
+            (click)="signup()"
             >Zarejestruj się</app-button
         >
     </form>

@@ -7,13 +7,22 @@ import {
     HttpResponse,
 } from '@angular/common/http';
 import { GeneralApiRoute } from '../classes/api-route.class';
-import { Observable, filter, map } from 'rxjs';
+import {
+    Observable,
+    filter,
+    map,
+    mergeMap,
+    skipWhile,
+    take,
+    timeout,
+} from 'rxjs';
 import { ApiOptions } from '../classes/api-options.class';
 import {
     BodilessRequestMethod,
     BodilyRequestMethod,
 } from '../types/request-method.type';
 import { UrlService } from './url.service';
+import { ApiAuthService } from './api-auth.service';
 
 @Injectable({
     providedIn: 'root',
@@ -21,7 +30,8 @@ import { UrlService } from './url.service';
 export class CoreApiService {
     constructor(
         private readonly httpClient: HttpClient,
-        private readonly urlService: UrlService
+        private readonly urlService: UrlService,
+        private readonly apiAuthService: ApiAuthService
     ) {}
 
     request<RS, RQ = unknown>(
@@ -71,8 +81,6 @@ export class CoreApiService {
         | Observable<RS>
         | Observable<HttpResponse<RS>>
         | Observable<HttpEvent<RS>> {
-        const authToken = ''; // TODO: get auth token from AuthService
-
         let httpRequest: HttpRequest<RQ>;
         let options: ApiOptions;
 
@@ -121,15 +129,41 @@ export class CoreApiService {
         }
 
         if (route.authorized && !httpRequest.headers.has('Authorization')) {
-            httpRequest = httpRequest.clone({
-                headers: httpRequest.headers.append(
-                    'Authorization',
-                    `Bearer ${authToken}`
-                ),
-            });
-        }
+            return this.apiAuthService.token.pipe(
+                skipWhile((token) => !token),
+                timeout({ each: 10000 }),
+                take(1),
+                mergeMap((token) => {
+                    httpRequest = httpRequest.clone({
+                        headers: httpRequest.headers.append(
+                            'Authorization',
+                            `Bearer ${token}`
+                        ),
+                    });
 
-        if (options.observe === 'body') {
+                    return this.makeRequest<RS, RQ>(options, httpRequest);
+                })
+            ) as
+                | Observable<RS>
+                | Observable<HttpResponse<RS>>
+                | Observable<HttpEvent<RS>>;
+        } else {
+            return this.makeRequest<RS, RQ>(options, httpRequest);
+        }
+    }
+
+    private makeRequest<RS, RQ>(
+        {
+            observe,
+        }: {
+            observe: 'body' | 'response' | 'events';
+        },
+        httpRequest: HttpRequest<RQ>
+    ):
+        | Observable<HttpEvent<RS>>
+        | Observable<HttpResponse<RS>>
+        | Observable<RS> {
+        if (observe === 'body') {
             return this.httpClient.request<RS>(httpRequest).pipe(
                 filter((httpEvent: HttpEvent<RS>) => {
                     return httpEvent.type === HttpEventType.Response;
@@ -138,7 +172,7 @@ export class CoreApiService {
                     return (httpEvent as HttpResponse<RS>).body;
                 })
             ) as Observable<RS>;
-        } else if (options.observe === 'response') {
+        } else if (observe === 'response') {
             return this.httpClient.request<RS>(httpRequest).pipe(
                 filter((httpEvent: HttpEvent<RS>) => {
                     return httpEvent.type === HttpEventType.Response;
