@@ -27,6 +27,7 @@ import { AfterViewInit, CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { UserComponent } from './views/user/user.component';
 import { RejectProjectModalComponent } from './components/modals/reject-project-modal/reject-project-modal.component';
 import { ResetPasswordModalComponent } from './components/modals/reset-password-modal/reset-password-modal.component';
+import { CreateOrganizationModalComponent } from './components/modals/create-organization-modal/create-organization-modal.component';
 
 @NgModule({
     declarations: [
@@ -51,6 +52,7 @@ import { ResetPasswordModalComponent } from './components/modals/reset-password-
         UserComponent,
         RejectProjectModalComponent,
         ResetPasswordModalComponent,
+        CreateOrganizationModalComponent,
     ],
     imports: [
         BrowserModule,
