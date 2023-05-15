@@ -1,0 +1,24 @@
+<app-page>
+    <h1 pageHeader class="last-added-header">Ostatnio dodane</h1>
+    <div class="project-container">
+        <app-project-card
+            *ngFor="let project of test_projects"
+            class="card"
+            projectName="{{ project.name }}"
+            projectDescription="{{ project.description }}"
+            imageUrl="{{ project.image_url }}"
+            (visitProject)="visitProject(project.id)"
+        ></app-project-card>
+    </div>
+
+    <h1 class="most-liked-header">Najbardziej lubiane</h1>
+    <div class="project-container">
+        <app-project-card
+            *ngFor="let project of test_projects"
+            class="card"
+            projectName="{{ project.name }}"
+            projectDescription="{{ project.description }}"
+            imageUrl="{{ project.image_url }}"
+            (visitProject)="visitProject(project.id)"
+        ></app-project-card></div
+></app-page>
