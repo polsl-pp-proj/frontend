@@ -1,5 +1,7 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/modules/auth/services/auth.service';
 
 @Component({
     selector: 'app-reset-password-modal',
@@ -7,23 +9,38 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
     styleUrls: ['./reset-password-modal.component.scss'],
 })
 export class ResetPasswordModalComponent implements OnInit {
-    resetPasswordForm: FormGroup;
-    done: boolean = false;
+    resetPasswordForm = new FormGroup({
+        emailAddress: new FormControl<string>('', {
+            nonNullable: true,
+            validators: [Validators.required, Validators.email],
+        }),
+    });
 
-    constructor() {
-        this.resetPasswordForm = new FormGroup({
-            emailAddress: new FormControl(null, [
-                Validators.required,
-                Validators.email,
-            ]),
-        });
-    }
+    sent = false;
+    done = false;
+
+    constructor(private readonly authService: AuthService) {}
 
     ngOnInit(): void {}
 
     onRequestPasswordReset() {
-        this.done = true;
+        this.sent = true;
 
-        
+        if (this.resetPasswordForm.valid) {
+            this.authService
+                .requestPasswordReset(
+                    this.resetPasswordForm.value.emailAddress!
+                )
+                .subscribe({
+                    next: () => {
+                        this.done = true;
+                        this.sent = false;
+                        this.resetPasswordForm.reset();
+                    },
+                    error: (err: HttpErrorResponse) => {
+                        this.sent = false;
+                    },
+                });
+        }
     }
 }
