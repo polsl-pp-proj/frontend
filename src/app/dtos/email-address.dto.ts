@@ -1,4 +1,4 @@
-export class RequestPasswordResetDto {
+export class EmailAddressDto {
     emailAddress: string;
 
     constructor(emailAddress: string) {
