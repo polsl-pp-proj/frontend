@@ -22,7 +22,9 @@
                 <div>
                     <ul class="nav-links">
                         <li>
-                            <app-button routerLink="">Strona główna</app-button>
+                            <app-button routerLink="/"
+                                >Strona główna</app-button
+                            >
                         </li>
                         <li>
                             <app-button routerLink="/search"
@@ -30,9 +32,7 @@
                             >
                         </li>
                         <li>
-                            <app-button routerLink="/about-us"
-                                >O nas</app-button
-                            >
+                            <app-button routerLink="/about">O nas</app-button>
                         </li>
                     </ul>
                 </div>
@@ -59,9 +59,9 @@
     </nav>
     <div [ngClass]="{ expandedLeft: expandedLeftMenu }" class="left-menu">
         <ul class="nav-links-left-top">
-            <li><app-button>Strona główna</app-button></li>
-            <li><app-button>Projekty</app-button></li>
-            <li><app-button>O nas</app-button></li>
+            <li><app-button routerLink="/">Strona główna</app-button></li>
+            <li><app-button routerLink="/search">Projekty</app-button></li>
+            <li><app-button routerLink="/about">O nas</app-button></li>
             <span>
                 <li *ngIf="logged">
                     <app-button>Moje organizacje</app-button>
