@@ -29,6 +29,7 @@ import { UserComponent } from './views/user/user.component';
 import { RejectProjectModalComponent } from './components/modals/reject-project-modal/reject-project-modal.component';
 import { ResetPasswordModalComponent } from './components/modals/reset-password-modal/reset-password-modal.component';
 import { ToastrModule } from 'ngx-toastr';
+import { OrganizationModule } from './modules/organization/organization.module';
 
 @NgModule({
     declarations: [
@@ -65,6 +66,7 @@ import { ToastrModule } from 'ngx-toastr';
         AuthModule,
         IntercomModule,
         ToastrModule.forRoot({ autoDismiss: true, timeOut: 5000 }),
+        OrganizationModule,
     ],
     providers: [],
     bootstrap: [AppComponent],
