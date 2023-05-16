@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 
 @Component({
-    selector: 'app-organisation-page',
-    templateUrl: './organisation-page.component.html',
-    styleUrls: ['./organisation-page.component.scss'],
+    selector: 'app-organization-page',
+    templateUrl: './organization-page.component.html',
+    styleUrls: ['./organization-page.component.scss'],
 })
-export class OrganisationPageComponent {
+export class OrganizationPageComponent {
     test_projects = [
         {
             name: 'Rakieta Elona',

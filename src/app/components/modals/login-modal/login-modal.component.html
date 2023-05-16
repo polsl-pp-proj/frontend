@@ -1,0 +1,41 @@
+<app-base-modal
+    modalTitle="Zaloguj się"
+    [modalName]="modalName"
+    transitionDuration="200ms"
+    [closable]="true"
+    (submit)="login()"
+>
+    <form [formGroup]="loginForm">
+        <app-input
+            name="loginEmailAddress"
+            [formControl]="loginForm.controls.emailAddress"
+            >Adres e-mail</app-input
+        >
+        <app-input
+            name="loginPassword"
+            type="password"
+            [formControl]="loginForm.controls.password"
+            >Hasło</app-input
+        >
+        <div class="forgot-password" (click)="openResetPassword()">
+            Zapomniałem hasła
+        </div>
+        <div class="login-container">
+            <div class="error-message" *ngIf="displayErrorMessage">
+                Podano nieprawidłowe dane
+            </div>
+            <app-button
+                type="color"
+                [disabled]="loginForm.invalid"
+                (click)="login()"
+                >Zaloguj</app-button
+            >
+        </div>
+    </form>
+    <div class="register-container">
+        <div class="no-account-label">Nie masz konta?</div>
+        <app-button type="translucent" (click)="openSignup()"
+            >Zarejestruj się</app-button
+        >
+    </div>
+</app-base-modal>

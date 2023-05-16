@@ -40,6 +40,11 @@
     color: var(--foreground-100);
     transition: border 0.2s ease-out;
 
+    option,
+    option:checked {
+        color: #000;
+    }
+
     &[multiple] {
         padding: 0;
         height: 6rem;

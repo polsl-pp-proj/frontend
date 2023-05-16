@@ -1,0 +1,62 @@
+<app-page>
+    <h1 pageHeader>
+        <div class="keep-together">
+            <span>Znajdź</span>
+            <app-input
+                [ngModel]="searchQueryParams.query"
+                (ngModelChange)="
+                    searchQueryParams.query = $event ? $event : undefined;
+                    searchQueryParamsChange.emit(this.searchQueryParams)
+                "
+                name="search-query"
+                [displayErrors]="false"
+            ></app-input>
+        </div>
+        <div class="keep-together">
+            <span>w</span>
+            <app-select
+                [ngModel]="searchQueryParams.category"
+                (ngModelChange)="
+                    searchQueryParams.category = $event ? +$event : undefined;
+                    searchQueryParamsChange.emit(this.searchQueryParams)
+                "
+                name="search-category"
+                resetText="każdej kategorii"
+                [options]="[
+                    { text: 'electronics', value: 1 },
+                    { text: 'computer science', value: 2 },
+                    { text: 'physics', value: 3 }
+                ]"
+                [displayErrors]="false"
+            ></app-select>
+        </div>
+        <div class="keep-together">
+            <span>według</span>
+            <app-select
+                [ngModel]="searchQueryParams.sort"
+                (ngModelChange)="
+                    searchQueryParams.sort = $event;
+                    searchQueryParamsChange.emit(this.searchQueryParams)
+                "
+                name="search-sort"
+                [options]="[
+                    { text: 'zebranych funduszy', value: SearchSortBy.Funds },
+                    { text: 'liczby polubień', value: SearchSortBy.Favorites }
+                ]"
+                [displayErrors]="false"
+            ></app-select>
+        </div>
+    </h1>
+    <div class="project-cards-container">
+        <app-project-card
+            *ngFor="let projectCard of projectCards"
+            [imageUrl]="projectCard.imageUrl"
+            [imageAlt]="projectCard.imageAlt"
+            [projectName]="projectCard.projectName"
+            [projectDescription]="projectCard.projectDescription"
+            [projectOrg]="projectCard.projectOrg"
+            (visitProject)="visitProject(projectCard.projectId)"
+        >
+        </app-project-card>
+    </div>
+</app-page>
