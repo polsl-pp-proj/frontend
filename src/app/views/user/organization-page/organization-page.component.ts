@@ -1,11 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { OrganizationService } from 'src/app/modules/organization/services/organization.service';
 
 @Component({
     selector: 'app-organization-page',
     templateUrl: './organization-page.component.html',
     styleUrls: ['./organization-page.component.scss'],
 })
-export class OrganizationPageComponent {
+export class OrganizationPageComponent implements OnInit {
+    organizationName = 'Trwa ładowanie...';
+
     test_projects = [
         {
             name: 'Rakieta Elona',
@@ -65,4 +69,29 @@ export class OrganizationPageComponent {
             requirements: ['React', 'Django', 'Postgres'],
         },
     ];
+
+    constructor(
+        private readonly activatedRoute: ActivatedRoute,
+        private readonly organizationService: OrganizationService,
+        private readonly router: Router
+    ) {}
+
+    ngOnInit(): void {
+        const organizationId =
+            this.activatedRoute.snapshot.paramMap.get('organizationId');
+        if (organizationId) {
+            this.organizationService
+                .getOrganization(+organizationId)
+                .subscribe({
+                    next: (organization) => {
+                        this.organizationName = organization.name;
+                    },
+                    error: () => {
+                        this.router.navigate(['/']);
+                    },
+                });
+            return;
+        }
+        this.router.navigate(['/']);
+    }
 }
