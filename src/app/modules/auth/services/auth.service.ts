@@ -63,6 +63,14 @@ export class AuthService {
             .pipe(mergeMap(() => from(this.authDataService.removeTokens())));
     }
 
+    requestPasswordReset(emailAddress: string) {
+        return this.authApiService.requestPasswordReset(emailAddress);
+    }
+
+    confirmPasswordReset(emailAddress: string, token: string) {
+        return this.authApiService.confirmPasswordReset(emailAddress, token);
+    }
+
     init() {
         this.authDataService.willExpireSoon.subscribe({
             next: () => {

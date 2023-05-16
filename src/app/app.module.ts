@@ -23,11 +23,12 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { LoginModalComponent } from './components/modals/login-modal/login-modal.component';
 import { JoinTeamModalComponent } from './components/modals/join-team-modal/join-team-modal.component';
 import { ProjectPageComponent } from './views/user/project-page/project-page.component';
-import { AfterViewInit, CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { UserComponent } from './views/user/user.component';
 import { RejectProjectModalComponent } from './components/modals/reject-project-modal/reject-project-modal.component';
 import { ResetPasswordModalComponent } from './components/modals/reset-password-modal/reset-password-modal.component';
 import { CreateOrganizationModalComponent } from './components/modals/create-organization-modal/create-organization-modal.component';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
     declarations: [
@@ -63,6 +64,7 @@ import { CreateOrganizationModalComponent } from './components/modals/create-org
         ReactiveFormsModule,
         AuthModule,
         IntercomModule,
+        ToastrModule.forRoot({ autoDismiss: true, timeOut: 5000 }),
     ],
     providers: [],
     bootstrap: [AppComponent],
