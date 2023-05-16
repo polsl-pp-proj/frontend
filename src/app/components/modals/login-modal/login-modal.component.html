@@ -17,7 +17,9 @@
             [formControl]="loginForm.controls.password"
             >Hasło</app-input
         >
-        <div class="forgot-password">Zapomniałem hasła</div>
+        <div class="forgot-password" (click)="openResetPassword()">
+            Zapomniałem hasła
+        </div>
         <div class="login-container">
             <div class="error-message" *ngIf="displayErrorMessage">
                 Podano nieprawidłowe dane

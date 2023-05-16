@@ -8,6 +8,7 @@ import {
 import { LoginDto } from '../dtos/login.dto';
 import { AuthTokensDto } from '../dtos/auth-tokens.dto';
 import { HttpHeaders } from '@angular/common/http';
+import { EmailAddressDto } from 'src/app/dtos/email-address.dto';
 
 @Injectable({
     providedIn: 'root',
@@ -42,6 +43,24 @@ export class AuthApiService {
                 headers: new HttpHeaders({
                     Authorization: `Bearer ${refreshToken}`,
                 }),
+            }) as ApiOptionsBody
+        );
+    }
+
+    requestPasswordReset(emailAddress: string) {
+        return this.coreApiService.request<EmailAddressDto, void>(
+            authApiRoutes.POST_requestPasswordReset,
+            new EmailAddressDto(emailAddress),
+            new ApiOptions() as ApiOptionsBody
+        );
+    }
+
+    confirmPasswordReset(emailAddress: string, token: string) {
+        return this.coreApiService.request<any, void>(
+            authApiRoutes.PATCH_confirmPasswordReset,
+            {},
+            new ApiOptions({
+                routeParams: { emailAddress, token },
             }) as ApiOptionsBody
         );
     }

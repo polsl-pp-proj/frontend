@@ -55,4 +55,7 @@ export class LoginModalComponent {
     openSignup() {
         this.modalService.updateModalState('signup-modal', 'open');
     }
+    openResetPassword() {
+        this.modalService.updateModalState('reset-password-modal', 'open');
+    }
 }
