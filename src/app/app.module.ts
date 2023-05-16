@@ -30,6 +30,7 @@ import { RejectProjectModalComponent } from './components/modals/reject-project-
 import { ResetPasswordModalComponent } from './components/modals/reset-password-modal/reset-password-modal.component';
 import { ToastrModule } from 'ngx-toastr';
 import { OrganizationModule } from './modules/organization/organization.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
     declarations: [
@@ -67,6 +68,7 @@ import { OrganizationModule } from './modules/organization/organization.module';
         IntercomModule,
         ToastrModule.forRoot({ autoDismiss: true, timeOut: 5000 }),
         OrganizationModule,
+        BrowserAnimationsModule,
     ],
     providers: [],
     bootstrap: [AppComponent],
