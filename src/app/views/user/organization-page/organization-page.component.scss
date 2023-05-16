@@ -1,3 +1,9 @@
+app-page ::ng-deep {
+    header {
+        margin-bottom: 0;
+    }
+}
+
 .container {
     margin-left: auto;
     margin-right: auto;
@@ -17,10 +23,6 @@
     margin-top: 20px;
 }
 
-h3 {
-    margin-top: 40px;
-}
-
-h4 {
-    margin-top: 10px;
+section:not(:last-of-type) {
+    margin-bottom: var(--padding);
 }

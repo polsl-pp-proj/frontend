@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { OrganizationService } from 'src/app/modules/organization/services/organization.service';
 
 @Component({
@@ -73,7 +74,8 @@ export class OrganizationPageComponent implements OnInit {
     constructor(
         private readonly activatedRoute: ActivatedRoute,
         private readonly organizationService: OrganizationService,
-        private readonly router: Router
+        private readonly router: Router,
+        private readonly toastrService: ToastrService
     ) {}
 
     ngOnInit(): void {
@@ -88,6 +90,10 @@ export class OrganizationPageComponent implements OnInit {
                     },
                     error: () => {
                         this.router.navigate(['/']);
+                        this.toastrService.info(
+                            'Odwiedzona przez Ciebie organizacja nie istnieje!',
+                            'Organizacja nie istnieje'
+                        );
                     },
                 });
             return;

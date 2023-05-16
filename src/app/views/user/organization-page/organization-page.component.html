@@ -1,31 +1,34 @@
 <app-page>
     <h1 pageHeader>{{ organizationName }}</h1>
-    <h3>Projekty organizacji</h3>
+    <section class="organization-projects">
+        <h3>Projekty organizacji</h3>
 
-    <div class="container_flex">
-        <div *ngFor="let project of test_projects">
-            <app-project-card
-                class="card"
-                [projectName]="project.name"
-                [projectDescription]="project.description"
-                [imageUrl]="project.image_url"
-            ></app-project-card>
+        <div class="container_flex">
+            <div *ngFor="let project of test_projects">
+                <app-project-card
+                    class="card"
+                    [projectName]="project.name"
+                    [projectDescription]="project.description"
+                    [imageUrl]="project.image_url"
+                ></app-project-card>
+            </div>
         </div>
-    </div>
-
-    <div class="container">
-        <h3>Dołącz do organizacji</h3>
-        <h4>Organizacja poszukuje osób, które mogą pomóc w jej rozwoju.</h4>
-    </div>
-
-    <div class="container_flex">
-        <div *ngFor="let position of test_positions">
-            <app-open-position-card
-                class="card"
-                [positionName]="position.name"
-                [positionDescription]="position.description"
-                [positionRequirements]="position.requirements"
-            ></app-open-position-card>
+    </section>
+    <section class="join-organization">
+        <div class="container">
+            <h3>Dołącz do organizacji</h3>
+            <h4>Organizacja poszukuje osób, które mogą pomóc w jej rozwoju.</h4>
         </div>
-    </div>
+
+        <div class="container_flex">
+            <div *ngFor="let position of test_positions">
+                <app-open-position-card
+                    class="card"
+                    [positionName]="position.name"
+                    [positionDescription]="position.description"
+                    [positionRequirements]="position.requirements"
+                ></app-open-position-card>
+            </div>
+        </div>
+    </section>
 </app-page>
