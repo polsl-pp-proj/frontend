@@ -2,6 +2,7 @@ import { Location } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/modules/auth/services/auth.service';
 import { SignupService } from 'src/app/modules/auth/services/signup.service';
 
@@ -61,11 +62,13 @@ export class HomePageComponent implements OnInit {
         private readonly activatedRoute: ActivatedRoute,
         private readonly location: Location,
         private readonly authService: AuthService,
-        private readonly signupService: SignupService
+        private readonly signupService: SignupService,
+        private readonly toastrService: ToastrService
     ) {}
 
     ngOnInit(): void {
         const params = this.activatedRoute.snapshot.queryParamMap;
+        this.replaceState();
         if (params.has('signup')) {
             if (params.has('confirm')) {
                 const email = params.get('email'),
@@ -87,26 +90,56 @@ export class HomePageComponent implements OnInit {
     confirmSignup(email: string, token: string) {
         this.signupService.confirmSignup(email, token).subscribe({
             next: () => {
-                // TODO: Display toast
+                this.toastrService.success(
+                    'Twoje konto zostało aktywowane! Możesz się teraz zalogować.',
+                    'Konto aktywowane'
+                );
             },
             error: (err: HttpErrorResponse) => {
-                // TODO: Display toast
+                switch (err.status) {
+                    case 404: {
+                        this.toastrService.error(
+                            'Link aktywacyjny jest niepoprawny lub wygasł!',
+                            'Aktywacja konta nie powiodła się'
+                        );
+                        break;
+                    }
+                    default: {
+                        this.toastrService.error(
+                            'Podczas aktywowania konta wystąpił błąd. Spróbuj ponownie później.',
+                            'Aktywacja konta nie powiodła się'
+                        );
+                    }
+                }
             },
         });
-
-        this.replaceState();
     }
     resetPassword(email: string, token: string) {
         this.authService.confirmPasswordReset(email, token).subscribe({
             next: () => {
-                // TODO: Display toast
+                this.toastrService.success(
+                    'Twoje hasło zostało zresetowane.',
+                    'Hasło zresetowane'
+                );
             },
             error: (err: HttpErrorResponse) => {
-                // TODO: Display toast
+                switch (err.status) {
+                    case 404: {
+                        this.toastrService.error(
+                            'Link resetowania jest niepoprawny lub wygasł!',
+                            'Resetowanie hasła nie powiodło się'
+                        );
+                        break;
+                    }
+                    default: {
+                        this.toastrService.error(
+                            'Podczas resetowania hasła wystąpił błąd. Spróbuj ponownie później.',
+                            'Resetowanie hasła nie powiodło się'
+                        );
+                    }
+                }
             },
         });
-
-        this.replaceState();
     }
 
     visitProject(projectId: number) {
