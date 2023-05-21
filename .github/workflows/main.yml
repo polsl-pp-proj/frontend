@@ -1,0 +1,5 @@
+name: PROD Frontend Deployment 
+on:
+  push:
+    branches:
+     - main
