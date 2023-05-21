@@ -58,6 +58,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.modalService.updateModalState('login-modal', 'open');
     }
 
+    openCreateOrganization() {
+        this.modalService.updateModalState('create-organization-modal', 'open');
+    }
+
     logout() {
         this.authService.logout().subscribe();
     }
