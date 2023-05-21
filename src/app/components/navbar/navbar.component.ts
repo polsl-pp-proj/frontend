@@ -15,6 +15,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     xIcon!: SafeHtml;
 
     logged: boolean = false;
+    isVerifiedStudent: boolean = false;
     expandedLeftMenu: boolean = false;
     expandedRightMenu: boolean = false;
 
@@ -44,6 +45,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
             .subscribe((payload) => {
                 if (payload) {
                     this.logged = true;
+                    this.isVerifiedStudent = payload.isVerifiedStudent;
                     this.initials = payload.firstName[0] + payload.lastName[0];
                     return;
                 }

@@ -88,7 +88,7 @@
 
     <div [ngClass]="{ expandedRight: expandedRightMenu }" class="right-menu">
         <ul class="nav-links-right-top">
-            <li>
+            <li *ngIf="isVerifiedStudent">
                 <app-button (click)="openCreateOrganization()"
                     >Dodaj organizację</app-button
                 >
