@@ -1,5 +1,8 @@
 module.exports = {
     module: {
-        rules: [{ test: /\.svg$/, use: "svg-inline-loader" }],
+        rules: [
+            { test: /\.svg$/, use: "svg-inline-loader" },
+            { test: /\.md$/, use: "text-loader" },
+        ],
     },
 };
