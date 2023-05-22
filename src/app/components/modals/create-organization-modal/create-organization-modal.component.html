@@ -7,7 +7,9 @@
     <div class="form-wrapper" *ngIf="!this.sent">
         <h4>Stworz se organizacje</h4>
         <form [formGroup]="createOrganizationForm">
-            <app-input name="organizationName" formControlName="organizationName"
+            <app-input
+                name="organizationName"
+                formControlName="organizationName"
                 >Nazwa organizacji</app-input
             >
         </form>
@@ -19,7 +21,8 @@
         >
     </div>
     <div class="end-message" *ngIf="this.sent">
-        Stworzono organizację o nazwie <span class = newOrganizationName>{{this.createOrganizationDto.organizationName}}</span>.
+        Stworzono organizację o nazwie
+        <span class="newOrganizationName">{{ this.organizationName }}</span
+        >.
     </div>
 </app-base-modal>
-
