@@ -1,6 +1,6 @@
 # Strona wyszukiwania projektów
 
-Na tej stronie można wyszukać projekty z wykorzystaniem takich kryteriów jak
+Na tej stronie możesz wyszukać projekty z wykorzystaniem takich kryteriów jak
 
 -   nazwa projektu
 -   kategoria projektu

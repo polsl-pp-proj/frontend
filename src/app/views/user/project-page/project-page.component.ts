@@ -1,8 +1,15 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import {
+    AfterViewInit,
+    Component,
+    ElementRef,
+    OnInit,
+    ViewChild,
+} from '@angular/core';
 import { OpenPositionDto } from 'src/app/dtos/open-position-dto';
 import { PaymentDto } from 'src/app/dtos/payment-dto';
 import { ProjectDto } from 'src/app/dtos/project-dto';
 import { AssetType } from 'src/app/enums/asset-type.enum';
+import { HelpService } from 'src/app/modules/help/services/help.service';
 import Swiper from 'swiper';
 
 @Component({
@@ -10,7 +17,7 @@ import Swiper from 'swiper';
     templateUrl: './project-page.component.html',
     styleUrls: ['./project-page.component.scss'],
 })
-export class ProjectPageComponent {
+export class ProjectPageComponent implements OnInit {
     projectDto: ProjectDto = {
         id: 5,
         name: 'Projekt rakiety studenckiej',
@@ -116,5 +123,9 @@ export class ProjectPageComponent {
         },
     ];
 
-    constructor() {}
+    constructor(private readonly helpService: HelpService) {}
+
+    ngOnInit(): void {
+        this.helpService.registerPageHelp('user/project-page');
+    }
 }
