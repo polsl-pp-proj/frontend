@@ -29,6 +29,7 @@ import { RejectProjectModalComponent } from './components/modals/reject-project-
 import { ResetPasswordModalComponent } from './components/modals/reset-password-modal/reset-password-modal.component';
 import { CreateOrganizationModalComponent } from './components/modals/create-organization-modal/create-organization-modal.component';
 import { ToastrModule } from 'ngx-toastr';
+import { MyAccountPageComponent } from './views/user/my-account-page/my-account-page.component';
 
 @NgModule({
     declarations: [
@@ -54,6 +55,7 @@ import { ToastrModule } from 'ngx-toastr';
         RejectProjectModalComponent,
         ResetPasswordModalComponent,
         CreateOrganizationModalComponent,
+        MyAccountPageComponent,
     ],
     imports: [
         BrowserModule,

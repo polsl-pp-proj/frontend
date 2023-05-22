@@ -66,7 +66,9 @@
                 <li *ngIf="logged">
                     <app-button>Moje organizacje</app-button>
                 </li>
-                <li *ngIf="logged"><app-button>Moje konto</app-button></li>
+                <li *ngIf="logged">
+                    <app-button routerLink="/account">Moje konto</app-button>
+                </li>
             </span>
         </ul>
         <ul class="nav-links-left-bottom">
@@ -89,7 +91,7 @@
     <div [ngClass]="{ expandedRight: expandedRightMenu }" class="right-menu">
         <ul class="nav-links-right-top">
             <li><app-button>Moje organizacje</app-button></li>
-            <li><app-button>Moje konto</app-button></li>
+            <li><app-button routerLink="/account">Moje konto</app-button></li>
         </ul>
         <ul class="nav-links-right-bottom">
             <li *ngIf="!logged">
