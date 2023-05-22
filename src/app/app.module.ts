@@ -14,6 +14,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NotFoundPageComponent } from './views/not-found-page/not-found-page.component';
 import { PageComponent } from './views/page/page.component';
 import { SignupModalComponent } from './components/modals/signup-modal/signup-modal.component';
+import { OrganizationPageComponent } from './views/user/organization-page/organization-page.component';
 import { AboutPageComponent } from './views/user/about-page/about-page.component';
 import { HomePageComponent } from './views/user/home-page/home-page.component';
 import { AuthModule } from './modules/auth/auth.module';
@@ -29,6 +30,8 @@ import { RejectProjectModalComponent } from './components/modals/reject-project-
 import { ResetPasswordModalComponent } from './components/modals/reset-password-modal/reset-password-modal.component';
 import { CreateOrganizationModalComponent } from './components/modals/create-organization-modal/create-organization-modal.component';
 import { ToastrModule } from 'ngx-toastr';
+import { OrganizationModule } from './modules/organization/organization.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
     declarations: [
@@ -44,6 +47,7 @@ import { ToastrModule } from 'ngx-toastr';
         PageComponent,
         SignupModalComponent,
         AboutPageComponent,
+        OrganizationPageComponent,
         HomePageComponent,
         SearchPageComponent,
         NavbarComponent,
@@ -65,6 +69,8 @@ import { ToastrModule } from 'ngx-toastr';
         AuthModule,
         IntercomModule,
         ToastrModule.forRoot({ autoDismiss: true, timeOut: 5000 }),
+        OrganizationModule,
+        BrowserAnimationsModule,
     ],
     providers: [],
     bootstrap: [AppComponent],
