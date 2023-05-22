@@ -14,6 +14,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NotFoundPageComponent } from './views/not-found-page/not-found-page.component';
 import { PageComponent } from './views/page/page.component';
 import { SignupModalComponent } from './components/modals/signup-modal/signup-modal.component';
+import { OrganizationPageComponent } from './views/user/organization-page/organization-page.component';
 import { AboutPageComponent } from './views/user/about-page/about-page.component';
 import { HomePageComponent } from './views/user/home-page/home-page.component';
 import { AuthModule } from './modules/auth/auth.module';
@@ -27,10 +28,13 @@ import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { UserComponent } from './views/user/user.component';
 import { RejectProjectModalComponent } from './components/modals/reject-project-modal/reject-project-modal.component';
 import { ResetPasswordModalComponent } from './components/modals/reset-password-modal/reset-password-modal.component';
+import { CreateOrganizationModalComponent } from './components/modals/create-organization-modal/create-organization-modal.component';
 import { ToastrModule } from 'ngx-toastr';
 import { MarkdownModule } from './modules/markdown/markdown.module';
 import { HelpModule } from './modules/help/help.module';
 import { HelpComponent } from './components/help/help.component';
+import { OrganizationModule } from './modules/organization/organization.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
     declarations: [
@@ -46,6 +50,7 @@ import { HelpComponent } from './components/help/help.component';
         PageComponent,
         SignupModalComponent,
         AboutPageComponent,
+        OrganizationPageComponent,
         HomePageComponent,
         SearchPageComponent,
         NavbarComponent,
@@ -56,6 +61,7 @@ import { HelpComponent } from './components/help/help.component';
         RejectProjectModalComponent,
         ResetPasswordModalComponent,
         HelpComponent,
+        CreateOrganizationModalComponent,
     ],
     imports: [
         BrowserModule,
@@ -69,6 +75,8 @@ import { HelpComponent } from './components/help/help.component';
         ToastrModule.forRoot({ autoDismiss: true, timeOut: 5000 }),
         MarkdownModule,
         HelpModule,
+        OrganizationModule,
+        BrowserAnimationsModule,
     ],
     providers: [],
     bootstrap: [AppComponent],

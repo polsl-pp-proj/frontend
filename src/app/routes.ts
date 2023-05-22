@@ -6,6 +6,7 @@ import {
     UrlSegmentGroup,
 } from '@angular/router';
 import { NotFoundPageComponent } from './views/not-found-page/not-found-page.component';
+import { OrganizationPageComponent } from './views/user/organization-page/organization-page.component';
 import { AboutPageComponent } from './views/user/about-page/about-page.component';
 import { HomePageComponent } from './views/user/home-page/home-page.component';
 import { SearchPageComponent } from './views/user/search-page/search-page.component';
@@ -49,6 +50,10 @@ export const routes: Routes = [
             { path: 'about', component: AboutPageComponent },
             { path: 'search', component: SearchPageComponent },
             { path: 'project/:projectId', component: ProjectPageComponent },
+            {
+                path: 'organization/:organizationId',
+                component: OrganizationPageComponent,
+            },
         ],
     },
     {
