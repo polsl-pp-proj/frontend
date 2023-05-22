@@ -29,6 +29,8 @@ import { RejectProjectModalComponent } from './components/modals/reject-project-
 import { ResetPasswordModalComponent } from './components/modals/reset-password-modal/reset-password-modal.component';
 import { ToastrModule } from 'ngx-toastr';
 import { MarkdownModule } from './modules/markdown/markdown.module';
+import { HelpModule } from './modules/help/help.module';
+import { HelpComponent } from './components/help/help.component';
 
 @NgModule({
     declarations: [
@@ -53,6 +55,7 @@ import { MarkdownModule } from './modules/markdown/markdown.module';
         UserComponent,
         RejectProjectModalComponent,
         ResetPasswordModalComponent,
+        HelpComponent,
     ],
     imports: [
         BrowserModule,
@@ -65,6 +68,7 @@ import { MarkdownModule } from './modules/markdown/markdown.module';
         IntercomModule,
         ToastrModule.forRoot({ autoDismiss: true, timeOut: 5000 }),
         MarkdownModule,
+        HelpModule,
     ],
     providers: [],
     bootstrap: [AppComponent],

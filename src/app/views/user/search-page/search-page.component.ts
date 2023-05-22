@@ -10,6 +10,7 @@ import { Subscription, debounceTime } from 'rxjs';
 import { ProjectCardDto } from 'src/app/dtos/project-card.dto';
 import { SearchQueryParamsDto } from 'src/app/dtos/search-query-params.dto';
 import { SearchSortBy } from 'src/app/enums/search-sort-by.enums';
+import { HelpService } from 'src/app/modules/help/services/help.service';
 
 @Component({
     selector: 'app-search-page',
@@ -37,7 +38,10 @@ export class SearchPageComponent implements OnInit, OnDestroy {
         category: undefined,
     });
 
-    constructor(private readonly router: Router) {
+    constructor(
+        private readonly router: Router,
+        private readonly helpService: HelpService
+    ) {
         for (let i = 0; i < 25; ++i) {
             this.projectCards.push(this.projectCards[0]);
         }
@@ -51,6 +55,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
                     console.log(params);
                 },
             });
+        this.helpService.registerPageHelp('user/search-page');
     }
 
     ngOnDestroy(): void {
