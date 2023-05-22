@@ -13,7 +13,10 @@ export class CreateOrganizationModalComponent implements OnInit {
 
     constructor() {
         this.createOrganizationForm = new FormGroup({
-            organizationName: new FormControl('', [Validators.required]),
+            organizationName: new FormControl<string>('', {
+                nonNullable: true,
+                validators: [Validators.required],
+            }),
         });
     }
 
