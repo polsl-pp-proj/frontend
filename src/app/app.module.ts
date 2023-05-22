@@ -28,6 +28,7 @@ import { UserComponent } from './views/user/user.component';
 import { RejectProjectModalComponent } from './components/modals/reject-project-modal/reject-project-modal.component';
 import { ResetPasswordModalComponent } from './components/modals/reset-password-modal/reset-password-modal.component';
 import { ToastrModule } from 'ngx-toastr';
+import { SetNewPasswordModalComponent } from './components/modals/set-new-password-modal/set-new-password-modal.component';
 
 @NgModule({
     declarations: [
@@ -52,6 +53,7 @@ import { ToastrModule } from 'ngx-toastr';
         UserComponent,
         RejectProjectModalComponent,
         ResetPasswordModalComponent,
+        SetNewPasswordModalComponent,
     ],
     imports: [
         BrowserModule,
