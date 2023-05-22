@@ -1,0 +1,78 @@
+<app-page>
+    <h1 pageHeader>{{ projectDto.name }}</h1>
+    <div class="main-container">
+        <h3>{{ projectDto.projectGroupName }}</h3>
+        <div class="summary-container">
+            <div class="top">
+                <div class="main-swiper-wrapper">
+                    <swiper-container
+                        class="main-swiper"
+                        initial-slide="0"
+                        slides-per-view="1"
+                        navigation="true"
+                        auto-height="true"
+                        thumbs-swiper=".thumbnail-swiper"
+                    >
+                        <swiper-slide *ngFor="let asset of projectDto.assets">
+                            <img class="swiper-img" [src]="asset.url" />
+                        </swiper-slide>
+                    </swiper-container>
+                </div>
+                <div class="aside">
+                    <div class="button-container">
+                        <app-button type="color">Odrzuć</app-button>
+                        <app-button class="bottom" type="translucent"
+                            >Zaakceptuj</app-button
+                        >
+                    </div>
+                    
+                </div>
+            </div>
+            <swiper-container
+                initial-slide="0"
+                navigation="true"
+                slides-per-view="auto"
+                class="thumbnail-swiper"
+                slides-offset-before="50"
+                slides-offset-after="50"
+                space-between="25"
+            >
+                <swiper-slide
+                    *ngFor="let asset of projectDto.assets"
+                    class="thumbnail-swiper-slide"
+                >
+                    <img class="swiper-thumb-img" [src]="asset.url" />
+                </swiper-slide>
+            </swiper-container>
+        </div>
+        <div class="project-description">
+            {{ this.projectDto.description }}
+        </div>
+        <!-- <div class="open-positions">
+            <h2>Dołącz do organizacji</h2>
+            <h3>
+                Organizacja poszukuje osób, które pomogą w rozwinięciu projektu.
+            </h3>
+            <div class="open-positions-container">
+                <app-open-position-card
+                    *ngFor="let position of openPositionDtos"
+                    [positionName]="position.name"
+                    [positionRequirements]="position.requirements"
+                    [positionDescription]="position.description"
+                >
+                </app-open-position-card>
+            </div>
+        </div> -->
+        <!-- <div class="recent-payments">
+            <h2>Ostatnie wpłaty</h2>
+            <div class="recent-payments-container">
+                <app-recent-payment-card
+                    *ngFor="let payment of recentPaymentsDtos"
+                    [userName]="payment.userName"
+                    [amount]="payment.amount"
+                >
+                </app-recent-payment-card>
+            </div>
+        </div> -->
+    </div>
+</app-page>
