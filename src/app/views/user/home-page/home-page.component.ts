@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/modules/auth/services/auth.service';
 import { SignupService } from 'src/app/modules/auth/services/signup.service';
+import { HelpService } from 'src/app/modules/help/services/help.service';
 
 @Component({
     selector: 'app-home-page',
@@ -63,10 +64,12 @@ export class HomePageComponent implements OnInit {
         private readonly location: Location,
         private readonly authService: AuthService,
         private readonly signupService: SignupService,
-        private readonly toastrService: ToastrService
+        private readonly toastrService: ToastrService,
+        private readonly helpService: HelpService
     ) {}
 
     ngOnInit(): void {
+        this.helpService.registerPageHelp('user/home-page');
         const params = this.activatedRoute.snapshot.queryParamMap;
         this.replaceState();
         if (params.has('signup')) {

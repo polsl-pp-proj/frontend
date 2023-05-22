@@ -14,6 +14,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NotFoundPageComponent } from './views/not-found-page/not-found-page.component';
 import { PageComponent } from './views/page/page.component';
 import { SignupModalComponent } from './components/modals/signup-modal/signup-modal.component';
+import { OrganizationPageComponent } from './views/user/organization-page/organization-page.component';
 import { AboutPageComponent } from './views/user/about-page/about-page.component';
 import { HomePageComponent } from './views/user/home-page/home-page.component';
 import { AuthModule } from './modules/auth/auth.module';
@@ -30,6 +31,11 @@ import { ResetPasswordModalComponent } from './components/modals/reset-password-
 import { CreateOrganizationModalComponent } from './components/modals/create-organization-modal/create-organization-modal.component';
 import { ToastrModule } from 'ngx-toastr';
 import { MyAccountPageComponent } from './views/user/my-account-page/my-account-page.component';
+import { MarkdownModule } from './modules/markdown/markdown.module';
+import { HelpModule } from './modules/help/help.module';
+import { HelpComponent } from './components/help/help.component';
+import { OrganizationModule } from './modules/organization/organization.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
     declarations: [
@@ -45,6 +51,7 @@ import { MyAccountPageComponent } from './views/user/my-account-page/my-account-
         PageComponent,
         SignupModalComponent,
         AboutPageComponent,
+        OrganizationPageComponent,
         HomePageComponent,
         SearchPageComponent,
         NavbarComponent,
@@ -54,6 +61,7 @@ import { MyAccountPageComponent } from './views/user/my-account-page/my-account-
         UserComponent,
         RejectProjectModalComponent,
         ResetPasswordModalComponent,
+        HelpComponent,
         CreateOrganizationModalComponent,
         MyAccountPageComponent,
     ],
@@ -67,6 +75,10 @@ import { MyAccountPageComponent } from './views/user/my-account-page/my-account-
         AuthModule,
         IntercomModule,
         ToastrModule.forRoot({ autoDismiss: true, timeOut: 5000 }),
+        MarkdownModule,
+        HelpModule,
+        OrganizationModule,
+        BrowserAnimationsModule,
     ],
     providers: [],
     bootstrap: [AppComponent],
