@@ -30,7 +30,6 @@
                         ],
                         "styles": ["src/styles.scss"],
                         "scripts": [],
-                        "localize": true,
                         "customWebpackConfig": {
                             "path": "./custom-webpack.config.js"
                         }
@@ -107,10 +106,13 @@
                         }
                     }
                 }
+            },
+            "i18n": {
+                "sourceLocale": "pl"
             }
         }
     },
     "cli": {
-      "analytics": false
+        "analytics": false
     }
 }
