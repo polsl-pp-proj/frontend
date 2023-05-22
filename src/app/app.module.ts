@@ -30,6 +30,9 @@ import { RejectProjectModalComponent } from './components/modals/reject-project-
 import { ResetPasswordModalComponent } from './components/modals/reset-password-modal/reset-password-modal.component';
 import { CreateOrganizationModalComponent } from './components/modals/create-organization-modal/create-organization-modal.component';
 import { ToastrModule } from 'ngx-toastr';
+import { MarkdownModule } from './modules/markdown/markdown.module';
+import { HelpModule } from './modules/help/help.module';
+import { HelpComponent } from './components/help/help.component';
 import { OrganizationModule } from './modules/organization/organization.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -57,6 +60,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         UserComponent,
         RejectProjectModalComponent,
         ResetPasswordModalComponent,
+        HelpComponent,
         CreateOrganizationModalComponent,
     ],
     imports: [
@@ -69,6 +73,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         AuthModule,
         IntercomModule,
         ToastrModule.forRoot({ autoDismiss: true, timeOut: 5000 }),
+        MarkdownModule,
+        HelpModule,
         OrganizationModule,
         BrowserAnimationsModule,
     ],
