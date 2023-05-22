@@ -1,28 +1,22 @@
 <app-base-modal
     modalTitle="Stwórz organizację"
-    modalName="create-organization-modal"
+    [modalName]="modalName"
     transitionDuration="200ms"
     [closable]="true"
 >
-    <div class="form-wrapper" *ngIf="!this.sent">
-        <h4>Stworz se organizacje</h4>
+    <div class="form-wrapper">
         <form [formGroup]="createOrganizationForm">
             <app-input
                 name="organizationName"
-                formControlName="organizationName"
+                [formControl]="createOrganizationForm.controls.organizationName"
                 >Nazwa organizacji</app-input
             >
         </form>
         <app-button
             type="color"
-            [disabled]="!this.createOrganizationForm.valid"
-            (click)="onOrganizationCreate()"
+            [disabled]="!this.createOrganizationForm.valid || inTransit"
+            (click)="createOrganization()"
             >Stwórz</app-button
         >
-    </div>
-    <div class="end-message" *ngIf="this.sent">
-        Stworzono organizację o nazwie
-        <span class="newOrganizationName">{{ this.organizationName }}</span
-        >.
     </div>
 </app-base-modal>
