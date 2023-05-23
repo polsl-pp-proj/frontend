@@ -50,7 +50,7 @@ export const routes: Routes = [
             { path: 'about', component: AboutPageComponent },
             { path: 'search', component: SearchPageComponent },
             {
-                path: 'moderate-project',
+                path: 'moderate/project/:projectId',
                 component: ProjectModerationPageComponent,
             },
             { path: 'project/:projectId', component: ProjectPageComponent },
