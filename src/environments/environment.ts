@@ -4,7 +4,7 @@
 
 export const environment = {
     production: false,
-    apiUrl: 'https://example.com', // TODO: set valid development API URL
+    apiUrl: 'https://dev-api.studenthub.edu.eu.org', // TODO: set valid development API URL
 };
 
 /*
