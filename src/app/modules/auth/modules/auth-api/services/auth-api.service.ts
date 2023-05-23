@@ -9,6 +9,7 @@ import { LoginDto } from '../dtos/login.dto';
 import { AuthTokensDto } from '../dtos/auth-tokens.dto';
 import { HttpHeaders } from '@angular/common/http';
 import { EmailAddressDto } from 'src/app/dtos/email-address.dto';
+import { PasswordDto } from '../dtos/password.dto';
 
 @Injectable({
     providedIn: 'root',
@@ -55,10 +56,14 @@ export class AuthApiService {
         );
     }
 
-    confirmPasswordReset(emailAddress: string, token: string) {
-        return this.coreApiService.request<any, void>(
+    confirmPasswordReset(
+        emailAddress: string,
+        token: string,
+        newPassword: string
+    ) {
+        return this.coreApiService.request<PasswordDto, void>(
             authApiRoutes.PATCH_confirmPasswordReset,
-            {},
+            new PasswordDto({ password: newPassword }),
             new ApiOptions({
                 routeParams: { emailAddress, token },
             }) as ApiOptionsBody
