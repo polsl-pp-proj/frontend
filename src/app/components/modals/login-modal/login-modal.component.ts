@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/modules/auth/services/auth.service';
 import { ModalService } from 'src/app/modules/modal/services/modal.service';
+import { SignupModalComponent } from '../signup-modal/signup-modal.component';
 
 @Component({
     selector: 'app-login-modal',
@@ -9,7 +10,11 @@ import { ModalService } from 'src/app/modules/modal/services/modal.service';
     styleUrls: ['./login-modal.component.scss'],
 })
 export class LoginModalComponent {
-    modalName = 'login-modal';
+    static ModalName = 'login-modal';
+    get modalName() {
+        return LoginModalComponent.ModalName;
+    }
+
     displayErrorMessage: boolean = false;
 
     loginForm = new FormGroup({
@@ -53,7 +58,10 @@ export class LoginModalComponent {
     }
 
     openSignup() {
-        this.modalService.updateModalState('signup-modal', 'open');
+        this.modalService.updateModalState(
+            SignupModalComponent.ModalName,
+            'open'
+        );
     }
     openResetPassword() {
         this.modalService.updateModalState('reset-password-modal', 'open');
