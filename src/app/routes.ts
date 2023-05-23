@@ -57,15 +57,6 @@ export const routes: Routes = [
                 path: 'organization/:organizationId',
                 component: OrganizationPageComponent,
             },
-            {
-                path: 'admin',
-                children: [
-                    {
-                        path: '/projects',
-                        component: AdministrateProjectsPageComponent,
-                    },
-                ],
-            },
         ],
     },
     {
