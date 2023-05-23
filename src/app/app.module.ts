@@ -30,6 +30,7 @@ import { RejectProjectModalComponent } from './components/modals/reject-project-
 import { ResetPasswordModalComponent } from './components/modals/reset-password-modal/reset-password-modal.component';
 import { CreateOrganizationModalComponent } from './components/modals/create-organization-modal/create-organization-modal.component';
 import { ToastrModule } from 'ngx-toastr';
+import { SetNewPasswordModalComponent } from './components/modals/set-new-password-modal/set-new-password-modal.component';
 import { MyAccountPageComponent } from './views/user/my-account-page/my-account-page.component';
 import { MarkdownModule } from './modules/markdown/markdown.module';
 import { HelpModule } from './modules/help/help.module';
@@ -61,6 +62,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         UserComponent,
         RejectProjectModalComponent,
         ResetPasswordModalComponent,
+        SetNewPasswordModalComponent,
         HelpComponent,
         CreateOrganizationModalComponent,
         MyAccountPageComponent,
