@@ -13,6 +13,7 @@ import { SearchPageComponent } from './views/user/search-page/search-page.compon
 import { ProjectPageComponent } from './views/user/project-page/project-page.component';
 import { UserComponent } from './views/user/user.component';
 import { MyAccountPageComponent } from './views/user/my-account-page/my-account-page.component';
+import { AdministrateProjectsPageComponent } from './views/admin/administrate-projects-page/administrate-projects-page.component';
 
 const customRouteMatcher = (
     segments: UrlSegment[],
@@ -55,6 +56,15 @@ export const routes: Routes = [
             {
                 path: 'organization/:organizationId',
                 component: OrganizationPageComponent,
+            },
+            {
+                path: 'admin',
+                children: [
+                    {
+                        path: '/projects',
+                        component: AdministrateProjectsPageComponent,
+                    },
+                ],
             },
         ],
     },
