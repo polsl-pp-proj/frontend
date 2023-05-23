@@ -75,4 +75,28 @@ export class ProjectModerationPageComponent {
         createdAt: 121,
         updatedAt: 122,
     };
+
+    openPositionDtos: OpenPositionDto[] = [
+        {
+            id: 67,
+            name: 'Full stack developer',
+            description:
+                'Full Stack Developer będzie zajmował się stworzeniem aplikacji internetowej do monitorowania aktualnego stanu zielonej architektury.',
+            requirements: ['Angular', 'Java', 'NodeJS', 'C++'],
+        },
+        {
+            id: 67,
+            name: 'Full stack developer',
+            description:
+                'Full Stack Developer będzie zajmował się stworzeniem aplikacji internetowej do monitorowania aktualnego stanu zielonej architektury.',
+            requirements: ['Angular', 'Java', 'NodeJS', 'C++'],
+        },
+        {
+            id: 67,
+            name: 'Full stack developer',
+            description:
+                'Full Stack Developer będzie zajmował się stworzeniem aplikacji internetowej do monitorowania aktualnego stanu zielonej architektury.',
+            requirements: ['Angular', 'Java', 'NodeJS', 'C++'],
+        },
+    ];
 }
