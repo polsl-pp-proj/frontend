@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterEvent } from '@angular/router';
 import { Subscription, skipWhile } from 'rxjs';
 import { PastPaymentDto } from 'src/app/dtos/past-payment-dto';
 import { ProjectCardDto } from 'src/app/dtos/project-card.dto';
@@ -14,7 +14,8 @@ import { AuthService } from 'src/app/modules/auth/services/auth.service';
 })
 export class MyAccountPageComponent implements OnInit, OnDestroy {
     authPayloadSubscription!: Subscription;
-    payload: AuthTokenPayloadDto = new AuthTokenPayloadDto();
+    payload!: AuthTokenPayloadDto;
+
     constructor(
         private readonly authService: AuthService,
         private readonly router: Router
@@ -47,15 +48,8 @@ export class MyAccountPageComponent implements OnInit, OnDestroy {
                     this.payload = payload;
                     return;
                 }
+                this.router.navigate(['/']);
             });
-
-        this.payload.firstName = 'Kamil';
-        this.payload.isActive = true;
-        this.payload.isVerifiedStudent = false;
-        this.payload.lastName = 'Zdun';
-        this.payload.role = UserRole.Moderator;
-        this.payload.emailAddress = 'kamilluuc137@op.pl';
-        this.payload.isActive = true;
 
         for (let i = 0; i < 14; i++) {
             this.projects.push(this.projects[0]);
