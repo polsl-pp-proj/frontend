@@ -1,0 +1,103 @@
+.main-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: calc(var(--padding) / 2);
+}
+
+span {
+    margin-bottom: 25px;
+    width: 100%;
+}
+
+.with-label {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.user-info {
+    font-size: 1.2em;
+    color: var(--money);
+}
+
+.name-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: var(--padding);
+
+    .with-label {
+        min-width: 40%;
+        width: fit-content;
+    }
+}
+
+.project-cards-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-content: center;
+    gap: var(--navbar-padding);
+
+    app-project-card {
+        margin: auto;
+    }
+}
+
+.additional-info-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--padding);
+}
+
+.buttons-container {
+    padding: 5px;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: calc(var(--padding) / 2);
+
+    app-button {
+        min-width: fit-content;
+        margin: auto;
+    }
+}
+
+.email-role-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: var(--padding);
+
+    .with-label {
+        min-width: 40%;
+        width: fit-content;
+    }
+}
+
+.label {
+    font-weight: bold;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.favourite-projects {
+    h2 {
+        margin-bottom: var(--padding);
+        margin-top: var(--padding);
+    }
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}

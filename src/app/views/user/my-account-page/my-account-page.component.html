@@ -1,0 +1,67 @@
+<app-page>
+    <h1 pageHeader>Twoje konto</h1>
+    <div class="main-container">
+        <div class="name-container">
+            <div class="with-label">
+                <span class="label">Imię</span>
+                <span class="user-info">{{ this.payload.firstName }}</span>
+            </div>
+            <div class="with-label">
+                <span class="label">Nazwisko</span>
+                <span class="user-info">{{ this.payload.lastName }}</span>
+            </div>
+        </div>
+        <div class="email-role-container">
+            <div class="with-label">
+                <span class="label">Adres e-mail</span>
+                <span class="user-info">{{ this.payload.emailAddress }}</span>
+            </div>
+            <div class="with-label">
+                <span class="label">Rola</span>
+                <span class="user-info">{{
+                    this.roles[this.payload.role]
+                }}</span>
+            </div>
+        </div>
+        <div class="additional-info-container">
+            <div class="with-label">
+                <span class="label">Dodatkowe informacje</span>
+                <ul class="list-group">
+                    <li *ngIf="this.payload.isActive" class="user-info">
+                        Użytkownik aktywny
+                    </li>
+                    <li *ngIf="!this.payload.isActive" class="user-info">
+                        Użytkownik nieaktywny
+                    </li>
+                    <li
+                        *ngIf="this.payload.isVerifiedStudent"
+                        class="user-info"
+                    >
+                        Student
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="buttons-container">
+            <app-button type="color">Zmień hasło</app-button>
+            <app-button type="color" (click)="verifyStudentship()"
+                >Zweryfikuj status studenta</app-button
+            >
+        </div>
+        <section *ngIf="this.projects.length > 0" class="favourite-projects">
+            <h2>Ulubione projekty</h2>
+            <div class="project-cards-container">
+                <app-project-card
+                    *ngFor="let projectCard of projects"
+                    [imageUrl]="projectCard.imageUrl"
+                    [imageAlt]="projectCard.imageAlt"
+                    [projectName]="projectCard.projectName"
+                    [projectDescription]="projectCard.projectDescription"
+                    [projectOrg]="projectCard.projectOrg"
+                    (visitProject)="visitProject(projectCard.projectId)"
+                >
+                </app-project-card>
+            </div>
+        </section>
+    </div>
+</app-page>
