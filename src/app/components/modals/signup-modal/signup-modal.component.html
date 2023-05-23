@@ -1,6 +1,6 @@
 <app-base-modal
     modalTitle="Zarejestruj się"
-    modalName="signup-modal"
+    [modalName]="modalName"
     transitionDuration="200ms"
     [closable]="true"
 >
@@ -42,7 +42,10 @@
                     type="password"
                     [formControl]="signupForm.controls.password"
                     [errors]="signupForm.controls.password.errors"
-                    [errorMessages]="{ required: 'Podaj swoje hasło' }"
+                    [errorMessages]="{
+                        required: 'Podaj swoje hasło',
+                        minlength: 'Hasło za krótkie'
+                    }"
                     >Hasło</app-input
                 >
             </div>
@@ -52,7 +55,10 @@
                     type="password"
                     [formControl]="signupForm.controls.repeatPassword"
                     [errors]="signupForm.controls.repeatPassword.errors"
-                    [errorMessages]="{ required: 'Powtórz swoje hasło' }"
+                    [errorMessages]="{
+                        required: 'Powtórz swoje hasło',
+                        mustMatch: 'Hasła niezgodne'
+                    }"
                     >Powtórz hasło</app-input
                 >
             </div>

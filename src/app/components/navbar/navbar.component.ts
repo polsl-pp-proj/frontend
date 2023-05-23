@@ -4,6 +4,8 @@ import { Subscription, skipWhile } from 'rxjs';
 import { AuthService } from 'src/app/modules/auth/services/auth.service';
 import { IconVaultService } from 'src/app/modules/icon-vault/services/icon-vault.service';
 import { ModalService } from 'src/app/modules/modal/services/modal.service';
+import { LoginModalComponent } from '../modals/login-modal/login-modal.component';
+import { CreateOrganizationModalComponent } from '../modals/create-organization-modal/create-organization-modal.component';
 
 @Component({
     selector: 'app-navbar',
@@ -57,11 +59,17 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
 
     openLogin() {
-        this.modalService.updateModalState('login-modal', 'open');
+        this.modalService.updateModalState(
+            LoginModalComponent.ModalName,
+            'open'
+        );
     }
 
     openCreateOrganization() {
-        this.modalService.updateModalState('create-organization-modal', 'open');
+        this.modalService.updateModalState(
+            CreateOrganizationModalComponent.ModalName,
+            'open'
+        );
     }
 
     logout() {

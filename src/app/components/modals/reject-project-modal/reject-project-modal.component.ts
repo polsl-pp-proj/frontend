@@ -7,6 +7,11 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
     styleUrls: ['./reject-project-modal.component.scss'],
 })
 export class RejectProjectModalComponent implements OnInit {
+    static ModalName = 'reject-project-modal';
+    get modalName() {
+        return RejectProjectModalComponent.ModalName;
+    }
+
     displayErrorMessage: boolean = false;
 
     projectName = 'Projekt zielonej architektury';

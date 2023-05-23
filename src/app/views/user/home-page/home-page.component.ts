@@ -3,9 +3,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { SetNewPasswordModalComponent } from 'src/app/components/modals/set-new-password-modal/set-new-password-modal.component';
 import { AuthService } from 'src/app/modules/auth/services/auth.service';
 import { SignupService } from 'src/app/modules/auth/services/signup.service';
 import { HelpService } from 'src/app/modules/help/services/help.service';
+import { ModalService } from 'src/app/modules/modal/services/modal.service';
 
 @Component({
     selector: 'app-home-page',
@@ -65,7 +67,8 @@ export class HomePageComponent implements OnInit {
         private readonly authService: AuthService,
         private readonly signupService: SignupService,
         private readonly toastrService: ToastrService,
-        private readonly helpService: HelpService
+        private readonly helpService: HelpService,
+        private readonly modalService: ModalService
     ) {}
 
     ngOnInit(): void {
@@ -118,31 +121,11 @@ export class HomePageComponent implements OnInit {
         });
     }
     resetPassword(email: string, token: string) {
-        this.authService.confirmPasswordReset(email, token).subscribe({
-            next: () => {
-                this.toastrService.success(
-                    'Twoje hasło zostało zresetowane.',
-                    'Hasło zresetowane'
-                );
-            },
-            error: (err: HttpErrorResponse) => {
-                switch (err.status) {
-                    case 404: {
-                        this.toastrService.error(
-                            'Link resetowania jest niepoprawny lub wygasł!',
-                            'Resetowanie hasła nie powiodło się'
-                        );
-                        break;
-                    }
-                    default: {
-                        this.toastrService.error(
-                            'Podczas resetowania hasła wystąpił błąd. Spróbuj ponownie później.',
-                            'Resetowanie hasła nie powiodło się'
-                        );
-                    }
-                }
-            },
-        });
+        this.authService.setEmailTokenParams(email, token);
+        this.modalService.updateModalState(
+            SetNewPasswordModalComponent.ModalName,
+            'open'
+        );
     }
 
     visitProject(projectId: number) {

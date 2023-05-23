@@ -11,7 +11,11 @@ import { OrganizationService } from 'src/app/modules/organization/services/organ
     styleUrls: ['./create-organization-modal.component.scss'],
 })
 export class CreateOrganizationModalComponent implements OnInit {
-    modalName = 'create-organization-modal';
+    static ModalName = 'create-organization-modal';
+    get modalName() {
+        return CreateOrganizationModalComponent.ModalName;
+    }
+
     createOrganizationForm = new FormGroup({
         organizationName: new FormControl<string>('', {
             nonNullable: true,
