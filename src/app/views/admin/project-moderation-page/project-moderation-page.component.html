@@ -48,7 +48,7 @@
         <div class="project-description">
             {{ this.projectDto.description }}
         </div>
-        <!-- <div class="open-positions">
+        <div class="open-positions">
             <h2>Dołącz do organizacji</h2>
             <h3>
                 Organizacja poszukuje osób, które pomogą w rozwinięciu projektu.
@@ -59,20 +59,10 @@
                     [positionName]="position.name"
                     [positionRequirements]="position.requirements"
                     [positionDescription]="position.description"
+                    
                 >
                 </app-open-position-card>
             </div>
-        </div> -->
-        <!-- <div class="recent-payments">
-            <h2>Ostatnie wpłaty</h2>
-            <div class="recent-payments-container">
-                <app-recent-payment-card
-                    *ngFor="let payment of recentPaymentsDtos"
-                    [userName]="payment.userName"
-                    [amount]="payment.amount"
-                >
-                </app-recent-payment-card>
-            </div>
-        </div> -->
+        </div>
     </div>
 </app-page>
