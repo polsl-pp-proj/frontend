@@ -1,4 +1,5 @@
 import { UserRole } from '../enums/user-role.enum';
+import { UserOrganizationDto } from './user-organization.dto';
 
 export class AuthTokenPayloadDto {
     userId!: number;
@@ -9,4 +10,5 @@ export class AuthTokenPayloadDto {
     role!: UserRole;
     isVerifiedStudent!: boolean;
     isActive!: boolean;
+    organizations!: UserOrganizationDto[];
 }
