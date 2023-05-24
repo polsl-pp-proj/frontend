@@ -52,8 +52,15 @@ span {
 .additional-info-container {
     width: 100%;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
     gap: var(--padding);
+
+    .with-label {
+        min-width: 40%;
+        width: fit-content;
+    }
 }
 
 .buttons-container {
@@ -100,4 +107,27 @@ span {
 ul {
     list-style-type: none;
     padding: 0;
+}
+
+.organizations {
+    width: 100%;
+    h2 {
+        margin-bottom: var(--padding);
+        margin-top: var(--padding);
+    }
+}
+.organizations-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: calc(var(--padding) / 2);
+}
+
+.organization {
+    width: fit-content;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: calc(var(--padding) / 2);
 }
