@@ -21,6 +21,8 @@
                 >Adres E-mail</app-input
             >
             <app-select
+                [formControl]="addOrganizationMemberForm.controls.assignedRole"
+                [multiple]="false"
                 name="assignedRole"
                 [errors]="
                     addOrganizationMemberForm.controls.assignedRole.errors
