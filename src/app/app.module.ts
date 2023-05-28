@@ -37,6 +37,7 @@ import { HelpModule } from './modules/help/help.module';
 import { HelpComponent } from './components/help/help.component';
 import { OrganizationModule } from './modules/organization/organization.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AddOrganizationMembersModalComponent } from './components/modals/add-organization-members-modal/add-organization-members-modal.component';
 
 @NgModule({
     declarations: [
@@ -66,6 +67,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         HelpComponent,
         CreateOrganizationModalComponent,
         MyAccountPageComponent,
+        AddOrganizationMembersModalComponent,
     ],
     imports: [
         BrowserModule,

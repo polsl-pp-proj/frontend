@@ -1,0 +1,43 @@
+<app-base-modal
+    modalTitle="Dodaj nowego członka organizacji"
+    [modalName]="modalName"
+    transitionDuration="200ms"
+    [closable]="true"
+>
+    <div class="container">
+        <form [formGroup]="addOrganizationMemberForm">
+            <app-input
+                name="newMemberEmail"
+                [formControl]="
+                    addOrganizationMemberForm.controls.newMemberEmail
+                "
+                [errors]="
+                    addOrganizationMemberForm.controls.newMemberEmail.errors
+                "
+                [errorMessages]="{
+                    required: 'Wpisz adres e-mail',
+                    email: 'Wprowadź poprawny adres e-mail'
+                }"
+                >Adres E-mail</app-input
+            >
+            <app-select
+                name="assignedRole"
+                [errors]="
+                    addOrganizationMemberForm.controls.assignedRole.errors
+                "
+                [errorMessages]="{
+                    required: 'Wybierz rolę dla nowego członka'
+                }"
+                [options]="roles"
+                [displayErrors]="false"
+                >Rola</app-select
+            >
+        </form>
+        <app-button
+            type="color"
+            (click)="sendAddRequest()"
+            [disabled]="addOrganizationMemberForm.invalid"
+            >Dodaj</app-button
+        >
+    </div>
+</app-base-modal>
