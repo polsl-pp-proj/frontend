@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { SetNewPasswordModalComponent } from 'src/app/components/modals/set-new-password-modal/set-new-password-modal.component';
 import { AuthService } from 'src/app/modules/auth/services/auth.service';
 import { SignupService } from 'src/app/modules/auth/services/signup.service';
+import { DonationService } from 'src/app/modules/donation/services/donation.service';
 import { HelpService } from 'src/app/modules/help/services/help.service';
 import { ModalService } from 'src/app/modules/modal/services/modal.service';
 
@@ -68,7 +69,8 @@ export class HomePageComponent implements OnInit {
         private readonly signupService: SignupService,
         private readonly toastrService: ToastrService,
         private readonly helpService: HelpService,
-        private readonly modalService: ModalService
+        private readonly modalService: ModalService,
+        private readonly donationService: DonationService
     ) {}
 
     ngOnInit(): void {
@@ -89,6 +91,12 @@ export class HomePageComponent implements OnInit {
                 token = params.get('token');
             if (email && token) {
                 this.resetPassword(email, token);
+            }
+        }
+        if (params.has('df')) {
+            const clientSecret = params.get('payment_intent_client_secret');
+            if (clientSecret) {
+                this.checkPaymentStatus(clientSecret);
             }
         }
     }
@@ -126,6 +134,9 @@ export class HomePageComponent implements OnInit {
             SetNewPasswordModalComponent.ModalName,
             'open'
         );
+    }
+    checkPaymentStatus(clientSecret: string) {
+        this.donationService.checkPaymentStatus(clientSecret).subscribe();
     }
 
     visitProject(projectId: number) {
