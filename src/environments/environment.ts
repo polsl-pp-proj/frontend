@@ -7,6 +7,7 @@ export const environment = {
     apiUrl: 'https://dev-api.studenthub.edu.eu.org', // TODO: set valid development API URL
     stripeKey:
         'pk_test_51NEDOoCJ8XfsvOOrp45ygsPdkQboahVOiaxxDIko9zMAH6U6BiZHhorfNJqQRWIHM5yT4jTwOXWCsJYTEmLay7OK00UUPqDPTP',
+    frontendUrl: 'https://dev.studenthub.edu.eu.org',
 };
 
 /*
