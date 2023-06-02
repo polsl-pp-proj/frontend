@@ -101,3 +101,17 @@ ul {
     list-style-type: none;
     padding: 0;
 }
+
+.organizations {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--padding) / 2);
+}
+
+.organization {
+    width: fit-content;
+    display: flex;
+    flex-direction: row;
+    gap: calc(var(--padding) / 2);
+}

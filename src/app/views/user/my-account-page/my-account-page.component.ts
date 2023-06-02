@@ -4,8 +4,10 @@ import { Subscription, skipWhile } from 'rxjs';
 import { PastPaymentDto } from 'src/app/dtos/past-payment-dto';
 import { ProjectCardDto } from 'src/app/dtos/project-card.dto';
 import { AuthTokenPayloadDto } from 'src/app/modules/auth/dtos/auth-token-payload.dto';
+import { UserOrganizationDto } from 'src/app/modules/auth/dtos/user-organization.dto';
 import { UserRole } from 'src/app/modules/auth/enums/user-role.enum';
 import { AuthService } from 'src/app/modules/auth/services/auth.service';
+import { OrganizationMemberRole } from 'src/app/modules/organization/enums/organization-member-role.enum';
 
 @Component({
     selector: 'app-my-account-page',
@@ -39,6 +41,21 @@ export class MyAccountPageComponent implements OnInit, OnDestroy {
         [UserRole.Moderator]: 'Moderator',
         [UserRole.Administrator]: 'Administrator',
     };
+
+    organizations: UserOrganizationDto[] = [
+        {
+            organizationId: 1,
+            role: OrganizationMemberRole.Owner,
+        },
+        {
+            organizationId: 2,
+            role: OrganizationMemberRole.Member,
+        },
+        {
+            organizationId: 3,
+            role: OrganizationMemberRole.Member,
+        },
+    ];
 
     ngOnInit(): void {
         this.authPayloadSubscription = this.authService.authTokenPayload
