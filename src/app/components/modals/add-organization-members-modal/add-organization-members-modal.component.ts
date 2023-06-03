@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+    FormArray,
+    FormBuilder,
+    FormControl,
+    FormGroup,
+    Validators,
+} from '@angular/forms';
 import { OrganizationMemberRole } from 'src/app/modules/organization/enums/organization-member-role.enum';
 
 @Component({
@@ -13,32 +19,49 @@ export class AddOrganizationMembersModalComponent implements OnInit {
         return AddOrganizationMembersModalComponent.ModalName;
     }
 
+    constructor(private fb: FormBuilder) {}
+
     roles = [
         { text: 'Członek', value: OrganizationMemberRole.Member },
         { text: 'Właściciel', value: OrganizationMemberRole.Owner },
     ];
 
-    addOrganizationMemberForm = new FormGroup({
-        newMemberEmail: new FormControl<string>('', {
-            nonNullable: true,
-            validators: [Validators.required, Validators.email],
-        }),
-        assignedRole: new FormControl<OrganizationMemberRole>(
-            OrganizationMemberRole.Member,
-            {
-                nonNullable: true,
-                validators: [Validators.required],
-            }
-        ),
+    addOrganizationMemberForm = this.fb.group({
+        newMembers: new FormArray<FormGroup>([]),
     });
 
-    ngOnInit(): void {}
+    addMemberRow() {
+        const newMemberForm = this.fb.group({
+            newMemberEmail: new FormControl<string>('', {
+                nonNullable: true,
+                validators: [Validators.required, Validators.email],
+            }),
+            assignedRole: new FormControl<OrganizationMemberRole>(
+                OrganizationMemberRole.Member,
+                {
+                    nonNullable: true,
+                    validators: [Validators.required],
+                }
+            ),
+        });
+        this.newMembers.push(newMemberForm);
+    }
+
+    removeMemberRow(rowIndex: number) {
+        this.newMembers.removeAt(rowIndex);
+    }
+
+    get newMembers() {
+        return this.addOrganizationMemberForm.controls[
+            'newMembers'
+        ] as FormArray;
+    }
+
+    ngOnInit(): void {
+        this.addMemberRow();
+    }
 
     sendAddRequest() {
-        console.log(
-            this.addOrganizationMemberForm.controls.newMemberEmail.value
-        );
-        console.log(this.addOrganizationMemberForm.controls.assignedRole.value);
         console.log(this.addOrganizationMemberForm);
     }
 }
