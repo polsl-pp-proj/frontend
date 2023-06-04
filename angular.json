@@ -28,7 +28,10 @@
                             "src/assets",
                             "src/favicons"
                         ],
-                        "styles": ["src/styles.scss"],
+                        "styles": [
+                            "src/styles.scss",
+                            "node_modules/vditor/src/assets/less/index.less"
+                        ],
                         "scripts": [],
                         "customWebpackConfig": {
                             "path": "./custom-webpack.config.js"

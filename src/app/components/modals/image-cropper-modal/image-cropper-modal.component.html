@@ -1,0 +1,18 @@
+<app-base-modal
+    modalTitle="Przytnij zdjęcie"
+    [modalName]="modalName"
+    transitionDuration="200ms"
+    [closable]="true"
+>
+    <div class="main-container">
+        <image-cropper
+            [imageFile]="imageFile!"
+            [maintainAspectRatio]="true"
+            [aspectRatio]="1200 / 630"
+            [onlyScaleDown]="true"
+            format="jpeg"
+            (imageCropped)="imageCropped($event)"
+        ></image-cropper>
+        <app-button type="color" (click)="submitImage()"> Przytnij </app-button>
+    </div>
+</app-base-modal>

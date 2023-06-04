@@ -10,11 +10,14 @@ export class OpenPositionCardComponent {
     positionName!: string;
 
     @Input()
+    buttonText: string = 'Dołącz';
+
+    @Input()
     positionDescription!: string;
 
     @Input()
     positionRequirements: string[] = [];
 
     @Output()
-    join = new EventEmitter<void>();
+    trigger = new EventEmitter<void>();
 }

@@ -13,6 +13,7 @@ import { SearchPageComponent } from './views/user/search-page/search-page.compon
 import { ProjectPageComponent } from './views/user/project-page/project-page.component';
 import { UserComponent } from './views/user/user.component';
 import { MyAccountPageComponent } from './views/user/my-account-page/my-account-page.component';
+import { AddProjectPageComponent } from './views/user/add-project-page/add-project-page.component';
 
 const customRouteMatcher = (
     segments: UrlSegment[],
@@ -50,6 +51,7 @@ export const routes: Routes = [
             { path: '', component: HomePageComponent },
             { path: 'about', component: AboutPageComponent },
             { path: 'search', component: SearchPageComponent },
+            { path: 'project/add', component: AddProjectPageComponent },
             { path: 'project/:projectId', component: ProjectPageComponent },
             { path: 'account', component: MyAccountPageComponent },
             {

@@ -60,9 +60,9 @@ describe('OpenPositionCardComponent', () => {
     });
 
     it('should emit join event when button is clicked', () => {
-        spyOn(component.join, 'emit');
+        spyOn(component.trigger, 'emit');
         const buttonElement = fixture.debugElement.query(By.css('.join-btn'));
         buttonElement.triggerEventHandler('click', null);
-        expect(component.join.emit).toHaveBeenCalled();
+        expect(component.trigger.emit).toHaveBeenCalled();
     });
 });

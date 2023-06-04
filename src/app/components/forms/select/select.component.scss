@@ -52,10 +52,10 @@
 
         option {
             padding: 0.15rem 1rem;
+            color: var(--foreground-100);
 
             &:checked {
                 background-color: var(--secondary-100);
-                color: var(--foreground-100);
             }
 
             &:first-child {
