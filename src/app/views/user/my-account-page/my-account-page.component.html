@@ -48,6 +48,15 @@
                 >Zweryfikuj status studenta</app-button
             >
         </div>
+        <section *ngIf="this.organizations.length > 0" class="organizations">
+            <h2>Organizacje, do których należysz</h2>
+            <div class="organizations-container">
+                <span *ngFor="let organization of this.organizations" class="organization">
+                    <span>{{organization.organizationId}}</span>
+                    <span>{{organization.role}}</span>
+                </span>
+            </div>
+        </section>
         <section *ngIf="this.projects.length > 0" class="favourite-projects">
             <h2>Ulubione projekty</h2>
             <div class="project-cards-container">
