@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { OrganizationMemberRole } from 'src/app/modules/organization/enums/organization-member-role.enum';
-import { MemberDto } from 'src/app/modules/organization/modules/organization-api/dtos/member.dto';
+import { OrganizationMemberDto } from 'src/app/modules/organization/modules/organization-api/dtos/organization-member.dto';
 
 type MemberToDisplay = {
     text: string;
@@ -23,22 +23,34 @@ export class RemoveOrganizationMembersModalComponent implements OnInit {
 
     displayErrorMessage: boolean = false;
 
-    members: MemberDto[] = [
+    members: OrganizationMemberDto[] = [
         {
+            id: 1,
+            firstName: 'xxxxxxx',
+            lastName: 'xxxxxxxxx',
             emailAddress: 'kamil3232@op.pl',
-            memberRole: OrganizationMemberRole.Member,
+            role: OrganizationMemberRole.Member,
         },
         {
+            id: 321,
+            firstName: 'yyyyy',
+            lastName: 'yyyyyyyy',
             emailAddress: 'kamil321232@op.pl',
-            memberRole: OrganizationMemberRole.Member,
+            role: OrganizationMemberRole.Member,
         },
         {
+            id: 55555,
+            firstName: 'zzzzzz',
+            lastName: 'zzzzzzzzz',
             emailAddress: 'kamil32121232@op.pl',
-            memberRole: OrganizationMemberRole.Member,
+            role: OrganizationMemberRole.Member,
         },
         {
+            id: 2324,
+            firstName: 'Lorem',
+            lastName: 'Ipsum',
             emailAddress: 'kamddil3232@op.pl',
-            memberRole: OrganizationMemberRole.Owner,
+            role: OrganizationMemberRole.Owner,
         },
     ];
 
@@ -57,8 +69,8 @@ export class RemoveOrganizationMembersModalComponent implements OnInit {
                 text:
                     this.members[i].emailAddress +
                     ': ' +
-                    this.members[i].memberRole,
-                value: i,
+                    this.members[i].role,
+                value: this.members[i].id,
             });
         }
     }
@@ -66,6 +78,4 @@ export class RemoveOrganizationMembersModalComponent implements OnInit {
     sendRemoveOrganizationMembersRequest() {
         console.log(this.removeOrganizationMembersForm.controls.members.value);
     }
-}
-{
 }
