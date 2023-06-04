@@ -1,0 +1,37 @@
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: calc(var(--padding) / 2);
+}
+
+.requirement {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: calc(var(--padding) / 3);
+
+    app-button {
+        padding-top: 5px;
+    }
+}
+
+.requirements-label {
+    font-size: 1rem;
+    margin-left: calc(var(--input-height) / 2);
+    font-weight: 600;
+    margin-bottom: 0.3125rem;
+}
+
+.reqirements-container {
+    gap: 0;
+}
+
+app-input {
+    width: 100%;
+}
+
+.add-button {
+    margin: auto;
+    align-self: center;
+}
