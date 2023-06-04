@@ -1,0 +1,57 @@
+<app-base-modal
+    modalTitle="Dodaj nowych członków organizacji"
+    [modalName]="modalName"
+    transitionDuration="200ms"
+    [closable]="true"
+>
+    <div class="container">
+        <div class="form-container" [formGroup]="addOrganizationMemberForm">
+            <ng-container formArrayName="newMembers">
+                <ng-container
+                    *ngFor="let newMember of newMembers.controls; let i = index"
+                >
+                    <div class="new-member-data" [formGroupName]="i">
+                        <app-input
+                            name="newMemberEmail"
+                            formControlName="newMemberEmail"
+                            [errors]="newMember.get('newMemberEmail')!.errors"
+                            [errorMessages]="{
+                                required: 'Wpisz adres e-mail',
+                                email: 'Wprowadź poprawny adres e-mail'
+                            }"
+                            >Adres E-mail</app-input
+                        >
+                        <app-select
+                            [multiple]="false"
+                            name="assignedRole"
+                            formControlName="assignedRole"
+                            [errors]="newMember.get('assignedRole')!.errors"
+                            [errorMessages]="{
+                                required: 'Wybierz rolę dla nowego członka'
+                            }"
+                            [options]="roles"
+                            [displayErrors]="false"
+                            >Rola</app-select
+                        >
+                        <app-button
+                            *ngIf="newMembers.length > 1"
+                            (click)="removeMemberRow(i)"
+                            type="color"
+                            >-</app-button
+                        >
+                        <!-- Zmienić po wprowadzeniu czerwonego koloru przycisku -->
+                    </div>
+                </ng-container>
+            </ng-container>
+        </div>
+        <div class="button-container">
+            <app-button (click)="addMemberRow()" type="color">+</app-button>
+            <app-button
+                (click)="sendAddRequest()"
+                type="color"
+                [disabled]="!addOrganizationMemberForm.valid"
+                >Dodaj</app-button
+            >
+        </div>
+    </div>
+</app-base-modal>
