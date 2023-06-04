@@ -15,29 +15,18 @@ export class PaymentModalComponent implements OnInit {
     projectName = 'Projekt zielonej architektury';
 
     paymentForm = new FormGroup({
-        amount: new FormControl<number>(0, [
-            Validators.required,
-            Validators.pattern('(0|[1-9][0-9]*)([.][0-9]{1,2})?'),
-            Validators.min(0.01),
-        ]),
-        name: new FormControl<string>('', [Validators.required]),
-        anonymous: new FormControl<boolean>(false),
+        amount: new FormControl<number>(0, {
+            nonNullable: true,
+            validators: [
+                Validators.required,
+                Validators.pattern('(0|[1-9][0-9]*)([.][0-9]{1,2})?'),
+                Validators.min(0.01),
+            ],
+        }),
+        anonymous: new FormControl<boolean>(false, { nonNullable: true }),
     });
 
-    get anonymous() {
-        return this.paymentForm.controls.anonymous.value;
-    }
-
-    ngOnInit(): void {
-        this.paymentForm.get('anonymous')?.valueChanges.subscribe((value) => {
-            if (!value) {
-                this.paymentForm.get('name')?.enable();
-            } else {
-                this.paymentForm.get('name')?.setValue('');
-                this.paymentForm.get('name')?.disable();
-            }
-        });
-    }
+    ngOnInit(): void {}
 
     sendPaymentRequest() {
         console.log(this.paymentForm);

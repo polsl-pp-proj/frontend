@@ -12,7 +12,7 @@
             projekt dowolną kwotą.
         </div>
         <form [formGroup]="paymentForm">
-            <div class="input-container">
+            <div class="amount-container">
                 <app-input
                     name="amount"
                     [formControl]="paymentForm.controls.amount"
@@ -23,16 +23,6 @@
                         min: 'Kwota darowizny musi być większa niż 0 PLN'
                     }"
                     >Kwota darowizny (w PLN)</app-input
-                >
-                <app-input
-                    *ngIf="!anonymous"
-                    name="name"
-                    [formControl]="paymentForm.controls.name"
-                    [displayErrors]="true"
-                    [errorMessages]="{
-                        required: 'Wpisz swoje imię'
-                    }"
-                    >Imię</app-input
                 >
             </div>
             <div class="checkbox-container">
