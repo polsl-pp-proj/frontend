@@ -38,6 +38,7 @@ import { HelpComponent } from './components/help/help.component';
 import { OrganizationModule } from './modules/organization/organization.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RemoveOrganizationMembersModalComponent } from './components/modals/remove-organization-members-modal/remove-organization-members-modal.component';
+import { AddOrganizationMembersModalComponent } from './components/modals/add-organization-members-modal/add-organization-members-modal.component';
 
 @NgModule({
     declarations: [
@@ -68,6 +69,7 @@ import { RemoveOrganizationMembersModalComponent } from './components/modals/rem
         CreateOrganizationModalComponent,
         MyAccountPageComponent,
         RemoveOrganizationMembersModalComponent,
+        AddOrganizationMembersModalComponent,
     ],
     imports: [
         BrowserModule,
