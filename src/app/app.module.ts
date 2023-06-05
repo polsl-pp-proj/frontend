@@ -37,6 +37,7 @@ import { HelpModule } from './modules/help/help.module';
 import { HelpComponent } from './components/help/help.component';
 import { OrganizationModule } from './modules/organization/organization.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PaymentModalComponent } from './components/modals/payment-modal/payment-modal.component';
 import { RemoveOrganizationMembersModalComponent } from './components/modals/remove-organization-members-modal/remove-organization-members-modal.component';
 import { AddOrganizationMembersModalComponent } from './components/modals/add-organization-members-modal/add-organization-members-modal.component';
 import { AddOpenPositionModalComponent } from './components/modals/add-open-position-modal/add-open-position-modal.component';
@@ -69,6 +70,7 @@ import { AddOpenPositionModalComponent } from './components/modals/add-open-posi
         HelpComponent,
         CreateOrganizationModalComponent,
         MyAccountPageComponent,
+        PaymentModalComponent,
         RemoveOrganizationMembersModalComponent,
         AddOrganizationMembersModalComponent,
         AddOpenPositionModalComponent,
