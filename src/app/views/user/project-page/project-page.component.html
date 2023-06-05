@@ -21,7 +21,9 @@
                 <div class="aside">
                     <div class="button-container">
                         <app-button type="color">Wesprzyj</app-button>
-                        <app-button type="translucent"
+                        <app-button
+                            (click)="openMessageModal()"
+                            type="translucent"
                             >Skontaktuj sie</app-button
                         >
                         <app-button type="translucent"
@@ -85,3 +87,5 @@
         </div>
     </div>
 </app-page>
+
+<app-message-modal [id]="projectDto.id"></app-message-modal>
