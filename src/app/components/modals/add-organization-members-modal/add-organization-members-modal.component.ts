@@ -131,4 +131,8 @@ export class AddOrganizationMembersModalComponent implements OnInit {
             this.inTransit = false;
         }
     }
+
+    modalClosed() {
+        this.addOrganizationMemberForm.reset();
+    }
 }
