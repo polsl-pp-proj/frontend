@@ -3,6 +3,7 @@
     [modalName]="this.modalName"
     transitionDuration="200ms"
     [closable]="true"
+    (closed)="modalClosed()"
 >
     <div class="container">
         <form [formGroup]="removeOrganizationMembersForm">
@@ -17,7 +18,7 @@
         <app-button
             type="color"
             (click)="sendRemoveOrganizationMembersRequest()"
-            [disabled]="removeOrganizationMembersForm.invalid"
+            [disabled]="removeOrganizationMembersForm.invalid || inTransit"
             >Usuń</app-button
         >
     </div>
