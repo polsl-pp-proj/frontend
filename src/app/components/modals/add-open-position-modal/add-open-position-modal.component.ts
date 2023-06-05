@@ -20,7 +20,6 @@ export class AddOpenPositionModalComponent {
 
     @Output()
     newOpenPosition = new EventEmitter<NewOpenPositionDto>();
-
     constructor(private fb: FormBuilder) {}
 
     addOpenPositionForm = this.fb.group({

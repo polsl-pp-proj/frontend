@@ -13,7 +13,6 @@ import { ChangeablePhotoGalleryComponent } from 'src/app/components/changeable-p
 import { AddOpenPositionModalComponent } from 'src/app/components/modals/add-open-position-modal/add-open-position-modal.component';
 import { CategoryDto } from 'src/app/dtos/category-dto';
 import { NewOpenPositionDto } from 'src/app/dtos/new-open-position.dto';
-import { OpenPositionDto } from 'src/app/dtos/open-position-dto';
 import { AddProjectDto, ProjectDto } from 'src/app/dtos/project-dto';
 import { AuthTokenPayloadDto } from 'src/app/modules/auth/dtos/auth-token-payload.dto';
 import { IconVaultService } from 'src/app/modules/icon-vault/services/icon-vault.service';
@@ -50,28 +49,13 @@ export class AddProjectPageComponent implements OnInit, OnDestroy {
     shortDescriptionInputSize: number = 0;
     maxShortDescriptionInputSize: number = 150;
     addProjectDto: AddProjectDto = {
-        name: 'nowy',
-        shortDescription: 'test',
-        description: 'test',
+        name: '',
+        shortDescription: '',
+        description: '',
         assets: [],
-        projectGroupName: 'zmitac',
-        categories: [
-            {
-                id: 1,
-                name: 'it',
-            },
-            {
-                id: 2,
-                name: 'ti',
-            },
-        ],
-        openPositions: [
-            {
-                name: 'dev',
-                description: 'coś będziesz robić :DDDD',
-                requirements: ['html', 'css', 'js'],
-            },
-        ],
+        projectGroupName: '',
+        categories: [],
+        openPositions: [],
     };
 
     plusIcon!: SafeHtml;
