@@ -9,6 +9,7 @@ import { OrganizationService } from 'src/app/modules/organization/services/organ
     styleUrls: ['./organization-page.component.scss'],
 })
 export class OrganizationPageComponent implements OnInit {
+    organizationId = -1;
     organizationName = 'Trwa ładowanie...';
 
     test_projects = [
@@ -82,8 +83,9 @@ export class OrganizationPageComponent implements OnInit {
         const organizationId =
             this.activatedRoute.snapshot.paramMap.get('organizationId');
         if (organizationId) {
+            this.organizationId = +organizationId;
             this.organizationService
-                .getOrganization(+organizationId)
+                .getOrganization(this.organizationId)
                 .subscribe({
                     next: (organization) => {
                         this.organizationName = organization.name;
