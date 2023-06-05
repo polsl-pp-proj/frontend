@@ -3,6 +3,7 @@
     [modalName]="modalName"
     transitionDuration="200ms"
     [closable]="true"
+    (closed)="modalClosed()"
 >
     <form [formGroup]="messageForm">
         <app-input

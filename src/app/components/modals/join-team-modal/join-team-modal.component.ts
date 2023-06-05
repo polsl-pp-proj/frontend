@@ -39,4 +39,8 @@ export class JoinTeamModalComponent implements OnInit {
     sendJoinRequest() {
         console.log(this.joinProjectForm.get('candidateSummary')?.value);
     }
+
+    modalClosed() {
+        this.joinProjectForm.reset();
+    }
 }

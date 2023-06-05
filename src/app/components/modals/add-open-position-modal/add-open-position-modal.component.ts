@@ -58,4 +58,8 @@ export class AddOpenPositionModalComponent {
     sendAddOpenPositionRequest() {
         console.log(this.addOpenPositionForm);
     }
+
+    modalClosed() {
+        this.addOpenPositionForm.reset();
+    }
 }
