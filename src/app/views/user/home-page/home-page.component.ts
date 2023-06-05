@@ -88,7 +88,7 @@ export class HomePageComponent implements OnInit {
     }
 
     confirmSignup(email: string, token: string) {
-        this.signupService.confirmSignup(email, token).subscribe({
+        this.signupService.confirmSignup(email, token.slice(0, 36)).subscribe({
             next: () => {
                 this.toastrService.success(
                     'Twoje konto zostało aktywowane! Możesz się teraz zalogować.',
@@ -115,31 +115,33 @@ export class HomePageComponent implements OnInit {
         });
     }
     resetPassword(email: string, token: string) {
-        this.authService.confirmPasswordReset(email, token).subscribe({
-            next: () => {
-                this.toastrService.success(
-                    'Twoje hasło zostało zresetowane.',
-                    'Hasło zresetowane'
-                );
-            },
-            error: (err: HttpErrorResponse) => {
-                switch (err.status) {
-                    case 404: {
-                        this.toastrService.error(
-                            'Link resetowania jest niepoprawny lub wygasł!',
-                            'Resetowanie hasła nie powiodło się'
-                        );
-                        break;
+        this.authService
+            .confirmPasswordReset(email, token.slice(0, 36))
+            .subscribe({
+                next: () => {
+                    this.toastrService.success(
+                        'Twoje hasło zostało zresetowane.',
+                        'Hasło zresetowane'
+                    );
+                },
+                error: (err: HttpErrorResponse) => {
+                    switch (err.status) {
+                        case 404: {
+                            this.toastrService.error(
+                                'Link resetowania jest niepoprawny lub wygasł!',
+                                'Resetowanie hasła nie powiodło się'
+                            );
+                            break;
+                        }
+                        default: {
+                            this.toastrService.error(
+                                'Podczas resetowania hasła wystąpił błąd. Spróbuj ponownie później.',
+                                'Resetowanie hasła nie powiodło się'
+                            );
+                        }
                     }
-                    default: {
-                        this.toastrService.error(
-                            'Podczas resetowania hasła wystąpił błąd. Spróbuj ponownie później.',
-                            'Resetowanie hasła nie powiodło się'
-                        );
-                    }
-                }
-            },
-        });
+                },
+            });
     }
 
     visitProject(projectId: number) {
