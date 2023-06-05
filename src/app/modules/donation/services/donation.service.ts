@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DonationApiService } from '../modules/donation-api/services/donation-api.service';
-import { BehaviorSubject, map, skipWhile } from 'rxjs';
+import { BehaviorSubject, from, map, mergeMap, skipWhile } from 'rxjs';
 import {
     PaymentIntentResult,
     Stripe,
@@ -40,8 +40,35 @@ export class DonationService {
             skipWhile((stripe) => stripe === undefined),
             map((stripe) => {
                 const elements = stripe!.elements({
-                    appearance: { labels: 'above' },
+                    appearance: {
+                        labels: 'above',
+                        variables: {
+                            colorText: '#fff',
+                            borderRadius: '100vw',
+                            fontFamily:
+                                'Montserrat, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
+                            colorBackground: '#191919',
+                            colorDanger: '#ff5353',
+                        },
+                        rules: {
+                            '.Input, .Input:focus': {
+                                border: '4px solid #007cee',
+                                outline: 'none',
+                                boxShadow: 'none',
+                            },
+                            '.Input--invalid, .Input--invalid:focus': {
+                                border: '4px solid #ff5353',
+                                outline: 'none',
+                                boxShadow: 'none',
+                            },
+                        },
+                    },
                     locale: 'pl',
+                    fonts: [
+                        {
+                            cssSrc: 'https://fonts.googleapis.com/css2?family=Montserrat',
+                        },
+                    ],
                     clientSecret,
                 });
                 const element = elements.create('payment');
@@ -64,7 +91,8 @@ export class DonationService {
                 });
 
                 this.displayDonationPaymentResult(paymentIntentResult);
-            })
+            }),
+            mergeMap((confirm) => from(confirm))
         );
     }
 

@@ -5,12 +5,13 @@ import {
     OnInit,
     ViewChild,
 } from '@angular/core';
+import { PaymentModalComponent } from 'src/app/components/modals/payment-modal/payment-modal.component';
 import { OpenPositionDto } from 'src/app/dtos/open-position-dto';
 import { PaymentDto } from 'src/app/dtos/payment-dto';
 import { ProjectDto } from 'src/app/dtos/project-dto';
 import { AssetType } from 'src/app/enums/asset-type.enum';
 import { HelpService } from 'src/app/modules/help/services/help.service';
-import Swiper from 'swiper';
+import { ModalService } from 'src/app/modules/modal/services/modal.service';
 
 @Component({
     selector: 'app-project-page',
@@ -123,9 +124,19 @@ export class ProjectPageComponent implements OnInit {
         },
     ];
 
-    constructor(private readonly helpService: HelpService) {}
+    constructor(
+        private readonly helpService: HelpService,
+        private readonly modalService: ModalService
+    ) {}
 
     ngOnInit(): void {
         this.helpService.registerPageHelp('user/project-page');
+    }
+
+    makeDonation() {
+        this.modalService.updateModalState(
+            PaymentModalComponent.ModalName,
+            'open'
+        );
     }
 }
