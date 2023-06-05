@@ -6,6 +6,7 @@ import {
     ViewChild,
 } from '@angular/core';
 import { PaymentModalComponent } from 'src/app/components/modals/payment-modal/payment-modal.component';
+import { MessageModalComponent } from 'src/app/components/modals/message-modal/message-modal.component';
 import { OpenPositionDto } from 'src/app/dtos/open-position-dto';
 import { PaymentDto } from 'src/app/dtos/payment-dto';
 import { ProjectDto } from 'src/app/dtos/project-dto';
@@ -136,6 +137,13 @@ export class ProjectPageComponent implements OnInit {
     makeDonation() {
         this.modalService.updateModalState(
             PaymentModalComponent.ModalName,
+            'open'
+        );
+    }
+  
+    openMessageModal() {
+        this.modalService.updateModalState(
+            MessageModalComponent.ModalName,
             'open'
         );
     }

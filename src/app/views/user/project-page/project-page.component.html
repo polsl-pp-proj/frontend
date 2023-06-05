@@ -23,7 +23,9 @@
                         <app-button type="color" (click)="makeDonation()"
                             >Wesprzyj</app-button
                         >
-                        <app-button type="translucent"
+                        <app-button
+                            (click)="openMessageModal()"
+                            type="translucent"
                             >Skontaktuj sie</app-button
                         >
                         <app-button type="translucent"
@@ -88,3 +90,4 @@
     </div>
 </app-page>
 <app-payment-modal [projectDto]="projectDto"></app-payment-modal>
+<app-message-modal [id]="projectDto.id"></app-message-modal>
