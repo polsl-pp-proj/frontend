@@ -65,6 +65,14 @@
         }
     }
 
+    &.button-danger {
+        background-color: var(--danger-100-25);
+
+        &:hover:not([disabled]) {
+            background-color: var(--danger-100-50);
+        }
+    }
+
     &.button-icon-only {
         padding: 0;
         width: var(--button-height);
