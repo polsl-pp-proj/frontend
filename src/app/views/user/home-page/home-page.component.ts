@@ -94,7 +94,7 @@ export class HomePageComponent implements OnInit {
     }
 
     confirmSignup(email: string, token: string) {
-        this.signupService.confirmSignup(email, token).subscribe({
+        this.signupService.confirmSignup(email, token.slice(0, 36)).subscribe({
             next: () => {
                 this.toastrService.success(
                     'Twoje konto zostało aktywowane! Możesz się teraz zalogować.',
@@ -121,7 +121,7 @@ export class HomePageComponent implements OnInit {
         });
     }
     resetPassword(email: string, token: string) {
-        this.authService.setEmailTokenParams(email, token);
+        this.authService.setEmailTokenParams(email, token.slice(0, 36));
         this.modalService.updateModalState(
             SetNewPasswordModalComponent.ModalName,
             'open'
