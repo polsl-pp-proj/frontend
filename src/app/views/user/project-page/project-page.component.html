@@ -20,7 +20,9 @@
                 </div>
                 <div class="aside">
                     <div class="button-container">
-                        <app-button type="color">Wesprzyj</app-button>
+                        <app-button type="color" (click)="makeDonation()"
+                            >Wesprzyj</app-button
+                        >
                         <app-button
                             (click)="openMessageModal()"
                             type="translucent"
@@ -87,5 +89,5 @@
         </div>
     </div>
 </app-page>
-
+<app-payment-modal [projectDto]="projectDto"></app-payment-modal>
 <app-message-modal [id]="projectDto.id"></app-message-modal>
