@@ -57,4 +57,8 @@ export class CreateOrganizationModalComponent implements OnInit {
                 },
             });
     }
+
+    modalClosed() {
+        this.createOrganizationForm.reset();
+    }
 }

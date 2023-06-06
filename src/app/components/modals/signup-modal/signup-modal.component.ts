@@ -73,4 +73,8 @@ export class SignupModalComponent {
                 });
         }
     }
+
+    modalClosed() {
+        this.signupForm.reset();
+    }
 }

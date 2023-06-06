@@ -41,6 +41,11 @@ import { PaymentModalComponent } from './components/modals/payment-modal/payment
 import { RemoveOrganizationMembersModalComponent } from './components/modals/remove-organization-members-modal/remove-organization-members-modal.component';
 import { AddOrganizationMembersModalComponent } from './components/modals/add-organization-members-modal/add-organization-members-modal.component';
 import { AddOpenPositionModalComponent } from './components/modals/add-open-position-modal/add-open-position-modal.component';
+import { IndexChangeablePhotoComponent } from './components/index-changeable-photo/index-changeable-photo.component';
+import { ChangeablePhotoGalleryComponent } from './components/changeable-photo-gallery/changeable-photo-gallery.component';
+import { AddProjectPageComponent } from './views/user/add-project-page/add-project-page.component';
+import { ImageCropperModule } from 'ngx-image-cropper';
+import { ImageCropperModalComponent } from './components/modals/image-cropper-modal/image-cropper-modal.component';
 import { MessageModalComponent } from './components/modals/message-modal/message-modal.component';
 
 @NgModule({
@@ -75,6 +80,10 @@ import { MessageModalComponent } from './components/modals/message-modal/message
         RemoveOrganizationMembersModalComponent,
         AddOrganizationMembersModalComponent,
         AddOpenPositionModalComponent,
+        IndexChangeablePhotoComponent,
+        ChangeablePhotoGalleryComponent,
+        AddProjectPageComponent,
+        ImageCropperModalComponent,
         MessageModalComponent,
     ],
     imports: [
@@ -91,6 +100,7 @@ import { MessageModalComponent } from './components/modals/message-modal/message
         HelpModule,
         OrganizationModule,
         BrowserAnimationsModule,
+        ImageCropperModule,
     ],
     providers: [],
     bootstrap: [AppComponent],

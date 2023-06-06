@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import {
     FormArray,
     FormBuilder,
     FormControl,
-    FormGroup,
     Validators,
 } from '@angular/forms';
+import { NewOpenPositionDto } from 'src/app/dtos/new-open-position.dto';
 
 @Component({
     selector: 'app-add-open-position-modal',
@@ -18,6 +18,8 @@ export class AddOpenPositionModalComponent {
         return AddOpenPositionModalComponent.ModalName;
     }
 
+    @Output()
+    newOpenPosition = new EventEmitter<NewOpenPositionDto>();
     constructor(private fb: FormBuilder) {}
 
     addOpenPositionForm = this.fb.group({
@@ -29,7 +31,7 @@ export class AddOpenPositionModalComponent {
             nonNullable: true,
             validators: [Validators.required, Validators.maxLength(500)],
         }),
-        requirements: new FormArray<FormGroup>([]),
+        requirements: new FormArray<FormControl<string>>([]),
     });
 
     addRequirement() {
@@ -55,7 +57,30 @@ export class AddOpenPositionModalComponent {
         this.addRequirement();
     }
 
-    sendAddOpenPositionRequest() {
+    addOpenPosition() {
         console.log(this.addOpenPositionForm);
+
+        const newOpenPositionDto = new NewOpenPositionDto({
+            name: this.addOpenPositionForm.controls.positionName.value,
+            description: this.addOpenPositionForm.controls.description.value,
+            requirements: [],
+        });
+
+        for (let i = 0; i < this.requirements.length; ++i) {
+            newOpenPositionDto.requirements.push(
+                this.addOpenPositionForm.controls.requirements
+                    .at(i)
+                    .get('newRequirement')?.value
+            );
+        }
+
+        console.log(newOpenPositionDto);
+
+        this.addOpenPositionForm.reset();
+        this.newOpenPosition.emit(newOpenPositionDto);
+    }
+
+    modalClosed() {
+        this.addOpenPositionForm.reset();
     }
 }

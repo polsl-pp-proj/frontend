@@ -42,4 +42,8 @@ export class MessageModalComponent {
         );
         this.modalSerivce.updateModalState(this.modalName, 'close');
     }
+
+    modalClosed() {
+        this.messageForm.reset();
+    }
 }

@@ -36,4 +36,8 @@ export class RejectProjectModalComponent implements OnInit {
     }
 
     sendRejectRequest() {}
+
+    modalClosed() {
+        this.rejectProjectForm.reset();
+    }
 }

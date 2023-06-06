@@ -35,3 +35,15 @@ app-input {
     margin: auto;
     align-self: center;
 }
+
+.empty-requirements {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+
+    app-button {
+        margin-left: calc(var(--padding) / 3);
+    }
+
+    margin-bottom: calc(var(--padding) / 2);
+}
