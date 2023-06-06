@@ -37,6 +37,7 @@ import { HelpModule } from './modules/help/help.module';
 import { HelpComponent } from './components/help/help.component';
 import { OrganizationModule } from './modules/organization/organization.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PaymentModalComponent } from './components/modals/payment-modal/payment-modal.component';
 import { RemoveOrganizationMembersModalComponent } from './components/modals/remove-organization-members-modal/remove-organization-members-modal.component';
 import { AddOrganizationMembersModalComponent } from './components/modals/add-organization-members-modal/add-organization-members-modal.component';
 import { AddOpenPositionModalComponent } from './components/modals/add-open-position-modal/add-open-position-modal.component';
@@ -45,6 +46,7 @@ import { ChangeablePhotoGalleryComponent } from './components/changeable-photo-g
 import { AddProjectPageComponent } from './views/user/add-project-page/add-project-page.component';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { ImageCropperModalComponent } from './components/modals/image-cropper-modal/image-cropper-modal.component';
+import { MessageModalComponent } from './components/modals/message-modal/message-modal.component';
 
 @NgModule({
     declarations: [
@@ -74,6 +76,7 @@ import { ImageCropperModalComponent } from './components/modals/image-cropper-mo
         HelpComponent,
         CreateOrganizationModalComponent,
         MyAccountPageComponent,
+        PaymentModalComponent,
         RemoveOrganizationMembersModalComponent,
         AddOrganizationMembersModalComponent,
         AddOpenPositionModalComponent,
@@ -81,6 +84,7 @@ import { ImageCropperModalComponent } from './components/modals/image-cropper-mo
         ChangeablePhotoGalleryComponent,
         AddProjectPageComponent,
         ImageCropperModalComponent,
+        MessageModalComponent,
     ],
     imports: [
         BrowserModule,

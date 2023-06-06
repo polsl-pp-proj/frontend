@@ -1,16 +1,16 @@
 .container {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     gap: var(--padding);
 }
 
 form {
     display: flex;
     flex-direction: column;
-    justify-content: start;
+    gap: calc(var(--padding) / 2);
 }
 
-app-button {
-    align-self: center;
+.projectName {
+    font-style: italic;
+    font-weight: 500;
 }

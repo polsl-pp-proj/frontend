@@ -1,0 +1,45 @@
+<app-base-modal
+    modalTitle="Wesprzyj projekt"
+    [modalName]="modalName"
+    transitionDuration="200ms"
+    [closable]="true"
+>
+    <div class="container">
+        <div class="description">
+            Właśnie wspierasz projekt
+            <span class="projectName">{{ this.projectName + "." }}</span>
+            Twoja darowizna może być imienna, bądź anonimowa. Możesz wesprzeć
+            projekt dowolną kwotą.
+        </div>
+        <form [formGroup]="paymentForm">
+            <div class="amount-container">
+                <app-input
+                    name="amount"
+                    [formControl]="paymentForm.controls.amount"
+                    [errors]="paymentForm.controls.amount.errors"
+                    [errorMessages]="{
+                        required: 'Wprowadź kwotę darowizny',
+                        pattern: 'Wprowadź poprawną kwotę',
+                        min: 'Kwota darowizny musi być większa niż 0 PLN'
+                    }"
+                    >Kwota darowizny (w PLN)</app-input
+                >
+            </div>
+            <div class="checkbox-container">
+                <app-input
+                    type="checkbox"
+                    name="anonymous"
+                    [formControl]="paymentForm.controls.anonymous"
+                    [displayErrors]="false"
+                    >Chcę, aby moja darowizna była anonimowa</app-input
+                >
+            </div>
+        </form>
+        <app-button
+            type="color"
+            [disabled]="!paymentForm.valid"
+            (click)="sendPaymentRequest()"
+            >Wyślij darowiznę</app-button
+        >
+    </div>
+</app-base-modal>

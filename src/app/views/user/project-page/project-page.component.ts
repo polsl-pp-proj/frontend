@@ -5,11 +5,13 @@ import {
     OnInit,
     ViewChild,
 } from '@angular/core';
+import { MessageModalComponent } from 'src/app/components/modals/message-modal/message-modal.component';
 import { OpenPositionDto } from 'src/app/dtos/open-position-dto';
 import { PaymentDto } from 'src/app/dtos/payment-dto';
 import { ProjectDto } from 'src/app/dtos/project-dto';
 import { AssetType } from 'src/app/enums/asset-type.enum';
 import { HelpService } from 'src/app/modules/help/services/help.service';
+import { ModalService } from 'src/app/modules/modal/services/modal.service';
 import Swiper from 'swiper';
 
 @Component({
@@ -123,9 +125,19 @@ export class ProjectPageComponent implements OnInit {
         },
     ];
 
-    constructor(private readonly helpService: HelpService) {}
+    constructor(
+        private readonly helpService: HelpService,
+        private readonly modalService: ModalService
+    ) {}
 
     ngOnInit(): void {
         this.helpService.registerPageHelp('user/project-page');
+    }
+
+    openMessageModal() {
+        this.modalService.updateModalState(
+            MessageModalComponent.ModalName,
+            'open'
+        );
     }
 }
