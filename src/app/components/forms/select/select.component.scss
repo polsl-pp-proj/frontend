@@ -4,7 +4,7 @@
     &.ng-dirty {
         &.ng-invalid {
             .field {
-                border-color: var(--danger);
+                border-color: var(--danger-100);
             }
         }
 
@@ -71,7 +71,7 @@
 .error-message {
     margin-top: 0.3125rem;
     font-size: 0.75rem;
-    color: var(--danger);
+    color: var(--danger-100);
     font-weight: 600;
     margin-left: calc(var(--input-height) / 2);
 }

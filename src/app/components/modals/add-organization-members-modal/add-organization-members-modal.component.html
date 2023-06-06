@@ -3,6 +3,7 @@
     [modalName]="modalName"
     transitionDuration="200ms"
     [closable]="true"
+    (closed)="modalClosed()"
 >
     <div class="container">
         <div class="form-container" [formGroup]="addOrganizationMemberForm">
@@ -36,10 +37,9 @@
                         <app-button
                             *ngIf="newMembers.length > 1"
                             (click)="removeMemberRow(i)"
-                            type="color"
+                            type="danger"
                             >-</app-button
                         >
-                        <!-- Zmienić po wprowadzeniu czerwonego koloru przycisku -->
                     </div>
                 </ng-container>
             </ng-container>
@@ -49,7 +49,7 @@
             <app-button
                 (click)="sendAddRequest()"
                 type="color"
-                [disabled]="!addOrganizationMemberForm.valid"
+                [disabled]="!addOrganizationMemberForm.valid || inTransit"
                 >Dodaj</app-button
             >
         </div>
