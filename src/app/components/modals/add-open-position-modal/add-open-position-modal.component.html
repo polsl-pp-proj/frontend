@@ -21,14 +21,30 @@
                 [errors]="addOpenPositionForm.controls.description.errors"
                 [errorMessages]="{
                     required: 'Pole nie może być puste',
-                    maxLength: 'Opis jest zbyt długi'
+                    maxlength: 'Opis jest zbyt długi'
                 }"
                 type="multiline"
                 >Opis stanowiska</app-input
             >
             <div class="requirements">
                 <ng-container formArrayName="requirements">
-                    <label class="requirements-label">Wymagania</label>
+                    <label
+                        *ngIf="requirements.length > 0"
+                        class="requirements-label"
+                        >Wymagania</label
+                    >
+                    <div
+                        *ngIf="requirements.length == 0"
+                        class="empty-requirements"
+                    >
+                        <h3>Wymagania</h3>
+                        <app-button
+                            *ngIf="requirements.length == 0"
+                            type="color"
+                            (click)="addRequirement()"
+                            >+</app-button
+                        >
+                    </div>
                     <ng-container
                         *ngFor="
                             let requirement of requirements.controls;
@@ -66,7 +82,7 @@
             class="add-button"
             type="color"
             [disabled]="!addOpenPositionForm.valid"
-            (click)="sendAddOpenPositionRequest()"
+            (click)="addOpenPosition()"
             >Dodaj</app-button
         >
     </div>
