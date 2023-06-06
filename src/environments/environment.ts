@@ -5,6 +5,7 @@
 export const environment = {
     production: false,
     apiUrl: 'https://dev-api.studenthub.edu.eu.org', // TODO: set valid development API URL
+    remoteAssetsPath: 'https://dev-api.studenthub.edu.eu.org/assets',
 };
 
 /*
