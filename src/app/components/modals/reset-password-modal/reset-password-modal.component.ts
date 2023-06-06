@@ -64,4 +64,8 @@ export class ResetPasswordModalComponent implements OnInit {
                 });
         }
     }
+
+    modalClosed() {
+        this.resetPasswordForm.reset();
+    }
 }

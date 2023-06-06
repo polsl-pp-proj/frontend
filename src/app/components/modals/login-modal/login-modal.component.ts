@@ -66,4 +66,8 @@ export class LoginModalComponent {
     openResetPassword() {
         this.modalService.updateModalState('reset-password-modal', 'open');
     }
+
+    modalClosed() {
+        this.loginForm.reset();
+    }
 }

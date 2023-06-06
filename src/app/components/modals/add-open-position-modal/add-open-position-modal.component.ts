@@ -79,4 +79,8 @@ export class AddOpenPositionModalComponent {
         this.addOpenPositionForm.reset();
         this.newOpenPosition.emit(newOpenPositionDto);
     }
+
+    modalClosed() {
+        this.addOpenPositionForm.reset();
+    }
 }

@@ -80,4 +80,8 @@ export class SetNewPasswordModalComponent {
                 });
         }
     }
+
+    modalClosed() {
+        this.setNewPasswordForm.reset();
+    }
 }
