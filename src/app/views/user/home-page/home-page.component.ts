@@ -144,13 +144,6 @@ export class HomePageComponent implements OnInit {
         this.router.navigate(['project', projectId]);
     }
 
-    openNotification() {
-        this.modalService.updateModalState(
-            NotificationModalComponent.ModalName,
-            'open'
-        );
-    }
-
     replaceState() {
         this.location.replaceState('/', '');
     }
