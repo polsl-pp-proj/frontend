@@ -3,6 +3,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { NotificationModalComponent } from 'src/app/components/modals/notification-modal/notification-modal.component';
 import { SetNewPasswordModalComponent } from 'src/app/components/modals/set-new-password-modal/set-new-password-modal.component';
 import { AuthService } from 'src/app/modules/auth/services/auth.service';
 import { SignupService } from 'src/app/modules/auth/services/signup.service';
@@ -141,6 +142,13 @@ export class HomePageComponent implements OnInit {
 
     visitProject(projectId: number) {
         this.router.navigate(['project', projectId]);
+    }
+
+    openNotification() {
+        this.modalService.updateModalState(
+            NotificationModalComponent.ModalName,
+            'open'
+        );
     }
 
     replaceState() {

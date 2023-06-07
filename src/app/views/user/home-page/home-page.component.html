@@ -12,6 +12,9 @@
     </div>
 
     <h1 class="most-liked-header">Najbardziej lubiane</h1>
+    <app-button type="color" (click)="openNotification()"
+        >Test powiadomień</app-button
+    >
     <div class="project-container">
         <app-project-card
             *ngFor="let project of test_projects"

@@ -1,0 +1,19 @@
+.container {
+    margin: 5px auto;
+}
+
+article {
+    margin-top: 10px;
+}
+
+.buttons-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 15px;
+    justify-content: center;
+
+    app-button {
+        margin-bottom: 15px;
+    }
+}

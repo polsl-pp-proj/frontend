@@ -1,0 +1,21 @@
+<app-base-modal
+    [modalTitle]="modalTitle"
+    [modalName]="modalName"
+    transitionDuration="200ms"
+    [closable]="true"
+>
+    <div class="container">
+        <h3>Tytuł powiadomienia</h3>
+        <article>
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deserunt,
+            fugit ratione? Ut natus quis nisi ratione aperiam quaerat quisquam
+            sunt at praesentium? Voluptate quibusdam, cupiditate voluptates
+            corporis possimus ut expedita.
+        </article>
+    </div>
+    <div class="buttons-container">
+        <app-button type="color">Mark as read</app-button>
+        <app-button type="translucent">Remove</app-button>
+        <app-button type="color">Answer</app-button>
+    </div>
+</app-base-modal>
