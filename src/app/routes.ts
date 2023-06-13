@@ -47,6 +47,7 @@ const customRouteMatcher = (
 };
 
 export const routes: Routes = [
+    { path: 'users', component: ManageUsersPageComponent },
     { path: '404', component: NotFoundPageComponent },
     {
         path: '',
