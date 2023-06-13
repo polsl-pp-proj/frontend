@@ -30,6 +30,9 @@ import { RejectProjectModalComponent } from './components/modals/reject-project-
 import { ResetPasswordModalComponent } from './components/modals/reset-password-modal/reset-password-modal.component';
 import { CreateOrganizationModalComponent } from './components/modals/create-organization-modal/create-organization-modal.component';
 import { ToastrModule } from 'ngx-toastr';
+import { ProjectsModerationPageComponent } from './views/admin/projects-moderation-page/projects-moderation-page.component';
+import { ProjectModerationPageComponent } from './views/admin/project-moderation-page/project-moderation-page.component';
+import { AdminComponent } from './views/admin/admin.component';
 import { SetNewPasswordModalComponent } from './components/modals/set-new-password-modal/set-new-password-modal.component';
 import { MyAccountPageComponent } from './views/user/my-account-page/my-account-page.component';
 import { MarkdownModule } from './modules/markdown/markdown.module';
@@ -51,6 +54,9 @@ import { NotificationModalComponent } from './components/modals/notification-mod
 
 @NgModule({
     declarations: [
+        AdminComponent,
+        ProjectModerationPageComponent,
+        ProjectsModerationPageComponent,
         AppComponent,
         BaseModalComponent,
         ButtonComponent,

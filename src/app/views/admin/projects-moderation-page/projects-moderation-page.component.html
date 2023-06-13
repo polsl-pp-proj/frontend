@@ -1,0 +1,13 @@
+<app-page>
+    <h1 pageHeader>Moderuj projekty</h1>
+    <div class="project-container">
+        <app-project-card
+            *ngFor="let project of test_projects"
+            class="card"
+            projectName="{{ project.name }}"
+            projectDescription="{{ project.description }}"
+            imageUrl="{{ project.image_url }}"
+        ></app-project-card>
+    </div>
+
+</app-page>
