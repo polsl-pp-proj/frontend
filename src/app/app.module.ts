@@ -47,6 +47,7 @@ import { AddProjectPageComponent } from './views/user/add-project-page/add-proje
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { ImageCropperModalComponent } from './components/modals/image-cropper-modal/image-cropper-modal.component';
 import { MessageModalComponent } from './components/modals/message-modal/message-modal.component';
+import { NotificationModalComponent } from './components/modals/notification-modal/notification-modal.component';
 
 @NgModule({
     declarations: [
@@ -85,6 +86,7 @@ import { MessageModalComponent } from './components/modals/message-modal/message
         AddProjectPageComponent,
         ImageCropperModalComponent,
         MessageModalComponent,
+        NotificationModalComponent,
     ],
     imports: [
         BrowserModule,
