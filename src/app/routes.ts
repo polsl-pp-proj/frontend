@@ -59,12 +59,12 @@ export const routes: Routes = [
         component: AdminComponent,
         children: [
             {
-                path: 'moderate/project/:projectId',
-                component: ProjectModerationPageComponent,
-            },
-            {
                 path: 'moderate/projects',
                 component: ProjectsModerationPageComponent,
+            },
+            {
+                path: 'moderate/project/:projectId',
+                component: ProjectModerationPageComponent,
             },
         ],
     },
