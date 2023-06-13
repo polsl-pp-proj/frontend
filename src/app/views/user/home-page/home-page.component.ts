@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { NotificationModalComponent } from 'src/app/components/modals/notification-modal/notification-modal.component';
 import { SetNewPasswordModalComponent } from 'src/app/components/modals/set-new-password-modal/set-new-password-modal.component';
+import { VerifyStudentModalComponent } from 'src/app/components/modals/verify-student-modal/verify-student-modal.component';
 import { AuthService } from 'src/app/modules/auth/services/auth.service';
 import { SignupService } from 'src/app/modules/auth/services/signup.service';
 import { DonationService } from 'src/app/modules/donation/services/donation.service';
@@ -146,5 +147,12 @@ export class HomePageComponent implements OnInit {
 
     replaceState() {
         this.location.replaceState('/', '');
+    }
+
+    testVerifyModal() {
+        this.modalService.updateModalState(
+            VerifyStudentModalComponent.ModalName,
+            'open'
+        );
     }
 }
