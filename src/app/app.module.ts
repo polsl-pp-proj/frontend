@@ -29,15 +29,14 @@ import { RejectProjectModalComponent } from './components/modals/reject-project-
 import { ResetPasswordModalComponent } from './components/modals/reset-password-modal/reset-password-modal.component';
 import { CreateOrganizationModalComponent } from './components/modals/create-organization-modal/create-organization-modal.component';
 import { ToastrModule } from 'ngx-toastr';
-<<<<<<< HEAD
 import { ProjectsModerationPageComponent } from './views/admin/projects-moderation-page/projects-moderation-page.component';
-=======
 import { ProjectModerationPageComponent } from './views/admin/project-moderation-page/project-moderation-page.component';
 import { AdminComponent } from './views/admin/admin.component';
->>>>>>> 4057851895b21048259718ed67d4866b91ec8cc4
 
 @NgModule({
     declarations: [
+        AdminComponent,
+        ProjectModerationPageComponent,
         AppComponent,
         BaseModalComponent,
         ButtonComponent,
@@ -60,12 +59,6 @@ import { AdminComponent } from './views/admin/admin.component';
         RejectProjectModalComponent,
         ResetPasswordModalComponent,
         CreateOrganizationModalComponent,
-<<<<<<< HEAD
-        ProjectsModerationPageComponent,
-=======
-        ProjectModerationPageComponent,
-        AdminComponent,
->>>>>>> 4057851895b21048259718ed67d4866b91ec8cc4
     ],
     imports: [
         BrowserModule,
