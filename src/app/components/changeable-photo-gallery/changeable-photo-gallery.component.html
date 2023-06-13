@@ -1,0 +1,34 @@
+<div class="main-container">
+    <div class="main-asset">
+        <app-index-changeable-photo
+            *ngIf="assets.length > 0"
+            class="thumbnail"
+            [asset]="normalizedAssets[0]"
+            [showDeleteAsset]="false"
+        ></app-index-changeable-photo>
+        <div *ngIf="assets.length == 0" class="main-asset">
+            <h3>Galeria jest pusta</h3>
+        </div>
+    </div>
+    <div class="assetGallery" *ngIf="assets.length > 1">
+        <app-index-changeable-photo
+            *ngFor="
+                let asset of normalizedAssets | slice : 1;
+                index as i;
+                last as last
+            "
+            [asset]="asset"
+            [showMoveLeft]="true"
+            [showMoveRight]="!last"
+            [showDeleteAsset]="true"
+            (moveLeft)="moveAssetLeft(i + 1)"
+            (moveRight)="moveAssetRight(i + 1)"
+            (deleteAsset)="deleteAsset(i + 1)"
+        ></app-index-changeable-photo>
+    </div>
+</div>
+
+<app-image-cropper-modal
+    [imageFile]="currentAsset"
+    (imageSubmitted)="addImage($event)"
+></app-image-cropper-modal>

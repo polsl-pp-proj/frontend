@@ -35,7 +35,7 @@ export class ModalService {
             }
             return;
         }
-        throw new Error('Modal does not exist');
+        throw new Error(`Modal does not exist: ${name}`);
     }
 
     unregisterModal(name: string) {

@@ -4,7 +4,7 @@ import { AppModule } from './app/app.module';
 import { LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localePl from '@angular/common/locales/pl';
-registerLocaleData(localePl);
+registerLocaleData(localePl, 'pl');
 
 platformBrowserDynamic()
     .bootstrapModule(AppModule, {

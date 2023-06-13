@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/modules/auth/services/auth.service';
+import { ModalService } from 'src/app/modules/modal/services/modal.service';
 
 @Component({
     selector: 'app-reset-password-modal',
@@ -10,6 +11,11 @@ import { AuthService } from 'src/app/modules/auth/services/auth.service';
     styleUrls: ['./reset-password-modal.component.scss'],
 })
 export class ResetPasswordModalComponent implements OnInit {
+    static ModalName = 'reset-password-modal';
+    get modalName() {
+        return ResetPasswordModalComponent.ModalName;
+    }
+
     resetPasswordForm = new FormGroup({
         emailAddress: new FormControl<string>('', {
             nonNullable: true,
@@ -17,17 +23,18 @@ export class ResetPasswordModalComponent implements OnInit {
         }),
     });
 
-    sent = false;
+    inTransit = false;
 
     constructor(
         private readonly authService: AuthService,
-        private readonly toastrService: ToastrService
+        private readonly toastrService: ToastrService,
+        private readonly modalService: ModalService
     ) {}
 
     ngOnInit(): void {}
 
     onRequestPasswordReset() {
-        this.sent = true;
+        this.inTransit = true;
 
         if (this.resetPasswordForm.valid) {
             this.authService
@@ -40,11 +47,15 @@ export class ResetPasswordModalComponent implements OnInit {
                             'Jeśli podany adres email jest przypisany do użytkownika, to zostanie na niego wysłana wiadomość z linkiem do zresetowania hasła.',
                             'Wiadomość wysłana'
                         );
-                        this.sent = false;
+                        this.modalService.updateModalState(
+                            this.modalName,
+                            'close'
+                        );
+                        this.inTransit = false;
                         this.resetPasswordForm.reset();
                     },
                     error: (err: HttpErrorResponse) => {
-                        this.sent = false;
+                        this.inTransit = false;
                         this.toastrService.error(
                             'Podczas próby wysłania linku resetowania hasła wystąpił błąd. Spróbuj ponownie później.',
                             'Wystąpił błąd'
@@ -52,5 +63,9 @@ export class ResetPasswordModalComponent implements OnInit {
                     },
                 });
         }
+    }
+
+    modalClosed() {
+        this.resetPasswordForm.reset();
     }
 }

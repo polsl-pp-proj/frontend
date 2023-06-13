@@ -1,0 +1,25 @@
+<app-base-modal
+    modalTitle="Usuń członków organizacji"
+    [modalName]="this.modalName"
+    transitionDuration="200ms"
+    [closable]="true"
+    (closed)="modalClosed()"
+>
+    <div class="container">
+        <form [formGroup]="removeOrganizationMembersForm">
+            <app-select
+                [multiple]="true"
+                name="membersToRemove"
+                [formControl]="removeOrganizationMembersForm.controls.members"
+                [options]="membersToDisplay"
+                >Członkowie</app-select
+            >
+        </form>
+        <app-button
+            type="color"
+            (click)="sendRemoveOrganizationMembersRequest()"
+            [disabled]="removeOrganizationMembersForm.invalid || inTransit"
+            >Usuń</app-button
+        >
+    </div>
+</app-base-modal>

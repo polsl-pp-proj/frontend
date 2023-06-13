@@ -14,6 +14,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NotFoundPageComponent } from './views/not-found-page/not-found-page.component';
 import { PageComponent } from './views/page/page.component';
 import { SignupModalComponent } from './components/modals/signup-modal/signup-modal.component';
+import { OrganizationPageComponent } from './views/user/organization-page/organization-page.component';
 import { AboutPageComponent } from './views/user/about-page/about-page.component';
 import { HomePageComponent } from './views/user/home-page/home-page.component';
 import { AuthModule } from './modules/auth/auth.module';
@@ -32,6 +33,24 @@ import { ToastrModule } from 'ngx-toastr';
 import { ProjectsModerationPageComponent } from './views/admin/projects-moderation-page/projects-moderation-page.component';
 import { ProjectModerationPageComponent } from './views/admin/project-moderation-page/project-moderation-page.component';
 import { AdminComponent } from './views/admin/admin.component';
+import { SetNewPasswordModalComponent } from './components/modals/set-new-password-modal/set-new-password-modal.component';
+import { MyAccountPageComponent } from './views/user/my-account-page/my-account-page.component';
+import { MarkdownModule } from './modules/markdown/markdown.module';
+import { HelpModule } from './modules/help/help.module';
+import { HelpComponent } from './components/help/help.component';
+import { OrganizationModule } from './modules/organization/organization.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PaymentModalComponent } from './components/modals/payment-modal/payment-modal.component';
+import { RemoveOrganizationMembersModalComponent } from './components/modals/remove-organization-members-modal/remove-organization-members-modal.component';
+import { AddOrganizationMembersModalComponent } from './components/modals/add-organization-members-modal/add-organization-members-modal.component';
+import { AddOpenPositionModalComponent } from './components/modals/add-open-position-modal/add-open-position-modal.component';
+import { IndexChangeablePhotoComponent } from './components/index-changeable-photo/index-changeable-photo.component';
+import { ChangeablePhotoGalleryComponent } from './components/changeable-photo-gallery/changeable-photo-gallery.component';
+import { AddProjectPageComponent } from './views/user/add-project-page/add-project-page.component';
+import { ImageCropperModule } from 'ngx-image-cropper';
+import { ImageCropperModalComponent } from './components/modals/image-cropper-modal/image-cropper-modal.component';
+import { MessageModalComponent } from './components/modals/message-modal/message-modal.component';
+import { NotificationModalComponent } from './components/modals/notification-modal/notification-modal.component';
 
 @NgModule({
     declarations: [
@@ -50,6 +69,7 @@ import { AdminComponent } from './views/admin/admin.component';
         PageComponent,
         SignupModalComponent,
         AboutPageComponent,
+        OrganizationPageComponent,
         HomePageComponent,
         SearchPageComponent,
         NavbarComponent,
@@ -59,7 +79,20 @@ import { AdminComponent } from './views/admin/admin.component';
         UserComponent,
         RejectProjectModalComponent,
         ResetPasswordModalComponent,
+        SetNewPasswordModalComponent,
+        HelpComponent,
         CreateOrganizationModalComponent,
+        MyAccountPageComponent,
+        PaymentModalComponent,
+        RemoveOrganizationMembersModalComponent,
+        AddOrganizationMembersModalComponent,
+        AddOpenPositionModalComponent,
+        IndexChangeablePhotoComponent,
+        ChangeablePhotoGalleryComponent,
+        AddProjectPageComponent,
+        ImageCropperModalComponent,
+        MessageModalComponent,
+        NotificationModalComponent,
     ],
     imports: [
         BrowserModule,
@@ -71,6 +104,11 @@ import { AdminComponent } from './views/admin/admin.component';
         AuthModule,
         IntercomModule,
         ToastrModule.forRoot({ autoDismiss: true, timeOut: 5000 }),
+        MarkdownModule,
+        HelpModule,
+        OrganizationModule,
+        BrowserAnimationsModule,
+        ImageCropperModule,
     ],
     providers: [],
     bootstrap: [AppComponent],

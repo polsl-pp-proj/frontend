@@ -6,6 +6,7 @@ import {
     UrlSegmentGroup,
 } from '@angular/router';
 import { NotFoundPageComponent } from './views/not-found-page/not-found-page.component';
+import { OrganizationPageComponent } from './views/user/organization-page/organization-page.component';
 import { AboutPageComponent } from './views/user/about-page/about-page.component';
 import { HomePageComponent } from './views/user/home-page/home-page.component';
 import { SearchPageComponent } from './views/user/search-page/search-page.component';
@@ -14,6 +15,8 @@ import { UserComponent } from './views/user/user.component';
 import { ProjectsModerationPageComponent } from './views/admin/projects-moderation-page/projects-moderation-page.component';
 import { AdminComponent } from './views/admin/admin.component';
 import { ProjectModerationPageComponent } from './views/admin/project-moderation-page/project-moderation-page.component';
+import { MyAccountPageComponent } from './views/user/my-account-page/my-account-page.component';
+import { AddProjectPageComponent } from './views/user/add-project-page/add-project-page.component';
 
 const customRouteMatcher = (
     segments: UrlSegment[],
@@ -51,7 +54,13 @@ export const routes: Routes = [
             { path: '', component: HomePageComponent },
             { path: 'about', component: AboutPageComponent },
             { path: 'search', component: SearchPageComponent },
+            { path: 'project/add', component: AddProjectPageComponent },
             { path: 'project/:projectId', component: ProjectPageComponent },
+            { path: 'account', component: MyAccountPageComponent },
+            {
+                path: 'organization/:organizationId',
+                component: OrganizationPageComponent,
+            },
         ],
     },
     {

@@ -1,0 +1,52 @@
+<app-base-modal
+    modalTitle="Skontaktuj się"
+    [modalName]="modalName"
+    transitionDuration="200ms"
+    [closable]="true"
+    (closed)="modalClosed()"
+>
+    <form [formGroup]="messageForm">
+        <app-input
+            name="subject"
+            [formControl]="messageForm.controls.subject"
+            [errors]="messageForm.controls.subject.errors"
+            [errorMessages]="{
+                required: 'Pole nie może być puste',
+                maxlength: 'Temat jest zbyt długi'
+            }"
+            >Temat</app-input
+        >
+        <div class="message-container">
+            <app-input
+                name="message"
+                [formControl]="messageForm.controls.message"
+                [errors]="messageForm.controls.message.errors"
+                [errorMessages]="{
+                    required: 'Pole nie może być puste',
+                    maxlength: 'Wiadomość jest zbyt długa'
+                }"
+                type="multiline"
+                >Wiadomość</app-input
+            >
+            <span
+                class="char-counter"
+                [ngClass]="{
+                    limit:
+                        messageForm.controls.message.value.length >
+                        this.messageMaxLength
+                }"
+            >
+                {{ messageForm.controls.message.value.length }}/{{
+                    this.messageMaxLength
+                }}
+            </span>
+        </div>
+
+        <app-button
+            type="color"
+            [disabled]="messageForm.invalid"
+            (click)="sendMessage()"
+            >Wyślij</app-button
+        >
+    </form>
+</app-base-modal>

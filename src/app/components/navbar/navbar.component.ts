@@ -4,6 +4,8 @@ import { Subscription, skipWhile } from 'rxjs';
 import { AuthService } from 'src/app/modules/auth/services/auth.service';
 import { IconVaultService } from 'src/app/modules/icon-vault/services/icon-vault.service';
 import { ModalService } from 'src/app/modules/modal/services/modal.service';
+import { LoginModalComponent } from '../modals/login-modal/login-modal.component';
+import { CreateOrganizationModalComponent } from '../modals/create-organization-modal/create-organization-modal.component';
 
 @Component({
     selector: 'app-navbar',
@@ -15,6 +17,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     xIcon!: SafeHtml;
 
     logged: boolean = false;
+    isVerifiedStudent: boolean = false;
     expandedLeftMenu: boolean = false;
     expandedRightMenu: boolean = false;
 
@@ -44,6 +47,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
             .subscribe((payload) => {
                 if (payload) {
                     this.logged = true;
+                    this.isVerifiedStudent = payload.isVerifiedStudent;
                     this.initials = payload.firstName[0] + payload.lastName[0];
                     return;
                 }
@@ -55,7 +59,17 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
 
     openLogin() {
-        this.modalService.updateModalState('login-modal', 'open');
+        this.modalService.updateModalState(
+            LoginModalComponent.ModalName,
+            'open'
+        );
+    }
+
+    openCreateOrganization() {
+        this.modalService.updateModalState(
+            CreateOrganizationModalComponent.ModalName,
+            'open'
+        );
     }
 
     logout() {

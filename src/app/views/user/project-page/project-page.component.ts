@@ -1,16 +1,25 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import {
+    AfterViewInit,
+    Component,
+    ElementRef,
+    OnInit,
+    ViewChild,
+} from '@angular/core';
+import { PaymentModalComponent } from 'src/app/components/modals/payment-modal/payment-modal.component';
+import { MessageModalComponent } from 'src/app/components/modals/message-modal/message-modal.component';
 import { OpenPositionDto } from 'src/app/dtos/open-position-dto';
 import { PaymentDto } from 'src/app/dtos/payment-dto';
 import { ProjectDto } from 'src/app/dtos/project-dto';
 import { AssetType } from 'src/app/enums/asset-type.enum';
-import Swiper from 'swiper';
+import { HelpService } from 'src/app/modules/help/services/help.service';
+import { ModalService } from 'src/app/modules/modal/services/modal.service';
 
 @Component({
     selector: 'app-project-page',
     templateUrl: './project-page.component.html',
     styleUrls: ['./project-page.component.scss'],
 })
-export class ProjectPageComponent {
+export class ProjectPageComponent implements OnInit {
     projectDto: ProjectDto = {
         id: 5,
         name: 'Projekt rakiety studenckiej',
@@ -116,5 +125,26 @@ export class ProjectPageComponent {
         },
     ];
 
-    constructor() {}
+    constructor(
+        private readonly helpService: HelpService,
+        private readonly modalService: ModalService
+    ) {}
+
+    ngOnInit(): void {
+        this.helpService.registerPageHelp('user/project-page');
+    }
+
+    makeDonation() {
+        this.modalService.updateModalState(
+            PaymentModalComponent.ModalName,
+            'open'
+        );
+    }
+  
+    openMessageModal() {
+        this.modalService.updateModalState(
+            MessageModalComponent.ModalName,
+            'open'
+        );
+    }
 }

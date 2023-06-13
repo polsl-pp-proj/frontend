@@ -4,6 +4,7 @@
     transitionDuration="200ms"
     [closable]="true"
     (submit)="login()"
+    (closed)="modalClosed()"
 >
     <form [formGroup]="loginForm">
         <app-input

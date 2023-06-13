@@ -7,6 +7,11 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
     styleUrls: ['./join-team-modal.component.scss'],
 })
 export class JoinTeamModalComponent implements OnInit {
+    static ModalName = 'join-team-modal';
+    get modalName() {
+        return JoinTeamModalComponent.ModalName;
+    }
+
     displayErrorMessage: boolean = false;
 
     projectName = 'Projekt zielonej architektury';
@@ -33,5 +38,9 @@ export class JoinTeamModalComponent implements OnInit {
 
     sendJoinRequest() {
         console.log(this.joinProjectForm.get('candidateSummary')?.value);
+    }
+
+    modalClosed() {
+        this.joinProjectForm.reset();
     }
 }

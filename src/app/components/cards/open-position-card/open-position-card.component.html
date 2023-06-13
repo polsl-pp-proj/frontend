@@ -8,7 +8,7 @@
             {{ requirement }}
         </li>
     </ul>
-    <app-button class="join-btn" type="color" (click)="join.emit()"
-        >Dołącz</app-button
-    >
+    <app-button class="trigger-btn" type="color" (click)="trigger.emit()">{{
+        buttonText
+    }}</app-button>
 </div>

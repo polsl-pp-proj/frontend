@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { SignupService } from 'src/app/modules/auth/services/signup.service';
 import { ModalService } from 'src/app/modules/modal/services/modal.service';
 import { mustMatch } from 'src/app/validators/must-match.validator';
@@ -11,6 +12,11 @@ import { mustMatch } from 'src/app/validators/must-match.validator';
     styleUrls: ['./signup-modal.component.scss'],
 })
 export class SignupModalComponent {
+    static ModalName = 'signup-modal';
+    get modalName() {
+        return SignupModalComponent.ModalName;
+    }
+
     signupForm = new FormGroup(
         {
             firstName: new FormControl<string>('', [Validators.required]),
@@ -19,8 +25,14 @@ export class SignupModalComponent {
                 Validators.required,
                 Validators.email,
             ]),
-            password: new FormControl<string>('', [Validators.required]),
-            repeatPassword: new FormControl<string>('', [Validators.required]),
+            password: new FormControl<string>('', [
+                Validators.required,
+                Validators.minLength(5),
+            ]),
+            repeatPassword: new FormControl<string>('', [
+                Validators.required,
+                Validators.minLength(5),
+            ]),
             acceptRules: new FormControl<boolean>(false, [
                 Validators.requiredTrue,
             ]),
@@ -30,7 +42,8 @@ export class SignupModalComponent {
 
     constructor(
         private readonly signupService: SignupService,
-        private readonly modalService: ModalService
+        private readonly modalService: ModalService,
+        private readonly toastrService: ToastrService
     ) {}
 
     signup() {
@@ -45,8 +58,12 @@ export class SignupModalComponent {
                 })
                 .subscribe({
                     next: () => {
+                        this.toastrService.success(
+                            'Potwierdź teraz rejestrację, klikając w link wiadomości, którą właśnie wysłaliśmy.',
+                            'Konto stworzone'
+                        );
                         this.modalService.updateModalState(
-                            'signup-modal',
+                            this.modalName,
                             'close'
                         );
                     },
@@ -55,5 +72,9 @@ export class SignupModalComponent {
                     },
                 });
         }
+    }
+
+    modalClosed() {
+        this.signupForm.reset();
     }
 }
