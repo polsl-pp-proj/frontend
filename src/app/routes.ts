@@ -77,7 +77,7 @@ export const routes: Routes = [
                 path: 'moderate/project/:projectId',
                 component: ProjectModerationPageComponent,
             },
-            { path: 'moderate/category', component: CategoryPageComponent },
+            { path: 'manage/category', component: CategoryPageComponent },
         ],
     },
     {
