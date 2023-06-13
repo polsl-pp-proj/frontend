@@ -26,3 +26,7 @@ app-page ::ng-deep {
 section:not(:last-of-type) {
     margin-bottom: var(--padding);
 }
+
+.button-margin {
+margin-top: 10px;
+}
