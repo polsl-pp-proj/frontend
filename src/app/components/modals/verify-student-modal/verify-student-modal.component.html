@@ -1,0 +1,21 @@
+<app-base-modal
+    modalTitle="Zweryfikuj status studenta"
+    [modalName]="modalName"
+    transitionDuration="200ms"
+    [closable]="true"
+>
+    <div class="container">
+        <form [formGroup]="form">
+            <app-select
+                [multiple]="false"
+                name="university"
+                formControlName="university"
+                [options]="universities"
+                [displayErrors]="false"
+                >Uczelnia</app-select
+            >
+            <app-input formControlName="email">Adres e-mail</app-input>
+            <app-button type="color">Zweryfikuj</app-button>
+        </form>
+    </div>
+</app-base-modal>
