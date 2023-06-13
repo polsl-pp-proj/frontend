@@ -25,7 +25,6 @@
                             >Zaakceptuj</app-button
                         >
                     </div>
-                    
                 </div>
             </div>
             <swiper-container
@@ -49,17 +48,13 @@
             {{ this.projectDto.description }}
         </div>
         <div class="open-positions">
-            <h2>Dołącz do organizacji</h2>
-            <h3>
-                Organizacja poszukuje osób, które pomogą w rozwinięciu projektu.
-            </h3>
+            <h2>Dostępne pozycje w organizacji</h2>
             <div class="open-positions-container">
                 <app-open-position-card
                     *ngFor="let position of openPositionDtos"
                     [positionName]="position.name"
                     [positionRequirements]="position.requirements"
                     [positionDescription]="position.description"
-                    
                 >
                 </app-open-position-card>
             </div>

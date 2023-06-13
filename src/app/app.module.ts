@@ -30,6 +30,7 @@ import { ResetPasswordModalComponent } from './components/modals/reset-password-
 import { CreateOrganizationModalComponent } from './components/modals/create-organization-modal/create-organization-modal.component';
 import { ToastrModule } from 'ngx-toastr';
 import { ProjectModerationPageComponent } from './views/admin/project-moderation-page/project-moderation-page.component';
+import { AdminComponent } from './views/admin/admin.component';
 
 @NgModule({
     declarations: [
@@ -56,6 +57,7 @@ import { ProjectModerationPageComponent } from './views/admin/project-moderation
         ResetPasswordModalComponent,
         CreateOrganizationModalComponent,
         ProjectModerationPageComponent,
+        AdminComponent,
     ],
     imports: [
         BrowserModule,

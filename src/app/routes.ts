@@ -12,6 +12,7 @@ import { SearchPageComponent } from './views/user/search-page/search-page.compon
 import { ProjectPageComponent } from './views/user/project-page/project-page.component';
 import { UserComponent } from './views/user/user.component';
 import { ProjectModerationPageComponent } from './views/admin/project-moderation-page/project-moderation-page.component';
+import { AdminComponent } from './views/admin/admin.component';
 
 const customRouteMatcher = (
     segments: UrlSegment[],
@@ -49,11 +50,17 @@ export const routes: Routes = [
             { path: '', component: HomePageComponent },
             { path: 'about', component: AboutPageComponent },
             { path: 'search', component: SearchPageComponent },
+            { path: 'project/:projectId', component: ProjectPageComponent },
+        ],
+    },
+    {
+        path: 'admin',
+        component: AdminComponent,
+        children: [
             {
                 path: 'moderate/project/:projectId',
                 component: ProjectModerationPageComponent,
             },
-            { path: 'project/:projectId', component: ProjectPageComponent },
         ],
     },
     {
