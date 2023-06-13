@@ -63,7 +63,7 @@ export const routes: Routes = [
                 component: ProjectModerationPageComponent,
             },
             {
-                path: 'moderate-projects',
+                path: 'moderate/projects',
                 component: ProjectsModerationPageComponent,
             },
         ],
