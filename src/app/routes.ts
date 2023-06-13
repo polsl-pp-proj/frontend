@@ -17,6 +17,7 @@ import { AdminComponent } from './views/admin/admin.component';
 import { ProjectModerationPageComponent } from './views/admin/project-moderation-page/project-moderation-page.component';
 import { MyAccountPageComponent } from './views/user/my-account-page/my-account-page.component';
 import { AddProjectPageComponent } from './views/user/add-project-page/add-project-page.component';
+import { CategoryPageComponent } from './views/category-page/category-page.component';
 
 const customRouteMatcher = (
     segments: UrlSegment[],
