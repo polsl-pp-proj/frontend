@@ -37,6 +37,7 @@ import { AdminComponent } from './views/admin/admin.component';
     declarations: [
         AdminComponent,
         ProjectModerationPageComponent,
+        ProjectsModerationPageComponent,
         AppComponent,
         BaseModalComponent,
         ButtonComponent,
