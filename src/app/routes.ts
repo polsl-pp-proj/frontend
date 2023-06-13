@@ -17,7 +17,7 @@ import { AdminComponent } from './views/admin/admin.component';
 import { ProjectModerationPageComponent } from './views/admin/project-moderation-page/project-moderation-page.component';
 import { MyAccountPageComponent } from './views/user/my-account-page/my-account-page.component';
 import { AddProjectPageComponent } from './views/user/add-project-page/add-project-page.component';
-import { CategoryPageComponent } from './views/category-page/category-page.component';
+import { CategoryPageComponent } from './views/admin/category-page/category-page.component';
 
 const customRouteMatcher = (
     segments: UrlSegment[],
@@ -47,7 +47,6 @@ const customRouteMatcher = (
 };
 
 export const routes: Routes = [
-    { path: 'category', component: CategoryPageComponent },
     { path: 'about', component: AboutPageComponent },
     { path: '404', component: NotFoundPageComponent },
     {
@@ -78,6 +77,7 @@ export const routes: Routes = [
                 path: 'moderate/project/:projectId',
                 component: ProjectModerationPageComponent,
             },
+            { path: 'moderate/category', component: CategoryPageComponent },
         ],
     },
     {
