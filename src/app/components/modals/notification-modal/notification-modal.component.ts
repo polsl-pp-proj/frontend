@@ -20,12 +20,12 @@ export class NotificationModalComponent {
                 return 'Wiadomość';
             case NotificationType.OpenPositionApplication:
                 return 'Aplikacja na pozycję';
-            case NotificationType.Answer:
+            case NotificationType.MessageAnswer:
                 return 'Odpowiedź';
             case NotificationType.ProjectDraftPublication:
                 return 'Potwierdzenie publikacji projektu';
             case NotificationType.ProjectDraftRejection:
-                return 'Odrzucenie publikacji projketu';
+                return 'Odrzucenie publikacji projektu';
         }
     }
 }
