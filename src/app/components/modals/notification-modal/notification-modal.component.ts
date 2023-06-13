@@ -15,6 +15,17 @@ export class NotificationModalComponent {
     @Input()
     type: NotificationType = NotificationType.ProjectDraftRejection;
     get modalTitle() {
-        return this.type;
+        switch (this.type) {
+            case NotificationType.ProjectMessage:
+                return 'Wiadomość';
+            case NotificationType.OpenPositionApplication:
+                return 'Aplikacja na pozycję';
+            case NotificationType.Answer:
+                return 'Odpowiedź';
+            case NotificationType.ProjectDraftPublication:
+                return 'Potwierdzenie publikacji projektu';
+            case NotificationType.ProjectDraftRejection:
+                return 'Odrzucenie publikacji projketu';
+        }
     }
 }
