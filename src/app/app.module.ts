@@ -51,10 +51,12 @@ import { ImageCropperModule } from 'ngx-image-cropper';
 import { ImageCropperModalComponent } from './components/modals/image-cropper-modal/image-cropper-modal.component';
 import { MessageModalComponent } from './components/modals/message-modal/message-modal.component';
 import { NotificationModalComponent } from './components/modals/notification-modal/notification-modal.component';
+import { ManageUsersPageComponent } from './views/admin/manage-users-page/manage-users-page.component';
 
 @NgModule({
     declarations: [
         AdminComponent,
+        ManageUsersPageComponent,
         ProjectModerationPageComponent,
         ProjectsModerationPageComponent,
         AppComponent,
