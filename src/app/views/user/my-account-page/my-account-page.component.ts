@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router, RouterEvent } from '@angular/router';
 import { Subscription, skipWhile } from 'rxjs';
-import { PastPaymentDto } from 'src/app/dtos/past-payment-dto';
+import { PastPaymentDto } from 'src/app/dtos/past-payment.dto';
 import { ProjectCardDto } from 'src/app/dtos/project-card.dto';
 import { AuthTokenPayloadDto } from 'src/app/modules/auth/dtos/auth-token-payload.dto';
 import { UserOrganizationDto } from 'src/app/modules/auth/dtos/user-organization.dto';

@@ -1,8 +1,8 @@
 import { AssetType } from '../enums/asset-type.enum';
-import { CategoryDto } from './category-dto';
+import { CategoryDto } from './category.dto';
 import { NewOpenPositionDto } from './new-open-position.dto';
-import { OpenPositionDto } from './open-position-dto';
-import { ProjectAssetDto } from './project-asset-dto';
+import { OpenPositionDto } from './open-position.dto';
+import { ProjectAssetDto } from './project-asset.dto';
 
 export class ProjectDto {
     id!: number;
