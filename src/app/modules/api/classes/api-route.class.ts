@@ -10,10 +10,15 @@ export class GeneralApiRoute {
     authorized!: boolean;
 }
 
+export type EventStreamApiRoute = Omit<GeneralApiRoute, 'method'> & {
+    method: 'EVENT';
+};
+
 export type ApiRoute =
     | (Omit<GeneralApiRoute, 'method'> & {
           method: BodilessRequestMethod;
       })
     | (Omit<GeneralApiRoute, 'method'> & {
           method: BodilyRequestMethod;
-      });
+      })
+    | EventStreamApiRoute;
