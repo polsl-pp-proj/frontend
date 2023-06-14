@@ -18,7 +18,8 @@
         </div>
     </section>
     <!-- Only for owners of the organization -->
-    <div class="container">
+
+    <div class="container" *ngIf="isMember">
         <h3>Zarządzaj organizacją</h3>
         <app-button type="color" class="button-margin"
             >Dodaj nowego członka organizacji</app-button
@@ -29,7 +30,7 @@
     </div>
 
     <!-- Only people that aren't member of the org should see this: -->
-    <section class="join-organization">
+    <section class="join-organization" *ngIf="isOwner">
         <div class="container">
             <h3>Dołącz do organizacji</h3>
             <h4>Organizacja poszukuje osób, które mogą pomóc w jej rozwoju.</h4>

@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { AuthTokenPayloadDto } from 'src/app/modules/auth/dtos/auth-token-payload.dto';
+import { AuthService } from 'src/app/modules/auth/services/auth.service';
+import { OrganizationMemberRole } from 'src/app/modules/organization/enums/organization-member-role.enum';
 import { OrganizationService } from 'src/app/modules/organization/services/organization.service';
 
 @Component({
@@ -11,6 +14,8 @@ import { OrganizationService } from 'src/app/modules/organization/services/organ
 export class OrganizationPageComponent implements OnInit {
     organizationId = -1;
     organizationName = 'Trwa ładowanie...';
+    isMember!: boolean;
+    isOwner!: boolean;
 
     test_projects = [
         {
@@ -76,7 +81,8 @@ export class OrganizationPageComponent implements OnInit {
         private readonly activatedRoute: ActivatedRoute,
         private readonly organizationService: OrganizationService,
         private readonly router: Router,
-        private readonly toastrService: ToastrService
+        private readonly toastrService: ToastrService,
+        private readonly authService: AuthService
     ) {}
 
     ngOnInit(): void {
@@ -89,6 +95,30 @@ export class OrganizationPageComponent implements OnInit {
                 .subscribe({
                     next: (organization) => {
                         this.organizationName = organization.name;
+                        this.authService.authTokenPayload.subscribe(
+                            (
+                                authTokenPayload:
+                                    | AuthTokenPayloadDto
+                                    | null
+                                    | undefined
+                            ) => {
+                                if (authTokenPayload) {
+                                    const userOrganization =
+                                        authTokenPayload.organizations.find(
+                                            (org: { organizationId: number }) =>
+                                                org.organizationId ===
+                                                this.organizationId
+                                        );
+
+                                    if (userOrganization) {
+                                        this.isMember = true;
+                                        this.isOwner =
+                                            userOrganization.role ===
+                                            OrganizationMemberRole.Owner;
+                                    }
+                                }
+                            }
+                        );
                     },
                     error: () => {
                         this.router.navigate(['/']);
@@ -98,6 +128,7 @@ export class OrganizationPageComponent implements OnInit {
                         );
                     },
                 });
+
             return;
         }
         this.router.navigate(['/']);
