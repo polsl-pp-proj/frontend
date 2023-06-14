@@ -4,8 +4,8 @@ export class NotificationDto {
     id!: number;
     subject!: string;
     message!: string;
-    projectId!: number;
-    organizationName!: string;
+    project!: { id: number; name: string };
+    organization!: { id: number; name: string };
     type!: NotificationType;
     seen!: boolean;
     createdAt!: number;
