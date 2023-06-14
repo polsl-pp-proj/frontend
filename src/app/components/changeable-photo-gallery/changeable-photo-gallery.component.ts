@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
-import { ProjectAssetDto } from 'src/app/dtos/project-asset-dto';
+import { ProjectAssetDto } from 'src/app/dtos/project-asset.dto';
 import { AssetType } from 'src/app/enums/asset-type.enum';
 import { ModalService } from 'src/app/modules/modal/services/modal.service';
 import { environment } from 'src/environments/environment';
