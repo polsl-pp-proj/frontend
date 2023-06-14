@@ -32,6 +32,20 @@ const customRouteMatcher = (
                 consumed: segments,
             };
         }
+    } else if (
+        segments[0] &&
+        segments[1] &&
+        segments[0].path === 'studentship' &&
+        segments[1].path === 'verification'
+    ) {
+        const email = segments[3],
+            token = segments[4];
+        if (segments[2] && segments[2].path === 'confirm' && email && token) {
+            route.redirectTo = `/?${segments[0].path}=true&${segments[2].path}=true&email=${email}&token=${token}`;
+            return {
+                consumed: segments,
+            };
+        }
     } else if (segments[0] && segments[0].path === 'reset-password') {
         const email = segments[1],
             token = segments[2];

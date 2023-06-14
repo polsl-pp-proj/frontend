@@ -7,6 +7,7 @@ import { NotificationModalComponent } from 'src/app/components/modals/notificati
 import { SetNewPasswordModalComponent } from 'src/app/components/modals/set-new-password-modal/set-new-password-modal.component';
 import { AuthService } from 'src/app/modules/auth/services/auth.service';
 import { SignupService } from 'src/app/modules/auth/services/signup.service';
+import { StudentshipService } from 'src/app/modules/auth/services/studentship.service';
 import { DonationService } from 'src/app/modules/donation/services/donation.service';
 import { HelpService } from 'src/app/modules/help/services/help.service';
 import { ModalService } from 'src/app/modules/modal/services/modal.service';
@@ -71,7 +72,8 @@ export class HomePageComponent implements OnInit {
         private readonly toastrService: ToastrService,
         private readonly helpService: HelpService,
         private readonly modalService: ModalService,
-        private readonly donationService: DonationService
+        private readonly donationService: DonationService,
+        private readonly studentshipService: StudentshipService
     ) {}
 
     ngOnInit(): void {
@@ -84,6 +86,15 @@ export class HomePageComponent implements OnInit {
                     token = params.get('token');
                 if (email && token) {
                     this.confirmSignup(email, token);
+                }
+            }
+        }
+        if (params.has('studentship')) {
+            if (params.has('confirm')) {
+                const email = params.get('email'),
+                    token = params.get('token');
+                if (email && token) {
+                    this.confirmStudentshipVerification(email, token);
                 }
             }
         }
@@ -128,6 +139,35 @@ export class HomePageComponent implements OnInit {
                 }
             },
         });
+    }
+    confirmStudentshipVerification(email: string, token: string) {
+        this.studentshipService
+            .confirmStudentshipVerification(email, token.slice(0, 36))
+            .subscribe({
+                next: () => {
+                    this.toastrService.success(
+                        'Twoje konto zostało zweryfikowane! Możesz teraz tworzyć organizacje studenckie i dodawać w ich imieniu projekty studenckie.',
+                        'Konto zweryfikowane'
+                    );
+                },
+                error: (err: HttpErrorResponse) => {
+                    switch (err.status) {
+                        case 404: {
+                            this.toastrService.error(
+                                'Link weryfikacyjny jest niepoprawny lub wygasł!',
+                                'Weryfikacja konta nie powiodła się'
+                            );
+                            break;
+                        }
+                        default: {
+                            this.toastrService.error(
+                                'Podczas weryfikowania konta wystąpił błąd. Spróbuj ponownie później.',
+                                'Weryfikacja konta nie powiodła się'
+                            );
+                        }
+                    }
+                },
+            });
     }
     resetPassword(email: string, token: string) {
         this.authService.setEmailTokenParams(email, token.slice(0, 36));
