@@ -9,42 +9,15 @@
                 <th>Student</th>
                 <th></th>
             </tr>
-            <tr>
-                <td>Jan Nowak</td>
-                <td>jannowak@gmail.com</td>
-                <td>Użytkownik</td>
-                <td>Tak</td>
+            <tr *ngFor="let user of usersList">
+                <td>{{ user.name }} {{ user.lastname }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.role }}</td>
+                <td>{{ user.student }}</td>
                 <td>
-                    <img
-                        src="assets\img\icons\eye.svg"
-                        class="image last-column"
-                    />
-                </td>
-            </tr>
-            <tr>
-                <td>Jan Nowak</td>
-                <td>jannowak@gmail.com</td>
-                <td>Administrator</td>
-                <td>Tak</td>
-                <td>
-                    <button class="no-style-button">
-                        <img
-                            src="assets\img\icons\eye.svg"
-                            class="image last-column"
-                        />
-                    </button>
-                </td>
-            </tr>
-            <tr>
-                <td>Jan Nowak</td>
-                <td>jannowak@gmail.com</td>
-                <td>Moderator</td>
-                <td>Tak</td>
-                <td>
-                    <img
-                        src="assets\img\icons\eye.svg"
-                        class="image last-column"
-                    />
+                    <app-button type="clear" class="last-column">
+                        <img src="assets/img/icons/eye.svg" class="image" />
+                    </app-button>
                 </td>
             </tr>
         </table>
