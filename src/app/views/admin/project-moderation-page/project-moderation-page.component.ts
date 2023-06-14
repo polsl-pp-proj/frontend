@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
-import { OpenPositionDto } from 'src/app/dtos/open-position-dto';
-import { PaymentDto } from 'src/app/dtos/payment-dto';
-import { ProjectDto } from 'src/app/dtos/project-dto';
+import { OpenPositionDto } from 'src/app/dtos/open-position.dto';
+import { PaymentDto } from 'src/app/dtos/payment.dto';
+import { ProjectDto } from 'src/app/dtos/project.dto';
 import { AssetType } from 'src/app/enums/asset-type.enum';
 import Swiper from 'swiper';
 @Component({

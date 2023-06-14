@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { StripeElements } from '@stripe/stripe-js';
 import { ToastrService } from 'ngx-toastr';
 import { timer } from 'rxjs';
-import { ProjectDto } from 'src/app/dtos/project-dto';
+import { ProjectDto } from 'src/app/dtos/project.dto';
 import { DonationService } from 'src/app/modules/donation/services/donation.service';
 import { ModalService } from 'src/app/modules/modal/services/modal.service';
 
