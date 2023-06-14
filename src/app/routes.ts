@@ -17,6 +17,7 @@ import { AdminComponent } from './views/admin/admin.component';
 import { ProjectModerationPageComponent } from './views/admin/project-moderation-page/project-moderation-page.component';
 import { MyAccountPageComponent } from './views/user/my-account-page/my-account-page.component';
 import { AddProjectPageComponent } from './views/user/add-project-page/add-project-page.component';
+import { ManageUsersPageComponent } from './views/admin/manage-users-page/manage-users-page.component';
 import { CategoryPageComponent } from './views/admin/category-page/category-page.component';
 
 const customRouteMatcher = (
@@ -77,6 +78,7 @@ export const routes: Routes = [
                 path: 'moderate/project/:projectId',
                 component: ProjectModerationPageComponent,
             },
+            { path: 'manage/users', component: ManageUsersPageComponent },
             { path: 'manage/category', component: CategoryPageComponent },
         ],
     },
