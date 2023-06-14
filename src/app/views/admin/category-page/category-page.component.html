@@ -6,72 +6,26 @@
                 <th>Nazwa kategorii</th>
                 <th>Liczba projektów w kategorii</th>
                 <th class="third-head">
-                    <button class="no-style-button">
+                    <app-button type="clear">
                         <img
                             class="image"
                             src="assets/img/icons/ion_add-circle-outline.svg"
                         />
-                    </button>
+                    </app-button>
                 </th>
             </tr>
-            <tr>
-                <td>Elektronika</td>
-                <td>100</td>
+            <tr *ngFor="let category of categoryList">
+                <td>{{ category.name }}</td>
+                <td>{{ category.amount }}</td>
                 <td class="third-row">
-                    <button class="no-style-button">
-                        <img src="assets/img/icons/eye.svg" class="inline" />
-                    </button>
-                    <button class="no-style-button">
-                        <img
-                            src="assets/img/icons/trash-2.svg"
-                            class="inline"
-                        />
-                    </button>
-                </td>
-            </tr>
-            <tr>
-                <td>Elektronika</td>
-                <td>100</td>
-                <td class="third-row">
-                    <button class="no-style-button">
-                        <img src="assets/img/icons/eye.svg" class="inline" />
-                    </button>
-                    <button class="no-style-button">
-                        <img
-                            src="assets/img/icons/trash-2.svg"
-                            class="inline"
-                        />
-                    </button>
-                </td>
-            </tr>
-            <tr>
-                <td>Elektronika</td>
-                <td>100</td>
-                <td class="third-row">
-                    <button class="no-style-button">
-                        <img src="assets/img/icons/eye.svg" class="inline" />
-                    </button>
-                    <button class="no-style-button">
-                        <img
-                            src="assets/img/icons/trash-2.svg"
-                            class="inline"
-                        />
-                    </button>
-                </td>
-            </tr>
-            <tr>
-                <td>Elektronika</td>
-                <td>100</td>
-                <td class="third-row">
-                    <button class="no-style-button">
-                        <img src="assets/img/icons/eye.svg" class="inline" />
-                    </button>
-                    <button class="no-style-button">
-                        <img
-                            src="assets/img/icons/trash-2.svg"
-                            class="inline"
-                        />
-                    </button>
+                    <div class="button-container">
+                        <app-button type="clear">
+                            <img src="assets/img/icons/eye.svg" />
+                        </app-button>
+                        <app-button type="clear">
+                            <img src="assets/img/icons/trash-2.svg" />
+                        </app-button>
+                    </div>
                 </td>
             </tr>
         </table>

@@ -27,11 +27,6 @@ th, td {
     float: right;
 }
 
-.inline {
-    display: inline;
-    padding-right: 5px;
-}
-
 tr:nth-child(even) {background-color: #212121;}
 
 .image {
@@ -39,9 +34,8 @@ min-width: 32px;
 min-height: 32px;
 }
 
-.no-style-button {
-    border: none;
-    padding: 0;
-    background: none;
-    cursor: pointer;
-}
+.button-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
