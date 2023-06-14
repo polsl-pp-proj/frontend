@@ -28,7 +28,10 @@ import {
 import { UrlService } from './url.service';
 import { ApiAuthService } from './api-auth.service';
 import * as EventSource from 'eventsource';
-import { EventStreamObservable } from '../types/event-stream-observable.type';
+import {
+    EventStreamData,
+    EventStreamObservable,
+} from '../types/event-stream-observable.type';
 import { SseApiOptions } from '../classes/sse-api-options.class';
 
 @Injectable({
@@ -193,7 +196,10 @@ export class CoreApiService {
         }
     }
 
-    requestEventStream<RS>(route: EventStreamApiRoute, options: SseApiOptions) {
+    requestEventStream<RS>(
+        route: EventStreamApiRoute,
+        options: SseApiOptions
+    ): EventStreamObservable<RS> {
         if (route.authorized && !options.headers?.has('Authorization')) {
             return this.apiAuthService.token.pipe(
                 skipWhile((token) => !token),
@@ -232,13 +238,10 @@ export class CoreApiService {
             options
         );
 
-        const obs = new Observable<MessageEvent<RS>>((subscriber) => {
+        return new Observable<EventStreamData<RS>>((subscriber) => {
             eventSource.onmessage = (event) => {
-                subscriber.next(event);
+                subscriber.next({ ...event, eventSource });
             };
         });
-        (obs as EventStreamObservable<RS>).eventSource = eventSource;
-        (obs as EventStreamObservable<RS>).close = eventSource.close;
-        return obs as EventStreamObservable<RS>;
     }
 }
