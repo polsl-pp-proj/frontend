@@ -10,6 +10,7 @@ import {
 import { HttpParams } from '@angular/common/http';
 import { PaginationDto } from 'src/app/dtos/pagination.dto';
 import { NotificationsDto } from '../dtos/notifications.dto';
+import { NotificationReceiver } from '../../../types/notification-receiver.type';
 
 @Injectable({
     providedIn: 'root',
@@ -19,7 +20,9 @@ export class NotificationApiService {
 
     getNotificationEventObservable() {
         return this.apiService.requestEventStream<
-            NotificationDto | { id: number }
+            | (NotificationDto | { id: number }) & {
+                  receiver: NotificationReceiver;
+              }
         >(notificationApiRoutes.SSE_notificationEvents, new SseApiOptions());
     }
 
