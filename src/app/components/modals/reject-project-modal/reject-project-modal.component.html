@@ -8,7 +8,7 @@
     <div class="container">
         <div class="description">
             Odrzucasz projekt
-            <span class="projectName">{{ this.projectName }}</span>
+            <span class="projectName">{{ this.projectDraftDto.name }}</span>
         </div>
         <form [formGroup]="rejectProjectForm">
             <div class="input-container">
@@ -16,11 +16,13 @@
                     name="reason"
                     [formControl]="rejectProjectForm.controls.reason"
                     [displayErrors]="false"
-                    [type]="'multiline'"
+                    type="multiline"
                     >Powód odrzucenia</app-input
                 >
                 <div class="char-counter">
-                    {{ this.inputSize }}/{{ this.maxInputSize }}
+                    {{ rejectProjectForm.controls.reason.value.length }}/{{
+                        this.maxInputSize
+                    }}
                 </div>
             </div>
         </form>
