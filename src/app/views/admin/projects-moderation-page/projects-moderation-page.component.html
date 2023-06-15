@@ -2,12 +2,15 @@
     <h1 pageHeader>Moderuj projekty</h1>
     <div class="project-container">
         <app-project-card
-            *ngFor="let project of test_projects"
+            *ngFor="let submission of projectSubmissions"
             class="card"
-            projectName="{{ project.name }}"
-            projectDescription="{{ project.description }}"
-            imageUrl="{{ project.image_url }}"
+            projectName="{{ submission.simpleProjectDraft.name }}"
+            projectDescription="{{
+                submission.simpleProjectDraft.shortDescription
+            }}"
+            imageUrl="{{ submission.simpleProjectDraft.thumbnail }}"
+            buttonText="Moderuj"
+            (visitProject)="goToProjectModeration(submission.id)"
         ></app-project-card>
     </div>
-
 </app-page>
