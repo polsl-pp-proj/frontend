@@ -52,10 +52,14 @@ import { ImageCropperModalComponent } from './components/modals/image-cropper-mo
 import { MessageModalComponent } from './components/modals/message-modal/message-modal.component';
 import { NotificationModalComponent } from './components/modals/notification-modal/notification-modal.component';
 import { VerifyStudentModalComponent } from './components/modals/verify-student-modal/verify-student-modal.component';
+import { ManageUsersPageComponent } from './views/admin/manage-users-page/manage-users-page.component';
+import { CategoryPageComponent } from './views/admin/category-page/category-page.component';
 
 @NgModule({
     declarations: [
         AdminComponent,
+        ManageUsersPageComponent,
+        CategoryPageComponent,
         ProjectModerationPageComponent,
         ProjectsModerationPageComponent,
         AppComponent,

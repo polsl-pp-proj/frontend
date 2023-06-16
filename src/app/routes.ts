@@ -17,6 +17,8 @@ import { AdminComponent } from './views/admin/admin.component';
 import { ProjectModerationPageComponent } from './views/admin/project-moderation-page/project-moderation-page.component';
 import { MyAccountPageComponent } from './views/user/my-account-page/my-account-page.component';
 import { AddProjectPageComponent } from './views/user/add-project-page/add-project-page.component';
+import { ManageUsersPageComponent } from './views/admin/manage-users-page/manage-users-page.component';
+import { CategoryPageComponent } from './views/admin/category-page/category-page.component';
 
 const customRouteMatcher = (
     segments: UrlSegment[],
@@ -28,6 +30,20 @@ const customRouteMatcher = (
             token = segments[3];
         if (segments[1] && segments[1].path === 'confirm' && email && token) {
             route.redirectTo = `/?${segments[0].path}=true&${segments[1].path}=true&email=${email}&token=${token}`;
+            return {
+                consumed: segments,
+            };
+        }
+    } else if (
+        segments[0] &&
+        segments[1] &&
+        segments[0].path === 'studentship' &&
+        segments[1].path === 'verification'
+    ) {
+        const email = segments[3],
+            token = segments[4];
+        if (segments[2] && segments[2].path === 'confirm' && email && token) {
+            route.redirectTo = `/?${segments[0].path}=true&${segments[2].path}=true&email=${email}&token=${token}`;
             return {
                 consumed: segments,
             };
@@ -46,6 +62,7 @@ const customRouteMatcher = (
 };
 
 export const routes: Routes = [
+    { path: 'about', component: AboutPageComponent },
     { path: '404', component: NotFoundPageComponent },
     {
         path: '',
@@ -75,6 +92,8 @@ export const routes: Routes = [
                 path: 'moderate/project/:projectId',
                 component: ProjectModerationPageComponent,
             },
+            { path: 'manage/users', component: ManageUsersPageComponent },
+            { path: 'manage/category', component: CategoryPageComponent },
         ],
     },
     {

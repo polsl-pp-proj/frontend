@@ -1,0 +1,25 @@
+<app-page>
+    <div class="container">
+        <h1>Zarządzaj użytkownikami</h1>
+        <table>
+            <tr>
+                <th>Imię i nazwisko</th>
+                <th>Adres e-mail</th>
+                <th>Rola</th>
+                <th>Student</th>
+                <th></th>
+            </tr>
+            <tr *ngFor="let user of usersList">
+                <td>{{ user.name }} {{ user.lastname }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.role }}</td>
+                <td>{{ user.student }}</td>
+                <td>
+                    <app-button type="clear" class="last-column">
+                        <img src="assets/img/icons/eye.svg" class="image" />
+                    </app-button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</app-page>
