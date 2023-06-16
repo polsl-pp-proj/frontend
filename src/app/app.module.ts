@@ -51,6 +51,7 @@ import { ImageCropperModule } from 'ngx-image-cropper';
 import { ImageCropperModalComponent } from './components/modals/image-cropper-modal/image-cropper-modal.component';
 import { MessageModalComponent } from './components/modals/message-modal/message-modal.component';
 import { NotificationModalComponent } from './components/modals/notification-modal/notification-modal.component';
+import { VerifyStudentModalComponent } from './components/modals/verify-student-modal/verify-student-modal.component';
 import { ManageUsersPageComponent } from './views/admin/manage-users-page/manage-users-page.component';
 import { CategoryPageComponent } from './views/admin/category-page/category-page.component';
 
@@ -97,6 +98,7 @@ import { CategoryPageComponent } from './views/admin/category-page/category-page
         ImageCropperModalComponent,
         MessageModalComponent,
         NotificationModalComponent,
+        VerifyStudentModalComponent,
     ],
     imports: [
         BrowserModule,
