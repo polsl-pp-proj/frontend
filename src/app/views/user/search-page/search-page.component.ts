@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 import { Subscription, debounceTime } from 'rxjs';
 import { ProjectCardDto } from 'src/app/dtos/project-card.dto';
 import { SearchQueryParamsDto } from 'src/app/dtos/search-query-params.dto';
-import { SearchSortBy } from 'src/app/enums/search-sort-by.enums';
+import { SearchSortBy } from 'src/app/enums/search-sort-by.enum';
 import { HelpService } from 'src/app/modules/help/services/help.service';
 
 @Component({
