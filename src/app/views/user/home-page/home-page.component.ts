@@ -148,11 +148,4 @@ export class HomePageComponent implements OnInit {
     replaceState() {
         this.location.replaceState('/', '');
     }
-
-    testVerifyModal() {
-        this.modalService.updateModalState(
-            VerifyStudentModalComponent.ModalName,
-            'open'
-        );
-    }
 }
