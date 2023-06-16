@@ -5,7 +5,7 @@ import {
     FormControl,
     Validators,
 } from '@angular/forms';
-import { NewOpenPositionDto } from 'src/app/dtos/new-open-position.dto';
+import { CreateOpenPositionDto } from 'src/app/dtos/create-open-position.dto';
 
 @Component({
     selector: 'app-add-open-position-modal',
@@ -19,7 +19,7 @@ export class AddOpenPositionModalComponent {
     }
 
     @Output()
-    newOpenPosition = new EventEmitter<NewOpenPositionDto>();
+    newOpenPosition = new EventEmitter<CreateOpenPositionDto>();
     constructor(private fb: FormBuilder) {}
 
     addOpenPositionForm = this.fb.group({
@@ -58,9 +58,7 @@ export class AddOpenPositionModalComponent {
     }
 
     addOpenPosition() {
-        console.log(this.addOpenPositionForm);
-
-        const newOpenPositionDto = new NewOpenPositionDto({
+        const newOpenPositionDto = new CreateOpenPositionDto({
             name: this.addOpenPositionForm.controls.positionName.value,
             description: this.addOpenPositionForm.controls.description.value,
             requirements: [],
@@ -73,8 +71,6 @@ export class AddOpenPositionModalComponent {
                     .get('newRequirement')?.value
             );
         }
-
-        console.log(newOpenPositionDto);
 
         this.addOpenPositionForm.reset();
         this.newOpenPosition.emit(newOpenPositionDto);
