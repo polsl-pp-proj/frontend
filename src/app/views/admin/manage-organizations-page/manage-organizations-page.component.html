@@ -1,0 +1,19 @@
+<app-page>
+    <div class="container">
+        <h1>Zarządzaj organizacjami</h1>
+        <table>
+            <tr>
+                <th>Nazwa organizacji</th>
+                <th></th>
+            </tr>
+            <tr *ngFor="let org of orgList">
+                <td>{{ org.name }}</td>
+                <td>
+                    <app-button type="clear" class="last-column">
+                        <img src="assets/img/icons/eye.svg" class="image" />
+                    </app-button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</app-page>
