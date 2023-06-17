@@ -2,6 +2,9 @@
     <h1 pageHeader>{{ organizationName }}</h1>
     <section class="organization-projects">
         <h3>Projekty organizacji</h3>
+        <app-button type="color" class="button-margin" *ngIf="isMember"
+            >Dodaj projekt</app-button
+        >
 
         <div class="container_flex">
             <div *ngFor="let project of test_projects">
@@ -14,7 +17,20 @@
             </div>
         </div>
     </section>
-    <section class="join-organization">
+    <!-- Only for owners of the organization -->
+
+    <div class="container" *ngIf="isOwner">
+        <h3>Zarządzaj organizacją</h3>
+        <app-button type="color" class="button-margin"
+            >Dodaj nowego członka organizacji</app-button
+        >
+        <app-button type="danger" class="button-margin"
+            >Usuń członka organizacji</app-button
+        >
+    </div>
+
+    <!-- Only people that aren't member of the org should see this: -->
+    <section class="join-organization" *ngIf="!isMember">
         <div class="container">
             <h3>Dołącz do organizacji</h3>
             <h4>Organizacja poszukuje osób, które mogą pomóc w jej rozwoju.</h4>
