@@ -3,7 +3,9 @@
     <div class="main-container">
         <h2>
             Dodajesz projekt jako
-            <span class="organization-name">{{ this.organizationName }}</span>
+            <span class="organization-name">{{
+                this.organizationDto.name
+            }}</span>
         </h2>
         <form [formGroup]="addProjectForm">
             <app-input
@@ -134,7 +136,9 @@
             <app-button
                 class="add-project-button"
                 [disabled]="
-                    !this.addProjectForm.valid || this.newAssets.length == 0
+                    !this.addProjectForm.valid ||
+                    this.newAssets.length == 0 ||
+                    inTransit
                 "
                 type="color"
                 (click)="addProject()"
