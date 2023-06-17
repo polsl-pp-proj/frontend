@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 
 @Component({
-    selector: 'app-manage-organisations-page',
-    templateUrl: './manage-organisations-page.component.html',
-    styleUrls: ['./manage-organisations-page.component.scss'],
+    selector: 'app-manage-organizations-page',
+    templateUrl: './manage-organizations-page.component.html',
+    styleUrls: ['./manage-organizations-page.component.scss'],
 })
-export class ManageOrganisationsPageComponent {
+export class ManageOrganizationsPageComponent {
     orgList: {
         name: string;
     }[] = [

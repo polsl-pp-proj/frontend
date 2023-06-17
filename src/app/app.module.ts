@@ -54,7 +54,7 @@ import { NotificationModalComponent } from './components/modals/notification-mod
 import { VerifyStudentModalComponent } from './components/modals/verify-student-modal/verify-student-modal.component';
 import { ManageUsersPageComponent } from './views/admin/manage-users-page/manage-users-page.component';
 import { CategoryPageComponent } from './views/admin/category-page/category-page.component';
-import { ManageOrganisationsPageComponent } from './views/admin/manage-organisations-page/manage-organisations-page.component';
+import { ManageOrganizationsPageComponent } from './views/admin/manage-organizations-page/manage-organizations-page.component';
 
 @NgModule({
     declarations: [
@@ -100,7 +100,7 @@ import { ManageOrganisationsPageComponent } from './views/admin/manage-organisat
         MessageModalComponent,
         NotificationModalComponent,
         VerifyStudentModalComponent,
-        ManageOrganisationsPageComponent,
+        ManageOrganizationsPageComponent,
     ],
     imports: [
         BrowserModule,
