@@ -19,6 +19,7 @@ import { MyAccountPageComponent } from './views/user/my-account-page/my-account-
 import { AddProjectPageComponent } from './views/user/add-project-page/add-project-page.component';
 import { ManageUsersPageComponent } from './views/admin/manage-users-page/manage-users-page.component';
 import { CategoryPageComponent } from './views/admin/category-page/category-page.component';
+import { ManageOrganisationsPageComponent } from './views/admin/manage-organisations-page/manage-organisations-page.component';
 
 const customRouteMatcher = (
     segments: UrlSegment[],
@@ -94,6 +95,10 @@ export const routes: Routes = [
             },
             { path: 'manage/users', component: ManageUsersPageComponent },
             { path: 'manage/category', component: CategoryPageComponent },
+            {
+                path: 'manage/organizations',
+                component: ManageOrganisationsPageComponent,
+            },
         ],
     },
     {
