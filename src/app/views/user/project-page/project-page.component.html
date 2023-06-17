@@ -26,10 +26,16 @@
                         <app-button
                             (click)="openMessageModal()"
                             type="translucent"
-                            >Skontaktuj sie</app-button
+                            >Skontaktuj się</app-button
                         >
-                        <app-button type="translucent"
-                            >Dodaj do ulubionych</app-button
+                        <app-button
+                            type="translucent"
+                            (click)="toggleFavoriteState()"
+                            >{{
+                                isFavorite
+                                    ? "Usuń z ulubionych"
+                                    : "Dodaj do ulubionych"
+                            }}</app-button
                         >
                     </div>
                     <div class="gathered-funds-container">

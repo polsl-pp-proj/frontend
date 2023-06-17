@@ -2,6 +2,7 @@ import {
     AfterViewInit,
     Component,
     ElementRef,
+    OnDestroy,
     OnInit,
     ViewChild,
 } from '@angular/core';
@@ -13,13 +14,16 @@ import { ProjectDto } from 'src/app/dtos/project.dto';
 import { AssetType } from 'src/app/enums/asset-type.enum';
 import { HelpService } from 'src/app/modules/help/services/help.service';
 import { ModalService } from 'src/app/modules/modal/services/modal.service';
+import { FavoriteService } from 'src/app/modules/favorite/services/favorite.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-project-page',
     templateUrl: './project-page.component.html',
     styleUrls: ['./project-page.component.scss'],
 })
-export class ProjectPageComponent implements OnInit {
+export class ProjectPageComponent implements OnInit, OnDestroy {
     projectDto: ProjectDto = {
         id: 5,
         name: 'Projekt rakiety studenckiej',
@@ -125,13 +129,38 @@ export class ProjectPageComponent implements OnInit {
         },
     ];
 
+    projectId: number = -1;
+    isFavorite = false;
+
+    subSink: Subscription[] = [];
+
     constructor(
         private readonly helpService: HelpService,
-        private readonly modalService: ModalService
+        private readonly modalService: ModalService,
+        private readonly activatedRoute: ActivatedRoute,
+        private readonly router: Router,
+        private readonly favoriteService: FavoriteService
     ) {}
 
-    ngOnInit(): void {
+    async ngOnInit() {
         this.helpService.registerPageHelp('user/project-page');
+        const projectId =
+            this.activatedRoute.snapshot.paramMap.get('projectId');
+        if (!projectId) {
+            await this.router.navigate(['/404']);
+            return;
+        }
+        this.projectId = +projectId;
+
+        this.subSink.push(
+            this.favoriteService.isFavorite(this.projectId).subscribe({
+                next: (isFavorite) => (this.isFavorite = isFavorite),
+            })
+        );
+    }
+
+    ngOnDestroy(): void {
+        this.subSink.forEach((sub) => sub.unsubscribe());
     }
 
     makeDonation() {
@@ -146,5 +175,21 @@ export class ProjectPageComponent implements OnInit {
             MessageModalComponent.ModalName,
             'open'
         );
+    }
+
+    toggleFavoriteState() {
+        if (this.isFavorite) {
+            this.removeFromFavorites();
+        } else {
+            this.addToFavorites();
+        }
+    }
+
+    private addToFavorites() {
+        this.favoriteService.addToFavorites(this.projectId).subscribe();
+    }
+
+    private removeFromFavorites() {
+        this.favoriteService.removeFromFavorites(this.projectId).subscribe();
     }
 }
