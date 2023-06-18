@@ -9,12 +9,14 @@ import {
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SafeHtml } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
-import { Subscription, skipWhile, timer } from 'rxjs';
+import { Subscription, timer } from 'rxjs';
 import { ChangeablePhotoGalleryComponent } from 'src/app/components/changeable-photo-gallery/changeable-photo-gallery.component';
 import { AddOpenPositionModalComponent } from 'src/app/components/modals/add-open-position-modal/add-open-position-modal.component';
-import { CategoryDto } from 'src/app/dtos/category.dto';
 import { CreateOpenPositionDto } from 'src/app/dtos/create-open-position.dto';
 import { CreateProjectDto } from 'src/app/dtos/create-project.dto';
+import { AuthTokenPayloadDto } from 'src/app/modules/auth/dtos/auth-token-payload.dto';
+import { CategoryDto } from 'src/app/modules/category/modules/category-api/dtos/category.dto';
+import { CategoryService } from 'src/app/modules/category/services/category.service';
 import { IconVaultService } from 'src/app/modules/icon-vault/services/icon-vault.service';
 import { ModalService } from 'src/app/modules/modal/services/modal.service';
 import { OrganizationDto } from 'src/app/modules/organization/modules/organization-api/dtos/organization.dto';
@@ -31,20 +33,23 @@ export class AddProjectPageComponent implements OnInit, OnDestroy {
     private dataFilled = false;
     private subsink: Subscription[] = [];
 
-    descriptionVditor!: Vditor;
-    @ViewChild('descriptionMdEditor', { read: ElementRef })
-    descriptionMdEditorRef!: ElementRef;
-
     @ViewChild('photoGallery') photoGallery!: ChangeablePhotoGalleryComponent;
 
-    fundingGoalsVditor!: Vditor;
+    @ViewChild('descriptionMdEditor', { read: ElementRef })
+    descriptionMdEditorRef!: ElementRef;
+    descriptionVditor!: Vditor;
+
     @ViewChild('fundingGoalsMdEditor', { read: ElementRef })
     fundingGoalsMdEditorRef!: ElementRef;
+    fundingGoalsVditor!: Vditor;
 
     newAssets: File[] = [];
     categories: CategoryDto[] = [];
     shortDescriptionInputSize: number = 0;
     maxShortDescriptionInputSize: number = 150;
+
+    payload!: AuthTokenPayloadDto;
+
     addProjectDto: CreateProjectDto = {
         name: '',
         shortDescription: '',
@@ -69,11 +74,19 @@ export class AddProjectPageComponent implements OnInit, OnDestroy {
         }));
     }
 
+    get categoryOptions() {
+        return this.categories.map((category) => ({
+            text: category.name,
+            value: category.id,
+        }));
+    }
+
     constructor(
         private readonly iconVaultService: IconVaultService,
         private readonly modalService: ModalService,
         private readonly toastrService: ToastrService,
-        private readonly projectService: ProjectService
+        private readonly projectService: ProjectService,
+        private readonly categoryService: CategoryService
     ) {}
 
     ngOnInit(): void {
@@ -82,12 +95,11 @@ export class AddProjectPageComponent implements OnInit, OnDestroy {
                 (value) => {
                     this.shortDescriptionInputSize = value ? value.length : 0;
                 }
-            )
+            ),
+            this.categoryService
+                .getCategories()
+                .subscribe((categories) => (this.categories = categories))
         );
-
-        this.categories.push({ name: 'It', id: -5 });
-        this.categories.push({ name: 'Nie wiem', id: -2 });
-        this.categories.push({ name: 'test', id: 12 });
 
         this.iconVaultService
             .getIcon('ion_add')

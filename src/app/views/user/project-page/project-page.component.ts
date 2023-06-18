@@ -1,4 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {
+    AfterViewInit,
+    Component,
+    ElementRef,
+    OnDestroy,
+    OnInit,
+    ViewChild,
+} from '@angular/core';
 import { PaymentModalComponent } from 'src/app/components/modals/payment-modal/payment-modal.component';
 import { MessageModalComponent } from 'src/app/components/modals/message-modal/message-modal.component';
 import { PaymentDto } from 'src/app/dtos/payment.dto';
@@ -9,15 +16,15 @@ import { ModalService } from 'src/app/modules/modal/services/modal.service';
 import { ProjectService } from 'src/app/modules/project/services/project.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { FavoriteService } from 'src/app/modules/favorite/services/favorite.service';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-project-page',
     templateUrl: './project-page.component.html',
     styleUrls: ['./project-page.component.scss'],
 })
-export class ProjectPageComponent implements OnInit {
-    projectId = -1;
-
+export class ProjectPageComponent implements OnInit, OnDestroy {
     projectDto: ProjectDto = {
         id: 5,
         name: 'Projekt rakiety studenckiej',
@@ -124,16 +131,22 @@ export class ProjectPageComponent implements OnInit {
         },
     ];
 
+    projectId: number = -1;
+    isFavorite = false;
+
+    subSink: Subscription[] = [];
+
     constructor(
         private readonly helpService: HelpService,
         private readonly modalService: ModalService,
         private readonly projectService: ProjectService,
         private readonly activatedRoute: ActivatedRoute,
         private readonly router: Router,
-        private readonly toastrService: ToastrService
+        private readonly toastrService: ToastrService,
+        private readonly favoriteService: FavoriteService
     ) {}
 
-    ngOnInit(): void {
+    async ngOnInit() {
         this.helpService.registerPageHelp('user/project-page');
         const projectId =
             this.activatedRoute.snapshot.paramMap.get('projectId');
@@ -151,9 +164,18 @@ export class ProjectPageComponent implements OnInit {
                     );
                 },
             });
+            this.subSink.push(
+                this.favoriteService.isFavorite(this.projectId).subscribe({
+                    next: (isFavorite) => (this.isFavorite = isFavorite),
+                })
+            );
             return;
         }
         this.router.navigate(['/']);
+    }
+
+    ngOnDestroy(): void {
+        this.subSink.forEach((sub) => sub.unsubscribe());
     }
 
     makeDonation() {
@@ -168,5 +190,21 @@ export class ProjectPageComponent implements OnInit {
             MessageModalComponent.ModalName,
             'open'
         );
+    }
+
+    toggleFavoriteState() {
+        if (this.isFavorite) {
+            this.removeFromFavorites();
+        } else {
+            this.addToFavorites();
+        }
+    }
+
+    private addToFavorites() {
+        this.favoriteService.addToFavorites(this.projectId).subscribe();
+    }
+
+    private removeFromFavorites() {
+        this.favoriteService.removeFromFavorites(this.projectId).subscribe();
     }
 }
