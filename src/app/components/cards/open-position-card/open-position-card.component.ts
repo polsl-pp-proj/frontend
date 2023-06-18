@@ -13,6 +13,9 @@ export class OpenPositionCardComponent {
     buttonText: string = 'Dołącz';
 
     @Input()
+    buttonVisible: boolean = true;
+
+    @Input()
     positionDescription!: string;
 
     @Input()

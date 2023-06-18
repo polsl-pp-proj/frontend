@@ -1,6 +1,7 @@
 import {
     Component,
     ElementRef,
+    Input,
     OnDestroy,
     OnInit,
     ViewChild,
@@ -8,15 +9,18 @@ import {
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SafeHtml } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
-import { Subscription, skipWhile, timer } from 'rxjs';
+import { Subscription, timer } from 'rxjs';
 import { ChangeablePhotoGalleryComponent } from 'src/app/components/changeable-photo-gallery/changeable-photo-gallery.component';
 import { AddOpenPositionModalComponent } from 'src/app/components/modals/add-open-position-modal/add-open-position-modal.component';
-import { CategoryDto } from 'src/app/dtos/category.dto';
-import { NewOpenPositionDto } from 'src/app/dtos/new-open-position.dto';
-import { AddProjectDto, ProjectDto } from 'src/app/dtos/project.dto';
+import { CreateOpenPositionDto } from 'src/app/dtos/create-open-position.dto';
+import { CreateProjectDto } from 'src/app/dtos/create-project.dto';
 import { AuthTokenPayloadDto } from 'src/app/modules/auth/dtos/auth-token-payload.dto';
+import { CategoryDto } from 'src/app/modules/category/modules/category-api/dtos/category.dto';
+import { CategoryService } from 'src/app/modules/category/services/category.service';
 import { IconVaultService } from 'src/app/modules/icon-vault/services/icon-vault.service';
 import { ModalService } from 'src/app/modules/modal/services/modal.service';
+import { OrganizationDto } from 'src/app/modules/organization/modules/organization-api/dtos/organization.dto';
+import { ProjectService } from 'src/app/modules/project/services/project.service';
 import Vditor from 'vditor';
 
 @Component({
@@ -27,63 +31,75 @@ import Vditor from 'vditor';
 export class AddProjectPageComponent implements OnInit, OnDestroy {
     private viewInitialized = false;
     private dataFilled = false;
-
-    descriptionVditor!: Vditor;
-    @ViewChild('descriptionMdEditor', { read: ElementRef })
-    descriptionMdEditorRef!: ElementRef;
+    private subsink: Subscription[] = [];
 
     @ViewChild('photoGallery') photoGallery!: ChangeablePhotoGalleryComponent;
 
-    fundingGoalsVditor!: Vditor;
+    @ViewChild('descriptionMdEditor', { read: ElementRef })
+    descriptionMdEditorRef!: ElementRef;
+    descriptionVditor!: Vditor;
+
     @ViewChild('fundingGoalsMdEditor', { read: ElementRef })
     fundingGoalsMdEditorRef!: ElementRef;
+    fundingGoalsVditor!: Vditor;
 
     newAssets: File[] = [];
-    authPayloadSubscription!: Subscription;
-    payload!: AuthTokenPayloadDto;
     categories: CategoryDto[] = [];
-    mappedCategories: {
-        text: string;
-        value: number;
-    }[] = [];
     shortDescriptionInputSize: number = 0;
     maxShortDescriptionInputSize: number = 150;
-    addProjectDto: AddProjectDto = {
+
+    payload!: AuthTokenPayloadDto;
+
+    addProjectDto: CreateProjectDto = {
         name: '',
         shortDescription: '',
         description: '',
+        fundingObjectives: '',
         assets: [],
-        projectGroupName: '',
         categories: [],
         openPositions: [],
     };
 
     plusIcon!: SafeHtml;
-    organizationName = 'Agencja biura trzeciego sekretarza';
+
+    inTransit = false;
+
+    @Input()
+    organizationDto!: OrganizationDto;
+
+    get mappedCategories() {
+        return this.categories.map((category) => ({
+            text: category.name,
+            value: category.id,
+        }));
+    }
+
+    get categoryOptions() {
+        return this.categories.map((category) => ({
+            text: category.name,
+            value: category.id,
+        }));
+    }
 
     constructor(
         private readonly iconVaultService: IconVaultService,
         private readonly modalService: ModalService,
-        private readonly toastrService: ToastrService
+        private readonly toastrService: ToastrService,
+        private readonly projectService: ProjectService,
+        private readonly categoryService: CategoryService
     ) {}
 
     ngOnInit(): void {
-        this.addProjectForm.controls.shortDescription.valueChanges.subscribe(
-            (value) => {
-                this.shortDescriptionInputSize = value ? value.length : 0;
-            }
+        this.subsink.push(
+            this.addProjectForm.controls.shortDescription.valueChanges.subscribe(
+                (value) => {
+                    this.shortDescriptionInputSize = value ? value.length : 0;
+                }
+            ),
+            this.categoryService
+                .getCategories()
+                .subscribe((categories) => (this.categories = categories))
         );
-
-        this.categories.push({ name: 'It', id: -5 });
-        this.categories.push({ name: 'Nie wiem', id: -2 });
-        this.categories.push({ name: 'test', id: 12 });
-
-        this.mappedCategories = this.categories.map((value) => {
-            return {
-                text: value.name,
-                value: value.id,
-            };
-        });
 
         this.iconVaultService
             .getIcon('ion_add')
@@ -93,7 +109,7 @@ export class AddProjectPageComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        this.authPayloadSubscription.unsubscribe();
+        this.subsink.forEach((sub) => sub.unsubscribe());
     }
 
     addProjectForm = new FormGroup({
@@ -222,7 +238,6 @@ export class AddProjectPageComponent implements OnInit, OnDestroy {
     addNewAsset(file: File) {
         this.newAssets.push(file);
         this.addProjectDto?.assets.push(this.newAssets.length - 1);
-        console.log(this.addProjectDto);
     }
 
     deleteOpenPosition(index: number) {
@@ -236,7 +251,7 @@ export class AddProjectPageComponent implements OnInit, OnDestroy {
         );
     }
 
-    onAddOpenPosition(newOpenPosition: NewOpenPositionDto) {
+    onAddOpenPosition(newOpenPosition: CreateOpenPositionDto) {
         this.addProjectDto.openPositions.push(newOpenPosition);
 
         this.toastrService.success(
@@ -250,5 +265,40 @@ export class AddProjectPageComponent implements OnInit, OnDestroy {
         );
     }
 
-    addProject() {}
+    addProject() {
+        Object.assign(this.addProjectDto, {
+            name: this.addProjectForm.controls.projectName.value,
+            shortDescription:
+                this.addProjectForm.controls.shortDescription.value,
+            description: this.addProjectForm.controls.description.value.trim(),
+            fundingObjectives: this.addProjectForm.controls.fundingOpen.value
+                ? this.addProjectForm.controls.fundingGoals.value.trim()
+                : '',
+            categories: this.addProjectForm.controls.categories.value,
+        } satisfies Omit<CreateProjectDto, 'assets' | 'openPositions'>);
+
+        this.inTransit = true;
+        this.projectService
+            .createProjectDraft(
+                this.organizationDto.id,
+                this.addProjectDto,
+                this.newAssets
+            )
+            .subscribe({
+                next: () => {
+                    this.inTransit = false;
+                    this.toastrService.success(
+                        'Projekt został zgłoszony do sprawdzenia!',
+                        'Projekt zgłoszony'
+                    );
+                },
+                error: (err) => {
+                    this.inTransit = false;
+                    this.toastrService.error(
+                        'Podczas próby zgłoszenia projektu do sprawdzenia wystąpił błąd.',
+                        'Błąd zgłoszenia'
+                    );
+                },
+            });
+    }
 }

@@ -51,10 +51,18 @@ import { ImageCropperModule } from 'ngx-image-cropper';
 import { ImageCropperModalComponent } from './components/modals/image-cropper-modal/image-cropper-modal.component';
 import { MessageModalComponent } from './components/modals/message-modal/message-modal.component';
 import { NotificationModalComponent } from './components/modals/notification-modal/notification-modal.component';
+import { VerifyStudentModalComponent } from './components/modals/verify-student-modal/verify-student-modal.component';
+import { ManageUsersPageComponent } from './views/admin/manage-users-page/manage-users-page.component';
+import { CategoryPageComponent } from './views/admin/category-page/category-page.component';
+import { ProjectModule } from './modules/project/project.module';
+import { FavoriteModule } from './modules/favorite/favorite.module';
+import { ManageOrganizationsPageComponent } from './views/admin/manage-organizations-page/manage-organizations-page.component';
 
 @NgModule({
     declarations: [
         AdminComponent,
+        ManageUsersPageComponent,
+        CategoryPageComponent,
         ProjectModerationPageComponent,
         ProjectsModerationPageComponent,
         AppComponent,
@@ -93,6 +101,8 @@ import { NotificationModalComponent } from './components/modals/notification-mod
         ImageCropperModalComponent,
         MessageModalComponent,
         NotificationModalComponent,
+        VerifyStudentModalComponent,
+        ManageOrganizationsPageComponent,
     ],
     imports: [
         BrowserModule,
@@ -109,6 +119,8 @@ import { NotificationModalComponent } from './components/modals/notification-mod
         OrganizationModule,
         BrowserAnimationsModule,
         ImageCropperModule,
+        ProjectModule,
+        FavoriteModule,
     ],
     providers: [],
     bootstrap: [AppComponent],

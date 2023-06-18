@@ -20,7 +20,7 @@ import {
     take,
     timeout,
 } from 'rxjs';
-import { ApiOptions } from '../classes/api-options.class';
+import { ApiOptions, ApiOptionsBody } from '../classes/api-options.class';
 import {
     BodilessRequestMethod,
     BodilyRequestMethod,
@@ -48,44 +48,44 @@ export class CoreApiService {
         route: Omit<GeneralApiRoute, 'method'> & {
             method: BodilessRequestMethod;
         },
-        options: ApiOptions & { observe: 'body' }
+        options?: ApiOptions & { observe: 'body' }
     ): Observable<RS>;
     request<RQ, RS>(
         route: Omit<GeneralApiRoute, 'method'> & {
             method: BodilyRequestMethod;
         },
-        body: RQ,
-        options: ApiOptions & { observe: 'body' }
+        body?: RQ,
+        options?: ApiOptions & { observe: 'body' }
     ): Observable<RS>;
     request<RS, RQ = unknown>(
         route: Omit<GeneralApiRoute, 'method'> & {
             method: BodilessRequestMethod;
         },
-        options: ApiOptions & { observe: 'response' }
+        options?: ApiOptions & { observe: 'response' }
     ): Observable<HttpResponse<RS>>;
     request<RQ, RS>(
         route: Omit<GeneralApiRoute, 'method'> & {
             method: BodilyRequestMethod;
         },
-        body: RQ,
-        options: ApiOptions & { observe: 'response' }
+        body?: RQ,
+        options?: ApiOptions & { observe: 'response' }
     ): Observable<HttpResponse<RS>>;
     request<RS, RQ = unknown>(
         route: Omit<GeneralApiRoute, 'method'> & {
             method: BodilessRequestMethod;
         },
-        options: ApiOptions & { observe: 'events' }
+        options?: ApiOptions & { observe: 'events' }
     ): Observable<HttpEvent<RS>>;
     request<RQ, RS>(
         route: Omit<GeneralApiRoute, 'method'> & {
             method: BodilyRequestMethod;
         },
-        body: RQ,
-        options: ApiOptions & { observe: 'events' }
+        body?: RQ,
+        options?: ApiOptions & { observe: 'events' }
     ): Observable<HttpEvent<RS>>;
     request<RQ, RS>(
         route: GeneralApiRoute,
-        bodyOrOptions: RQ | ApiOptions,
+        bodyOrOptions?: RQ | ApiOptions,
         bodilyOptions?: ApiOptions
     ):
         | Observable<RS>
@@ -100,7 +100,9 @@ export class CoreApiService {
             case 'HEAD':
             case 'JSONP':
             case 'OPTIONS': {
-                options = bodyOrOptions as ApiOptions;
+                options =
+                    (bodyOrOptions as ApiOptions) ??
+                    (new ApiOptions() as ApiOptionsBody);
                 httpRequest = new HttpRequest(
                     route.method,
                     options.addHost
@@ -119,7 +121,8 @@ export class CoreApiService {
             case 'PATCH':
             case 'POST':
             case 'PUT': {
-                options = bodilyOptions!;
+                options =
+                    bodilyOptions! ?? (new ApiOptions() as ApiOptionsBody);
                 httpRequest = new HttpRequest<RQ>(
                     route.method,
                     options.addHost
@@ -131,7 +134,7 @@ export class CoreApiService {
                               route.path,
                               options.routeParams
                           ),
-                    bodyOrOptions as RQ,
+                    (bodyOrOptions as RQ) ?? ({} as RQ),
                     options
                 );
                 break;
