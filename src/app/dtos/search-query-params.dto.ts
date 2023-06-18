@@ -1,4 +1,4 @@
-import { SearchSortBy } from "../enums/search-sort-by.enums";
+import { SearchSortBy } from '../enums/search-sort-by.enum';
 
 export class SearchQueryParamsDto {
     sort?: SearchSortBy;

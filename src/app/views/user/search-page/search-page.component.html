@@ -22,11 +22,7 @@
                 "
                 name="search-category"
                 resetText="każdej kategorii"
-                [options]="[
-                    { text: 'electronics', value: 1 },
-                    { text: 'computer science', value: 2 },
-                    { text: 'physics', value: 3 }
-                ]"
+                [options]="categoryOptions"
                 [displayErrors]="false"
             ></app-select>
         </div>
@@ -41,7 +37,8 @@
                 name="search-sort"
                 [options]="[
                     { text: 'zebranych funduszy', value: SearchSortBy.Funds },
-                    { text: 'liczby polubień', value: SearchSortBy.Favorites }
+                    { text: 'liczby polubień', value: SearchSortBy.Favorites },
+                    { text: 'daty dodania', value: SearchSortBy.Newest }
                 ]"
                 [displayErrors]="false"
             ></app-select>
