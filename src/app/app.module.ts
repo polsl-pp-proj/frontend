@@ -54,6 +54,7 @@ import { NotificationModalComponent } from './components/modals/notification-mod
 import { VerifyStudentModalComponent } from './components/modals/verify-student-modal/verify-student-modal.component';
 import { ManageUsersPageComponent } from './views/admin/manage-users-page/manage-users-page.component';
 import { CategoryPageComponent } from './views/admin/category-page/category-page.component';
+import { ProjectModule } from './modules/project/project.module';
 import { FavoriteModule } from './modules/favorite/favorite.module';
 import { ManageOrganizationsPageComponent } from './views/admin/manage-organizations-page/manage-organizations-page.component';
 
@@ -118,6 +119,7 @@ import { ManageOrganizationsPageComponent } from './views/admin/manage-organizat
         OrganizationModule,
         BrowserAnimationsModule,
         ImageCropperModule,
+        ProjectModule,
         FavoriteModule,
     ],
     providers: [],

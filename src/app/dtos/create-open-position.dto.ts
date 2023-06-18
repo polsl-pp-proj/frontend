@@ -1,9 +1,9 @@
-export class NewOpenPositionDto {
+export class CreateOpenPositionDto {
     name!: string;
     description!: string;
     requirements!: string[];
 
-    constructor(newOpenPositionDto: NewOpenPositionDto) {
+    constructor(newOpenPositionDto: CreateOpenPositionDto) {
         Object.assign(this, newOpenPositionDto);
     }
 }

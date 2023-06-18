@@ -1,6 +1,7 @@
 import {
     Component,
     ElementRef,
+    Input,
     OnDestroy,
     OnInit,
     ViewChild,
@@ -11,13 +12,15 @@ import { ToastrService } from 'ngx-toastr';
 import { Subscription, timer } from 'rxjs';
 import { ChangeablePhotoGalleryComponent } from 'src/app/components/changeable-photo-gallery/changeable-photo-gallery.component';
 import { AddOpenPositionModalComponent } from 'src/app/components/modals/add-open-position-modal/add-open-position-modal.component';
-import { NewOpenPositionDto } from 'src/app/dtos/new-open-position.dto';
-import { AddProjectDto } from 'src/app/dtos/project.dto';
+import { CreateOpenPositionDto } from 'src/app/dtos/create-open-position.dto';
+import { CreateProjectDto } from 'src/app/dtos/create-project.dto';
 import { AuthTokenPayloadDto } from 'src/app/modules/auth/dtos/auth-token-payload.dto';
 import { CategoryDto } from 'src/app/modules/category/modules/category-api/dtos/category.dto';
 import { CategoryService } from 'src/app/modules/category/services/category.service';
 import { IconVaultService } from 'src/app/modules/icon-vault/services/icon-vault.service';
 import { ModalService } from 'src/app/modules/modal/services/modal.service';
+import { OrganizationDto } from 'src/app/modules/organization/modules/organization-api/dtos/organization.dto';
+import { ProjectService } from 'src/app/modules/project/services/project.service';
 import Vditor from 'vditor';
 
 @Component({
@@ -41,26 +44,35 @@ export class AddProjectPageComponent implements OnInit, OnDestroy {
     fundingGoalsVditor!: Vditor;
 
     newAssets: File[] = [];
+    categories: CategoryDto[] = [];
+    shortDescriptionInputSize: number = 0;
+    maxShortDescriptionInputSize: number = 150;
 
     payload!: AuthTokenPayloadDto;
 
-    categories: CategoryDto[] = [];
-
-    addProjectDto: AddProjectDto = {
+    addProjectDto: CreateProjectDto = {
         name: '',
         shortDescription: '',
         description: '',
+        fundingObjectives: '',
         assets: [],
-        projectGroupName: '',
         categories: [],
         openPositions: [],
     };
 
-    shortDescriptionInputSize: number = 0;
-    maxShortDescriptionInputSize: number = 150;
-
     plusIcon!: SafeHtml;
-    organizationName = 'Agencja biura trzeciego sekretarza';
+
+    inTransit = false;
+
+    @Input()
+    organizationDto!: OrganizationDto;
+
+    get mappedCategories() {
+        return this.categories.map((category) => ({
+            text: category.name,
+            value: category.id,
+        }));
+    }
 
     get categoryOptions() {
         return this.categories.map((category) => ({
@@ -73,6 +85,7 @@ export class AddProjectPageComponent implements OnInit, OnDestroy {
         private readonly iconVaultService: IconVaultService,
         private readonly modalService: ModalService,
         private readonly toastrService: ToastrService,
+        private readonly projectService: ProjectService,
         private readonly categoryService: CategoryService
     ) {}
 
@@ -225,7 +238,6 @@ export class AddProjectPageComponent implements OnInit, OnDestroy {
     addNewAsset(file: File) {
         this.newAssets.push(file);
         this.addProjectDto?.assets.push(this.newAssets.length - 1);
-        console.log(this.addProjectDto);
     }
 
     deleteOpenPosition(index: number) {
@@ -239,7 +251,7 @@ export class AddProjectPageComponent implements OnInit, OnDestroy {
         );
     }
 
-    onAddOpenPosition(newOpenPosition: NewOpenPositionDto) {
+    onAddOpenPosition(newOpenPosition: CreateOpenPositionDto) {
         this.addProjectDto.openPositions.push(newOpenPosition);
 
         this.toastrService.success(
@@ -253,5 +265,40 @@ export class AddProjectPageComponent implements OnInit, OnDestroy {
         );
     }
 
-    addProject() {}
+    addProject() {
+        Object.assign(this.addProjectDto, {
+            name: this.addProjectForm.controls.projectName.value,
+            shortDescription:
+                this.addProjectForm.controls.shortDescription.value,
+            description: this.addProjectForm.controls.description.value.trim(),
+            fundingObjectives: this.addProjectForm.controls.fundingOpen.value
+                ? this.addProjectForm.controls.fundingGoals.value.trim()
+                : '',
+            categories: this.addProjectForm.controls.categories.value,
+        } satisfies Omit<CreateProjectDto, 'assets' | 'openPositions'>);
+
+        this.inTransit = true;
+        this.projectService
+            .createProjectDraft(
+                this.organizationDto.id,
+                this.addProjectDto,
+                this.newAssets
+            )
+            .subscribe({
+                next: () => {
+                    this.inTransit = false;
+                    this.toastrService.success(
+                        'Projekt został zgłoszony do sprawdzenia!',
+                        'Projekt zgłoszony'
+                    );
+                },
+                error: (err) => {
+                    this.inTransit = false;
+                    this.toastrService.error(
+                        'Podczas próby zgłoszenia projektu do sprawdzenia wystąpił błąd.',
+                        'Błąd zgłoszenia'
+                    );
+                },
+            });
+    }
 }
