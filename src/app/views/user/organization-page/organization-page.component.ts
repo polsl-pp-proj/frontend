@@ -140,6 +140,7 @@ export class OrganizationPageComponent implements OnInit, OnDestroy {
 
     visitProject(projectId: number) {
         if (this.isMember) {
+            this.router.navigate(['/project/draft', projectId]);
         } else {
             this.router.navigate(['/project', projectId]);
         }
