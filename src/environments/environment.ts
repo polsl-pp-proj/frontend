@@ -8,7 +8,7 @@ export const environment = {
     stripeKey:
         'pk_test_51NEDOoCJ8XfsvOOrp45ygsPdkQboahVOiaxxDIko9zMAH6U6BiZHhorfNJqQRWIHM5yT4jTwOXWCsJYTEmLay7OK00UUPqDPTP',
     frontendUrl: 'https://dev.studenthub.edu.eu.org',
-    remoteAssetsPath: 'https://dev-api.studenthub.edu.eu.org/assets',
+    remoteAssetsPath: 'https://dev-api.studenthub.edu.eu.org/',
 };
 
 /*
