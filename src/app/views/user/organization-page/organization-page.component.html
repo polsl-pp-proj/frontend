@@ -59,9 +59,11 @@
     </section>
 </app-page>
 <app-add-organization-members-modal
+    *ngIf="isOwner"
     [organizationId]="organizationId"
 ></app-add-organization-members-modal>
 <app-remove-organization-members-modal
+    *ngIf="isOwner"
     [organizationId]="organizationId"
 ></app-remove-organization-members-modal>
 <app-join-team-modal [openPosition]="chosenOpenPosition"></app-join-team-modal>
