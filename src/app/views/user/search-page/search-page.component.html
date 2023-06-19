@@ -47,12 +47,12 @@
     <div class="project-cards-container">
         <app-project-card
             *ngFor="let projectCard of projectCards"
-            [imageUrl]="projectCard.imageUrl"
-            [imageAlt]="projectCard.imageAlt"
-            [projectName]="projectCard.projectName"
-            [projectDescription]="projectCard.projectDescription"
-            [projectOrg]="projectCard.projectOrg"
-            (visitProject)="visitProject(projectCard.projectId)"
+            [imageUrl]="projectCard.thumbnail.url"
+            [imageAlt]="projectCard.thumbnail.title"
+            [projectName]="projectCard.name"
+            [projectDescription]="projectCard.shortDescription"
+            [projectOrg]="projectCard.organizationName"
+            (visitProject)="visitProject(projectCard.id)"
         >
         </app-project-card>
     </div>
