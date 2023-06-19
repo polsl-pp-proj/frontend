@@ -7,6 +7,8 @@ import { ModalService } from 'src/app/modules/modal/services/modal.service';
 import { LoginModalComponent } from '../modals/login-modal/login-modal.component';
 import { CreateOrganizationModalComponent } from '../modals/create-organization-modal/create-organization-modal.component';
 import { UserRole } from 'src/app/modules/auth/enums/user-role.enum';
+import { NotificationDto } from 'src/app/modules/notification/modules/notification-api/dtos/notification.dto';
+import { NotificationType } from 'src/app/enums/notification-type.enum';
 
 @Component({
     selector: 'app-navbar',
@@ -16,6 +18,13 @@ import { UserRole } from 'src/app/modules/auth/enums/user-role.enum';
 export class NavbarComponent implements OnInit, OnDestroy {
     burgerIcon!: SafeHtml;
     xIcon!: SafeHtml;
+    notifIcon!: SafeHtml;
+
+    notifMemberIcon!: SafeHtml;
+    notifArrowIcon!: SafeHtml;
+    notifCheckIcon!: SafeHtml;
+    notifXIcon!: SafeHtml;
+    notifEnvelopeIcon!: SafeHtml;
 
     logged: boolean = false;
     isVerifiedStudent: boolean = false;
@@ -23,16 +32,41 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     expandedLeftMenu: boolean = false;
     expandedRightMenu: boolean = false;
+    showNotifications: boolean = false;
 
     initials: string = '';
 
     authPayloadSubscription!: Subscription;
 
+    notifications: NotificationDto[] = [];
+
     constructor(
         private readonly iconVaultService: IconVaultService,
         private readonly modalService: ModalService,
         private readonly authService: AuthService
-    ) {}
+    ) {
+        const notification: NotificationDto = {
+            id: 1,
+            subject: 'New Notification',
+            message: 'You have a new notification!',
+            project: {
+                id: 123,
+                name: 'Project XYZ',
+            },
+            organization: {
+                id: 456,
+                name: 'Organization ABC',
+            },
+            type: NotificationType.OpenPositionApplication,
+            seen: false,
+            createdAt: 1624136453000,
+            updatedAt: 1624136453000,
+        };
+
+        for (let i = 0; i < 22; ++i) {
+            this.notifications.push(notification);
+        }
+    }
 
     ngOnInit(): void {
         this.iconVaultService
@@ -45,6 +79,38 @@ export class NavbarComponent implements OnInit, OnDestroy {
             .subscribe((icon: SafeHtml | null) => {
                 this.xIcon = icon!;
             });
+        this.iconVaultService
+            .getIcon('ion_notif')
+            .subscribe((icon: SafeHtml | null) => {
+                this.notifIcon = icon!;
+            });
+
+        this.iconVaultService
+            .getIcon('notif-member-icon')
+            .subscribe((icon: SafeHtml | null) => {
+                this.notifMemberIcon = icon!;
+            });
+        this.iconVaultService
+            .getIcon('notif-arrow-icon')
+            .subscribe((icon: SafeHtml | null) => {
+                this.notifArrowIcon = icon!;
+            });
+        this.iconVaultService
+            .getIcon('notif-check-icon')
+            .subscribe((icon: SafeHtml | null) => {
+                this.notifCheckIcon = icon!;
+            });
+        this.iconVaultService
+            .getIcon('notif-x-icon')
+            .subscribe((icon: SafeHtml | null) => {
+                this.notifXIcon = icon!;
+            });
+        this.iconVaultService
+            .getIcon('notif-envelope-icon')
+            .subscribe((icon: SafeHtml | null) => {
+                this.notifEnvelopeIcon = icon!;
+            });
+
         this.authPayloadSubscription = this.authService.authTokenPayload
             .pipe(skipWhile((payload) => payload === undefined))
             .subscribe((payload) => {
@@ -78,6 +144,32 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     logout() {
         this.authService.logout().subscribe();
+    }
+
+    openNotifications() {
+        this.showNotifications = !this.showNotifications;
+    }
+
+    mapNotificationTypeToIcon(type: NotificationType): SafeHtml {
+        if (type === NotificationType.ProjectMessage) {
+            return this.notifEnvelopeIcon;
+        } else if (type === NotificationType.MessageAnswer) {
+            return this.notifArrowIcon;
+        } else if (type === NotificationType.OpenPositionApplication) {
+            return this.notifMemberIcon;
+        } else if (type === NotificationType.ProjectDraftRejection) {
+            return this.notifXIcon;
+        } else {
+            return this.notifCheckIcon;
+        }
+    }
+
+    getNotifSize(): string {
+        let val = this.notifications.length.toString();
+        if (this.notifications.length > 99) {
+            val = '99+';
+        }
+        return val;
     }
 
     UserRole = UserRole;
