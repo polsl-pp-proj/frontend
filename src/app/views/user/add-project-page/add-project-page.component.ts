@@ -45,7 +45,6 @@ export class AddProjectPageComponent implements OnInit, OnDestroy {
     fundingGoalsVditor!: Vditor;
 
     newAssets: File[] = [];
-    categories: CategoryDto[] = [];
     shortDescriptionInputSize: number = 0;
     maxShortDescriptionInputSize: number = 150;
 
@@ -68,19 +67,7 @@ export class AddProjectPageComponent implements OnInit, OnDestroy {
     @Input()
     organizationDto: OrganizationDto = { name: 'Trwa ładowanie...', id: -1 };
 
-    get mappedCategories() {
-        return this.categories.map((category) => ({
-            text: category.name,
-            value: category.id,
-        }));
-    }
-
-    get categoryOptions() {
-        return this.categories.map((category) => ({
-            text: category.name,
-            value: category.id,
-        }));
-    }
+    categoryOptions: { text: string; value: number }[] = [];
 
     constructor(
         private readonly router: Router,
@@ -104,9 +91,12 @@ export class AddProjectPageComponent implements OnInit, OnDestroy {
                     this.shortDescriptionInputSize = value ? value.length : 0;
                 }
             ),
-            this.categoryService
-                .getCategories()
-                .subscribe((categories) => (this.categories = categories))
+            this.categoryService.getCategories().subscribe((categories) => {
+                this.categoryOptions = categories.map((category) => ({
+                    text: category.name,
+                    value: category.id,
+                }));
+            })
         );
 
         this.iconVaultService
@@ -299,6 +289,10 @@ export class AddProjectPageComponent implements OnInit, OnDestroy {
                         'Projekt został zgłoszony do sprawdzenia!',
                         'Projekt zgłoszony'
                     );
+                    this.router.navigate([
+                        '/organization',
+                        this.organizationDto.id,
+                    ]);
                 },
                 error: (err) => {
                     this.inTransit = false;
