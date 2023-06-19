@@ -66,10 +66,10 @@
     }
 
     &.button-danger {
-        background-color: var(--danger-100-25);
+        background-color: var(--danger-25);
 
         &:hover:not([disabled]) {
-            background-color: var(--danger-100-50);
+            background-color: var(--danger-50);
         }
     }
 
