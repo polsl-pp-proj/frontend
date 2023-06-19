@@ -44,7 +44,7 @@
 
         <app-button
             type="color"
-            [disabled]="messageForm.invalid"
+            [disabled]="!messageForm.valid || inTransit"
             (click)="sendMessage()"
             >Wyślij</app-button
         >

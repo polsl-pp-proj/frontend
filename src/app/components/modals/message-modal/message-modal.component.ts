@@ -2,6 +2,8 @@ import { Component, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ModalService } from 'src/app/modules/modal/services/modal.service';
+import { ProjectMessageDto } from 'src/app/modules/project/modules/project-api/dtos/project-message.dto';
+import { ProjectService } from 'src/app/modules/project/services/project.service';
 
 @Component({
     selector: 'app-message-modal',
@@ -19,9 +21,12 @@ export class MessageModalComponent {
 
     messageMaxLength = 500;
 
+    inTransit = false;
+
     constructor(
         private readonly modalSerivce: ModalService,
-        private readonly toastrService: ToastrService
+        private readonly toastrService: ToastrService,
+        private readonly projectService: ProjectService
     ) {}
 
     messageForm = new FormGroup({
@@ -36,11 +41,33 @@ export class MessageModalComponent {
     });
 
     sendMessage() {
-        this.toastrService.success(
-            'Twoja wiadomość została wysłana do organizacji',
-            'Wiadomość wysłana'
-        );
-        this.modalSerivce.updateModalState(this.modalName, 'close');
+        this.inTransit = true;
+        this.projectService
+            .sendProjectMessage(
+                this.projectId,
+                new ProjectMessageDto({
+                    subject: this.messageForm.controls.subject.value,
+                    message: this.messageForm.controls.message.value,
+                })
+            )
+            .subscribe({
+                next: () => {
+                    this.toastrService.success(
+                        'Twoja wiadomość została wysłana do organizacji.',
+                        'Wiadomość wysłana'
+                    );
+                    this.modalSerivce.updateModalState(this.modalName, 'close');
+
+                    this.inTransit = false;
+                },
+                error: () => {
+                    this.toastrService.error(
+                        'Podczas próby wysłania Twojej wiadomości wystąpił błąd. Spróbuj ponownie.',
+                        'Błąd wysyłania'
+                    );
+                    this.inTransit = false;
+                },
+            });
     }
 
     modalClosed() {

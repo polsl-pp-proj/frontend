@@ -3,6 +3,7 @@ import { ProjectApiService } from '../modules/project-api/services/project-api.s
 import { CreateProjectDto } from 'src/app/dtos/create-project.dto';
 import { SearchQueryParamsDto } from 'src/app/dtos/search-query-params.dto';
 import { UpdateProjectDto } from 'src/app/dtos/update-project.dto';
+import { ProjectMessageDto } from '../modules/project-api/dtos/project-message.dto';
 
 const resultsPerPage = 6;
 
@@ -46,6 +47,10 @@ export class ProjectService {
 
     removeProject(projectId: number) {
         return this.projectApiService.removeProject(projectId);
+    }
+
+    sendProjectMessage(projectId: number, message: ProjectMessageDto) {
+        return this.projectApiService.sendProjectMessage(projectId, message);
     }
 
     getOrganizationProjectDrafts(organizationId: number) {

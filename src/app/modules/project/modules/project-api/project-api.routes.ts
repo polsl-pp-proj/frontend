@@ -31,6 +31,11 @@ export const projectApiRoutes = {
         path: '/v1/project/:projectId',
         method: 'DELETE',
     },
+    POST_sendProjectMessage: {
+        authorized: true,
+        path: '/v1/project/:projectId/message',
+        method: 'POST',
+    },
     GET_organizationProjectDrafts: {
         authorized: true,
         path: '/v1/project/draft/organization/:organizationId',
