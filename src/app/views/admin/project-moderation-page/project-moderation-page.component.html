@@ -1,5 +1,5 @@
 <app-page>
-    <h1 pageHeader>{{ projectDraftDto.name }}</h1>
+    <h1 pageHeader>{{ projectDto.name }}</h1>
     <div class="main-container">
         <h3>{{ projectDto.organizationName }}</h3>
         <div class="summary-container">
@@ -13,9 +13,7 @@
                         auto-height="true"
                         thumbs-swiper=".thumbnail-swiper"
                     >
-                        <swiper-slide
-                            *ngFor="let asset of projectDraftDto.assets"
-                        >
+                        <swiper-slide *ngFor="let asset of projectDto.assets">
                             <img class="swiper-img" [src]="asset.url" />
                         </swiper-slide>
                     </swiper-container>
@@ -44,7 +42,7 @@
                 space-between="25"
             >
                 <swiper-slide
-                    *ngFor="let asset of projectDraftDto.assets"
+                    *ngFor="let asset of projectDto.assets"
                     class="thumbnail-swiper-slide"
                 >
                     <img class="swiper-thumb-img" [src]="asset.url" />

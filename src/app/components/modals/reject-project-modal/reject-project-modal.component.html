@@ -8,7 +8,7 @@
     <div class="container">
         <div class="description">
             Odrzucasz projekt
-            <span class="projectName">{{ this.projectDraftDto.name }}</span>
+            <span class="projectName">{{ projectDto.name }}</span>
         </div>
         <form [formGroup]="rejectProjectForm">
             <div class="input-container">
@@ -21,14 +21,14 @@
                 >
                 <div class="char-counter">
                     {{ rejectProjectForm.controls.reason.value.length }}/{{
-                        this.maxInputSize
+                        maxInputSize
                     }}
                 </div>
             </div>
         </form>
         <app-button
             type="color"
-            [disabled]="!rejectProjectForm.valid"
+            [disabled]="!rejectProjectForm.valid || inTransit"
             (click)="sendRejectRequest()"
             >Odrzuć</app-button
         >
