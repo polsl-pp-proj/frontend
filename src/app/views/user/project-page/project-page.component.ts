@@ -150,6 +150,14 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
         requirements: ['Ładowanie...'],
     };
 
+    usersOrganizationIds: number[] = [];
+
+    get isUserPartOfProject() {
+        return this.usersOrganizationIds.some(
+            (id) => id === this.projectDto.organizationId
+        );
+    }
+
     constructor(
         private readonly helpService: HelpService,
         private readonly modalService: ModalService,
@@ -187,6 +195,10 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
                     .pipe(skipWhile((payload) => payload === undefined))
                     .subscribe((payload) => {
                         this.isStudent = payload?.isVerifiedStudent ?? false;
+                        this.usersOrganizationIds =
+                            payload?.organizations.map(
+                                (org) => org.organizationId
+                            ) ?? [];
                     })
             );
             return;
