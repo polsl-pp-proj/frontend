@@ -22,6 +22,8 @@ import { OpenPositionForProjectDto } from 'src/app/modules/project/modules/proje
 import { JoinTeamModalComponent } from 'src/app/components/modals/join-team-modal/join-team-modal.component';
 import { OpenPositionDto } from 'src/app/dtos/open-position.dto';
 import { AuthService } from 'src/app/modules/auth/services/auth.service';
+import { DonationService } from 'src/app/modules/donation/services/donation.service';
+import { DonationStatsDto } from 'src/app/modules/donation/modules/donation-api/dtos/donation-stats.dto';
 
 @Component({
     selector: 'app-project-page',
@@ -120,20 +122,10 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
         updatedAt: 122,
     };
 
-    recentPaymentsDtos: PaymentDto[] = [
-        {
-            userName: 'Grzegorz',
-            amount: 250,
-        },
-        {
-            userName: 'Mateusz',
-            amount: 310,
-        },
-        {
-            userName: 'Tomek',
-            amount: 99,
-        },
-    ];
+    donationStats: DonationStatsDto = {
+        lastFunders: [],
+        raised: { lastMonth: 0, total: 0 },
+    };
 
     projectId: number = -1;
     isFavorite = false;
@@ -166,7 +158,8 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
         private readonly router: Router,
         private readonly toastrService: ToastrService,
         private readonly favoriteService: FavoriteService,
-        private readonly authService: AuthService
+        private readonly authService: AuthService,
+        private readonly donationService: DonationService
     ) {}
 
     async ngOnInit() {
@@ -187,6 +180,9 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
                     );
                 },
             });
+            this.donationService
+                .getProjectDonationStats(this.projectId)
+                .subscribe((stats) => (this.donationStats = stats));
             this.subSink.push(
                 this.favoriteService.isFavorite(this.projectId).subscribe({
                     next: (isFavorite) => (this.isFavorite = isFavorite),
