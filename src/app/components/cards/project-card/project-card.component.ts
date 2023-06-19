@@ -10,6 +10,7 @@ export class ProjectCardComponent {
     @Input() imageAlt!: string;
     @Input() projectName!: string;
     @Input() projectDescription!: string;
+    @Input() buttonText: string = 'Odwiedź projekt';
     @Input() projectOrg!: string;
     @Output() visitProject = new EventEmitter<void>();
 }

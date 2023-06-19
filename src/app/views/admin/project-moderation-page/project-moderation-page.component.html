@@ -1,5 +1,5 @@
 <app-page>
-    <h1 pageHeader>{{ projectDto.name }}</h1>
+    <h1 pageHeader>{{ projectDraftDto.name }}</h1>
     <div class="main-container">
         <h3>{{ projectDto.organizationName }}</h3>
         <div class="summary-container">
@@ -13,15 +13,22 @@
                         auto-height="true"
                         thumbs-swiper=".thumbnail-swiper"
                     >
-                        <swiper-slide *ngFor="let asset of projectDto.assets">
+                        <swiper-slide
+                            *ngFor="let asset of projectDraftDto.assets"
+                        >
                             <img class="swiper-img" [src]="asset.url" />
                         </swiper-slide>
                     </swiper-container>
                 </div>
                 <div class="aside">
                     <div class="button-container">
-                        <app-button type="color">Odrzuć</app-button>
-                        <app-button class="bottom" type="translucent"
+                        <app-button type="danger" (click)="rejectSubmission()"
+                            >Odrzuć</app-button
+                        >
+                        <app-button
+                            class="bottom"
+                            type="color"
+                            (click)="publishSubmission()"
                             >Zaakceptuj</app-button
                         >
                     </div>
@@ -37,7 +44,7 @@
                 space-between="25"
             >
                 <swiper-slide
-                    *ngFor="let asset of projectDto.assets"
+                    *ngFor="let asset of projectDraftDto.assets"
                     class="thumbnail-swiper-slide"
                 >
                     <img class="swiper-thumb-img" [src]="asset.url" />
@@ -74,3 +81,4 @@
         </div>
     </div>
 </app-page>
+<app-reject-project-modal></app-reject-project-modal>
