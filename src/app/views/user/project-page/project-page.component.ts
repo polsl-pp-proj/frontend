@@ -17,10 +17,11 @@ import { ProjectService } from 'src/app/modules/project/services/project.service
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { FavoriteService } from 'src/app/modules/favorite/services/favorite.service';
-import { Subscription } from 'rxjs';
+import { Subscription, skipWhile } from 'rxjs';
 import { OpenPositionForProjectDto } from 'src/app/modules/project/modules/project-api/dtos/open-position-for-project.dto';
 import { JoinTeamModalComponent } from 'src/app/components/modals/join-team-modal/join-team-modal.component';
 import { OpenPositionDto } from 'src/app/dtos/open-position.dto';
+import { AuthService } from 'src/app/modules/auth/services/auth.service';
 
 @Component({
     selector: 'app-project-page',
@@ -136,6 +137,7 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
 
     projectId: number = -1;
     isFavorite = false;
+    isStudent = false;
 
     subSink: Subscription[] = [];
 
@@ -155,7 +157,8 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
         private readonly activatedRoute: ActivatedRoute,
         private readonly router: Router,
         private readonly toastrService: ToastrService,
-        private readonly favoriteService: FavoriteService
+        private readonly favoriteService: FavoriteService,
+        private readonly authService: AuthService
     ) {}
 
     async ngOnInit() {
@@ -179,7 +182,12 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
             this.subSink.push(
                 this.favoriteService.isFavorite(this.projectId).subscribe({
                     next: (isFavorite) => (this.isFavorite = isFavorite),
-                })
+                }),
+                this.authService.authTokenPayload
+                    .pipe(skipWhile((payload) => payload === undefined))
+                    .subscribe((payload) => {
+                        this.isStudent = payload?.isVerifiedStudent ?? false;
+                    })
             );
             return;
         }

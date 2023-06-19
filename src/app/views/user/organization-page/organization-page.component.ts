@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
 import { JoinTeamModalComponent } from 'src/app/components/modals/join-team-modal/join-team-modal.component';
 import { OpenPositionDto } from 'src/app/dtos/open-position.dto';
 import { SimpleProjectDto } from 'src/app/dtos/simple-project.dto';
@@ -18,11 +19,12 @@ import { ProjectService } from 'src/app/modules/project/services/project.service
     templateUrl: './organization-page.component.html',
     styleUrls: ['./organization-page.component.scss'],
 })
-export class OrganizationPageComponent implements OnInit {
+export class OrganizationPageComponent implements OnInit, OnDestroy {
     organizationId = -1;
     organizationName = 'Trwa ładowanie...';
-    isMember!: boolean;
-    isOwner!: boolean;
+    isMember = false;
+    isOwner = false;
+    isStudent = false;
 
     organizationProjects: SimpleProjectDto[] = [];
 
@@ -36,6 +38,8 @@ export class OrganizationPageComponent implements OnInit {
         description: 'Ładowanie...',
         requirements: ['Ładowanie...'],
     };
+
+    subsink: Subscription[] = [];
 
     constructor(
         private readonly activatedRoute: ActivatedRoute,
@@ -67,23 +71,33 @@ export class OrganizationPageComponent implements OnInit {
                         );
                     },
                 });
-            this.authService.authTokenPayload.subscribe(
-                (authTokenPayload: AuthTokenPayloadDto | null | undefined) => {
-                    if (authTokenPayload) {
-                        const userOrganization =
-                            authTokenPayload.organizations.find(
-                                (org: { organizationId: number }) =>
-                                    org.organizationId === this.organizationId
-                            );
+            this.subsink.push(
+                this.authService.authTokenPayload.subscribe(
+                    (
+                        authTokenPayload: AuthTokenPayloadDto | null | undefined
+                    ) => {
+                        if (authTokenPayload) {
+                            const userOrganization =
+                                authTokenPayload.organizations.find(
+                                    (org: { organizationId: number }) =>
+                                        org.organizationId ===
+                                        this.organizationId
+                                );
 
-                        if (userOrganization) {
-                            this.isMember = true;
-                            this.isOwner =
-                                userOrganization.role ===
-                                OrganizationMemberRole.Owner;
+                            if (userOrganization) {
+                                this.isMember = true;
+                                this.isOwner =
+                                    userOrganization.role ===
+                                    OrganizationMemberRole.Owner;
+                            } else {
+                                this.isMember = false;
+                                this.isOwner = false;
+                            }
                         }
+                        this.isStudent =
+                            authTokenPayload?.isVerifiedStudent ?? false;
                     }
-                }
+                )
             );
             this.projectService
                 .getOrganizationProjects(this.organizationId)
@@ -99,6 +113,9 @@ export class OrganizationPageComponent implements OnInit {
             return;
         }
         this.router.navigate(['/']);
+    }
+    ngOnDestroy(): void {
+        this.subsink.forEach((sub) => sub.unsubscribe());
     }
 
     visitProject(projectId: number) {
