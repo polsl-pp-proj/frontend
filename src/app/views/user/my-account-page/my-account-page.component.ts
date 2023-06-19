@@ -1,12 +1,15 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router, RouterEvent } from '@angular/router';
 import { Subscription, skipWhile } from 'rxjs';
+import { VerifyStudentModalComponent } from 'src/app/components/modals/verify-student-modal/verify-student-modal.component';
 import { PastPaymentDto } from 'src/app/dtos/past-payment.dto';
 import { ProjectCardDto } from 'src/app/dtos/project-card.dto';
 import { AuthTokenPayloadDto } from 'src/app/modules/auth/dtos/auth-token-payload.dto';
 import { UserOrganizationDto } from 'src/app/modules/auth/dtos/user-organization.dto';
 import { UserRole } from 'src/app/modules/auth/enums/user-role.enum';
 import { AuthService } from 'src/app/modules/auth/services/auth.service';
+import { StudentshipService } from 'src/app/modules/auth/services/studentship.service';
+import { ModalService } from 'src/app/modules/modal/services/modal.service';
 import { OrganizationMemberRole } from 'src/app/modules/organization/enums/organization-member-role.enum';
 
 @Component({
@@ -20,7 +23,8 @@ export class MyAccountPageComponent implements OnInit, OnDestroy {
 
     constructor(
         private readonly authService: AuthService,
-        private readonly router: Router
+        private readonly router: Router,
+        private readonly modalService: ModalService
     ) {}
 
     projects: ProjectCardDto[] = [
@@ -82,6 +86,9 @@ export class MyAccountPageComponent implements OnInit, OnDestroy {
     }
 
     verifyStudentship() {
-        this.payload.isVerifiedStudent = true;
+        this.modalService.updateModalState(
+            VerifyStudentModalComponent.ModalName,
+            'open'
+        );
     }
 }

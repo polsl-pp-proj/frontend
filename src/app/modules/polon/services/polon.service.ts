@@ -12,11 +12,13 @@ export class PolonService {
     getAcademicInstitutions(...statusFilter: PolonAcademicInstitutionStatus[]) {
         return this.polonApiService.getAcademicInstitutions().pipe(
             map((institutions) => {
-                return statusFilter.length
-                    ? institutions.filter((institution) =>
-                          statusFilter.includes(institution.status)
-                      )
-                    : institutions;
+                return (
+                    statusFilter.length
+                        ? institutions.filter((institution) =>
+                              statusFilter.includes(institution.status)
+                          )
+                        : institutions
+                ).sort((a, b) => a.name.localeCompare(b.name));
             })
         );
     }

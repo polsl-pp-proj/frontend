@@ -6,6 +6,7 @@ import { IconVaultService } from 'src/app/modules/icon-vault/services/icon-vault
 import { ModalService } from 'src/app/modules/modal/services/modal.service';
 import { LoginModalComponent } from '../modals/login-modal/login-modal.component';
 import { CreateOrganizationModalComponent } from '../modals/create-organization-modal/create-organization-modal.component';
+import { UserRole } from 'src/app/modules/auth/enums/user-role.enum';
 
 @Component({
     selector: 'app-navbar',
@@ -18,6 +19,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     logged: boolean = false;
     isVerifiedStudent: boolean = false;
+    userRole: UserRole = UserRole.BasicUser;
+
     expandedLeftMenu: boolean = false;
     expandedRightMenu: boolean = false;
 
@@ -49,6 +52,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
                     this.logged = true;
                     this.isVerifiedStudent = payload.isVerifiedStudent;
                     this.initials = payload.firstName[0] + payload.lastName[0];
+                    this.userRole = payload.role;
                     return;
                 }
                 this.logged = false;
@@ -75,4 +79,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
     logout() {
         this.authService.logout().subscribe();
     }
+
+    UserRole = UserRole;
 }

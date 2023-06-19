@@ -64,9 +64,6 @@
             <li><app-button routerLink="/about">O nas</app-button></li>
             <span>
                 <li *ngIf="logged">
-                    <app-button>Moje organizacje</app-button>
-                </li>
-                <li *ngIf="logged">
                     <app-button routerLink="/account">Moje konto</app-button>
                 </li>
             </span>
@@ -77,7 +74,7 @@
                     >Zaloguj się</app-button
                 >
             </li>
-            <li *ngIf="logged">
+            <li *ngIf="logged && userRole !== UserRole.BasicUser">
                 <app-button type="color">Moderuj</app-button>
             </li>
             <li *ngIf="logged">
@@ -103,7 +100,7 @@
                     >Zaloguj się</app-button
                 >
             </li>
-            <li *ngIf="logged">
+            <li *ngIf="logged && userRole !== UserRole.BasicUser">
                 <app-button type="color">Moderuj</app-button>
             </li>
             <li *ngIf="logged">

@@ -4,39 +4,34 @@
         <div class="name-container">
             <div class="with-label">
                 <span class="label">Imię</span>
-                <span class="user-info">{{ this.payload.firstName }}</span>
+                <span class="user-info">{{ payload.firstName }}</span>
             </div>
             <div class="with-label">
                 <span class="label">Nazwisko</span>
-                <span class="user-info">{{ this.payload.lastName }}</span>
+                <span class="user-info">{{ payload.lastName }}</span>
             </div>
         </div>
         <div class="email-role-container">
             <div class="with-label">
                 <span class="label">Adres e-mail</span>
-                <span class="user-info">{{ this.payload.emailAddress }}</span>
+                <span class="user-info">{{ payload.emailAddress }}</span>
             </div>
             <div class="with-label">
                 <span class="label">Rola</span>
-                <span class="user-info">{{
-                    this.roles[this.payload.role]
-                }}</span>
+                <span class="user-info">{{ roles[payload.role] }}</span>
             </div>
         </div>
         <div class="additional-info-container">
             <div class="with-label">
                 <span class="label">Dodatkowe informacje</span>
                 <ul class="list-group">
-                    <li *ngIf="this.payload.isActive" class="user-info">
+                    <li *ngIf="payload.isActive" class="user-info">
                         Użytkownik aktywny
                     </li>
-                    <li *ngIf="!this.payload.isActive" class="user-info">
+                    <li *ngIf="!payload.isActive" class="user-info">
                         Użytkownik nieaktywny
                     </li>
-                    <li
-                        *ngIf="this.payload.isVerifiedStudent"
-                        class="user-info"
-                    >
+                    <li *ngIf="payload.isVerifiedStudent" class="user-info">
                         Student
                     </li>
                 </ul>
@@ -48,16 +43,19 @@
                 >Zweryfikuj status studenta</app-button
             >
         </div>
-        <section *ngIf="this.organizations.length > 0" class="organizations">
+        <section *ngIf="organizations.length > 0" class="organizations">
             <h2>Organizacje, do których należysz</h2>
             <div class="organizations-container">
-                <span *ngFor="let organization of this.organizations" class="organization">
-                    <span>{{organization.organizationId}}</span>
-                    <span>{{organization.role}}</span>
+                <span
+                    *ngFor="let organization of organizations"
+                    class="organization"
+                >
+                    <span>{{ organization.organizationId }}</span>
+                    <span>{{ organization.role }}</span>
                 </span>
             </div>
         </section>
-        <section *ngIf="this.projects.length > 0" class="favourite-projects">
+        <section *ngIf="projects.length > 0" class="favourite-projects">
             <h2>Ulubione projekty</h2>
             <div class="project-cards-container">
                 <app-project-card
@@ -74,3 +72,4 @@
         </section>
     </div>
 </app-page>
+<app-verify-student-modal></app-verify-student-modal>
