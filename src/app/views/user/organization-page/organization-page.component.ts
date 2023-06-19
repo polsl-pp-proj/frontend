@@ -2,7 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
+import { AddOrganizationMembersModalComponent } from 'src/app/components/modals/add-organization-members-modal/add-organization-members-modal.component';
 import { JoinTeamModalComponent } from 'src/app/components/modals/join-team-modal/join-team-modal.component';
+import { RemoveOrganizationMembersModalComponent } from 'src/app/components/modals/remove-organization-members-modal/remove-organization-members-modal.component';
 import { OpenPositionDto } from 'src/app/dtos/open-position.dto';
 import { SimpleProjectDto } from 'src/app/dtos/simple-project.dto';
 import { AuthTokenPayloadDto } from 'src/app/modules/auth/dtos/auth-token-payload.dto';
@@ -126,6 +128,19 @@ export class OrganizationPageComponent implements OnInit, OnDestroy {
         this.chosenOpenPosition = openPosition;
         this.modalService.updateModalState(
             JoinTeamModalComponent.ModalName,
+            'open'
+        );
+    }
+
+    openAddMembersModal() {
+        this.modalService.updateModalState(
+            AddOrganizationMembersModalComponent.ModalName,
+            'open'
+        );
+    }
+    openRemoveMembersModal() {
+        this.modalService.updateModalState(
+            RemoveOrganizationMembersModalComponent.ModalName,
             'open'
         );
     }
