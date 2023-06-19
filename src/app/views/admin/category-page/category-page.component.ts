@@ -47,7 +47,7 @@ export class CategoryPageComponent implements OnInit {
         );
     }
 
-    //changeCategory(categoryId: number) {}
+    // changeCategory(categoryId: number) {}
 
     removeCategory(category: CategoryDto) {
         this.categoryService.deleteCategory(category.id).subscribe({
@@ -56,12 +56,14 @@ export class CategoryPageComponent implements OnInit {
                     `Kategoria '${category.name}' została usunięta.`,
                     'Kategoria usunięta'
                 );
+                this.fetchCategories();
             },
             error: () => {
                 this.toastrService.error(
                     'Podczas próby usunięcia kategorii wystąpił błąd.',
                     'Błąd usuwania kategorii'
                 );
+                this.fetchCategories();
             },
         });
     }
