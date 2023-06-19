@@ -5,4 +5,11 @@ module.exports = {
             { test: /\.md$/, use: "text-loader" },
         ],
     },
+    resolve: {
+        fallback: {
+            http: require.resolve("stream-http"),
+            https: require.resolve("https-browserify"),
+            url: require.resolve("url"),
+        },
+    },
 };

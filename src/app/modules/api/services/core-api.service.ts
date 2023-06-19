@@ -3,10 +3,14 @@ import {
     HttpClient,
     HttpEvent,
     HttpEventType,
+    HttpHeaders,
     HttpRequest,
     HttpResponse,
 } from '@angular/common/http';
-import { GeneralApiRoute } from '../classes/api-route.class';
+import {
+    EventStreamApiRoute,
+    GeneralApiRoute,
+} from '../classes/api-route.class';
 import {
     Observable,
     filter,
@@ -23,6 +27,12 @@ import {
 } from '../types/request-method.type';
 import { UrlService } from './url.service';
 import { ApiAuthService } from './api-auth.service';
+import * as EventSource from 'eventsource';
+import {
+    EventStreamData,
+    EventStreamObservable,
+} from '../types/event-stream-observable.type';
+import { SseApiOptions } from '../classes/sse-api-options.class';
 
 @Injectable({
     providedIn: 'root',
@@ -187,5 +197,54 @@ export class CoreApiService {
         } else {
             return this.httpClient.request<RS>(httpRequest);
         }
+    }
+
+    requestEventStream<RS>(
+        route: EventStreamApiRoute,
+        options: SseApiOptions
+    ): EventStreamObservable<RS> {
+        if (route.authorized && !options.headers?.has('Authorization')) {
+            return this.apiAuthService.token.pipe(
+                skipWhile((token) => !token),
+                timeout({ each: 10000 }),
+                take(1),
+                mergeMap((token) => {
+                    options.headers =
+                        options.headers?.append(
+                            'Authorization',
+                            `Bearer ${token}`
+                        ) ??
+                        new HttpHeaders({ Authorization: `Bearer ${token}` });
+
+                    return this.makeEventStreamRequest<RS>(route, options);
+                })
+            );
+        } else {
+            return this.makeEventStreamRequest<RS>(route, options);
+        }
+    }
+
+    private makeEventStreamRequest<RS>(
+        route: EventStreamApiRoute,
+        options: SseApiOptions
+    ): EventStreamObservable<RS> {
+        const eventSource = new EventSource(
+            options.addHost
+                ? this.urlService.getBoundAPIRouteWithHost(
+                      route.path,
+                      options.routeParams
+                  )
+                : this.urlService.bindRouteParams(
+                      route.path,
+                      options.routeParams
+                  ),
+            options
+        );
+
+        return new Observable<EventStreamData<RS>>((subscriber) => {
+            eventSource.onmessage = (event) => {
+                subscriber.next({ ...event, eventSource });
+            };
+        });
     }
 }
