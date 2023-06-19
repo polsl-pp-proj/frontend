@@ -1,19 +1,20 @@
 <app-page>
-    <div class="container">
-        <h1>Zarządzaj organizacjami</h1>
-        <table>
-            <tr>
-                <th>Nazwa organizacji</th>
-                <th></th>
-            </tr>
-            <tr *ngFor="let org of orgList">
-                <td>{{ org.name }}</td>
-                <td>
-                    <app-button type="clear" class="last-column">
-                        <img src="assets/img/icons/eye.svg" class="image" />
-                    </app-button>
-                </td>
-            </tr>
-        </table>
-    </div>
+    <h1 #pageHeader>Zarządzaj organizacjami</h1>
+    <table>
+        <tr>
+            <th>Nazwa organizacji</th>
+            <th></th>
+        </tr>
+        <tr *ngFor="let org of organizations">
+            <td>{{ org.name }}</td>
+            <td>
+                <app-button
+                    type="clear"
+                    class="last-column"
+                    [icon]="eyeIcon"
+                    [routerLink]="['/organization', org.id]"
+                ></app-button>
+            </td>
+        </tr>
+    </table>
 </app-page>

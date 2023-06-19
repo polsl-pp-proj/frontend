@@ -59,6 +59,7 @@ import { ProjectModule } from './modules/project/project.module';
 import { FavoriteModule } from './modules/favorite/favorite.module';
 import { ManageOrganizationsPageComponent } from './views/admin/manage-organizations-page/manage-organizations-page.component';
 import { ChangePasswordModalComponent } from './components/modals/change-password-modal/change-password-modal.component';
+import { CreateCategoryModalComponent } from './components/modals/create-category-modal/create-category-modal.component';
 
 @NgModule({
     declarations: [
@@ -106,6 +107,7 @@ import { ChangePasswordModalComponent } from './components/modals/change-passwor
         VerifyStudentModalComponent,
         ManageOrganizationsPageComponent,
         ChangePasswordModalComponent,
+        CreateCategoryModalComponent,
     ],
     imports: [
         BrowserModule,

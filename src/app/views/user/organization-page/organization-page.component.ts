@@ -2,13 +2,16 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
+import { AddOrganizationMembersModalComponent } from 'src/app/components/modals/add-organization-members-modal/add-organization-members-modal.component';
 import { JoinTeamModalComponent } from 'src/app/components/modals/join-team-modal/join-team-modal.component';
+import { RemoveOrganizationMembersModalComponent } from 'src/app/components/modals/remove-organization-members-modal/remove-organization-members-modal.component';
 import { OpenPositionDto } from 'src/app/dtos/open-position.dto';
 import { SimpleProjectDto } from 'src/app/dtos/simple-project.dto';
 import { AuthTokenPayloadDto } from 'src/app/modules/auth/dtos/auth-token-payload.dto';
 import { AuthService } from 'src/app/modules/auth/services/auth.service';
 import { ModalService } from 'src/app/modules/modal/services/modal.service';
 import { OrganizationMemberRole } from 'src/app/modules/organization/enums/organization-member-role.enum';
+import { OrganizationDto } from 'src/app/modules/organization/modules/organization-api/dtos/organization.dto';
 import { OrganizationService } from 'src/app/modules/organization/services/organization.service';
 import { OpenPositionForProjectDto } from 'src/app/modules/project/modules/project-api/dtos/open-position-for-project.dto';
 import { OpenPositionService } from 'src/app/modules/project/services/open-position.service';
@@ -128,5 +131,29 @@ export class OrganizationPageComponent implements OnInit, OnDestroy {
             JoinTeamModalComponent.ModalName,
             'open'
         );
+    }
+
+    openAddMembersModal() {
+        this.modalService.updateModalState(
+            AddOrganizationMembersModalComponent.ModalName,
+            'open'
+        );
+    }
+    openRemoveMembersModal() {
+        this.modalService.updateModalState(
+            RemoveOrganizationMembersModalComponent.ModalName,
+            'open'
+        );
+    }
+
+    addProject() {
+        this.router.navigate(['/project', 'add'], {
+            state: {
+                organization: new OrganizationDto({
+                    id: this.organizationId,
+                    name: this.organizationName,
+                }),
+            },
+        });
     }
 }

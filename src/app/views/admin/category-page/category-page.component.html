@@ -1,33 +1,38 @@
 <app-page>
-    <div class="container">
-        <h1>Zarządzaj kategoriami</h1>
-        <table>
-            <tr>
-                <th>Nazwa kategorii</th>
-                <th>Liczba projektów w kategorii</th>
-                <th class="third-head">
-                    <app-button type="clear">
-                        <img
-                            class="image"
-                            src="assets/img/icons/ion_add-circle-outline.svg"
-                        />
-                    </app-button>
-                </th>
-            </tr>
-            <tr *ngFor="let category of categoryList">
-                <td>{{ category.name }}</td>
-                <td>{{ category.amount }}</td>
-                <td class="third-row">
-                    <div class="button-container">
-                        <app-button type="clear">
-                            <img src="assets/img/icons/eye.svg" />
-                        </app-button>
-                        <app-button type="clear">
-                            <img src="assets/img/icons/trash-2.svg" />
-                        </app-button>
-                    </div>
-                </td>
-            </tr>
-        </table>
-    </div>
+    <h1 #pageHeader>Zarządzaj kategoriami</h1>
+    <table>
+        <tr>
+            <th>Nazwa kategorii</th>
+            <!-- <th>Liczba projektów w kategorii</th> -->
+            <th class="third-head">
+                <app-button
+                    type="clear"
+                    [icon]="icons['ion_add-circle-outline']"
+                    (click)="createCategory()"
+                >
+                </app-button>
+            </th>
+        </tr>
+        <tr *ngFor="let category of categories">
+            <td>{{ category.name }}</td>
+            <!-- <td>{{ category.amount }}</td> -->
+            <td class="third-row">
+                <div class="button-container">
+                    <!-- <app-button
+                        type="clear"
+                        [icon]="icons['eye']"
+                        (click)="changeCategory(category.id)"
+                    ></app-button> -->
+                    <app-button
+                        type="danger"
+                        [icon]="icons['trash-2']"
+                        (click)="removeCategory(category)"
+                    ></app-button>
+                </div>
+            </td>
+        </tr>
+    </table>
 </app-page>
+<app-create-category-modal
+    (createdCategory)="fetchCategories()"
+></app-create-category-modal>

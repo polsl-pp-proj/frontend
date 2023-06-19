@@ -1,19 +1,14 @@
-.container {
-    width: 80%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 30px;
-}
-
 table {
     border-collapse: collapse;
-    border-radius: 10px;
+    border-radius: calc(var(--el-height) / 2);
     width: 100%;
+    overflow: hidden;
 }
 
-th, td {
+th,
+td {
     text-align: left;
-    padding: 8px;
+    padding: 1rem;
     width: 20%;
 }
 
@@ -26,10 +21,11 @@ th, td {
     padding-right: 5px;
 }
 
-tr:nth-child(even) {background-color: #212121;}
+tr:nth-child(even) {
+    background-color: #212121;
+}
 
 .image {
-min-width: 32px;
-min-height: 32px;
+    min-width: 32px;
+    min-height: 32px;
 }
-  

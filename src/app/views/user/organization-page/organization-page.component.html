@@ -2,7 +2,11 @@
     <h1 pageHeader>{{ organizationName }}</h1>
     <section class="organization-projects">
         <h3>Projekty organizacji</h3>
-        <app-button type="color" class="button-margin" *ngIf="isMember"
+        <app-button
+            type="color"
+            class="button-margin"
+            *ngIf="isMember"
+            (click)="addProject()"
             >Dodaj projekt</app-button
         >
 
@@ -22,10 +26,16 @@
     </section>
     <div class="container" *ngIf="isOwner">
         <h3>Zarządzaj organizacją</h3>
-        <app-button type="color" class="button-margin"
+        <app-button
+            type="color"
+            class="button-margin"
+            (click)="openAddMembersModal()"
             >Dodaj nowego członka organizacji</app-button
         >
-        <app-button type="danger" class="button-margin"
+        <app-button
+            type="danger"
+            class="button-margin"
+            (click)="openRemoveMembersModal()"
             >Usuń członka organizacji</app-button
         >
     </div>
