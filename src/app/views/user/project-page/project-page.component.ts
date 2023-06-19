@@ -171,7 +171,7 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
                 error: () => {
                     this.router.navigate(['/404']);
                     this.toastrService.info(
-                        'Odwiedzony przez Ciebie project nie istnieje!',
+                        'Odwiedzony przez Ciebie projekt nie istnieje!',
                         'Projekt nie istnieje'
                     );
                 },

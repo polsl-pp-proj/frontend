@@ -21,11 +21,6 @@ export const projectApiRoutes = {
         path: '/v1/project/organization/:organizationId',
         method: 'GET',
     },
-    GET_organizationOpenPositions: {
-        authorized: false,
-        path: '/v1/project/open-positions/organization/:organizationId',
-        method: 'GET',
-    },
     PATCH_project: {
         authorized: true,
         path: '/v1/project/:projectId',

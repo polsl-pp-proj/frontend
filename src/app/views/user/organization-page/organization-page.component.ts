@@ -10,6 +10,7 @@ import { ModalService } from 'src/app/modules/modal/services/modal.service';
 import { OrganizationMemberRole } from 'src/app/modules/organization/enums/organization-member-role.enum';
 import { OrganizationService } from 'src/app/modules/organization/services/organization.service';
 import { OpenPositionForProjectDto } from 'src/app/modules/project/modules/project-api/dtos/open-position-for-project.dto';
+import { OpenPositionService } from 'src/app/modules/project/services/open-position.service';
 import { ProjectService } from 'src/app/modules/project/services/project.service';
 
 @Component({
@@ -43,6 +44,7 @@ export class OrganizationPageComponent implements OnInit {
         private readonly toastrService: ToastrService,
         private readonly authService: AuthService,
         private readonly projectService: ProjectService,
+        private readonly openPositionService: OpenPositionService,
         private readonly modalService: ModalService
     ) {}
 
@@ -88,7 +90,7 @@ export class OrganizationPageComponent implements OnInit {
                 .subscribe(
                     (projects) => (this.organizationProjects = projects)
                 );
-            this.projectService
+            this.openPositionService
                 .getOrganizationOpenPositions(this.organizationId)
                 .subscribe(
                     (openPositions) => (this.openPositions = openPositions)

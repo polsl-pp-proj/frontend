@@ -18,7 +18,7 @@
                     name="candidateSummary"
                     [formControl]="joinProjectForm.controls.candidateSummary"
                     [displayErrors]="false"
-                    [type]="'multiline'"
+                    type="multiline"
                     >Powiedz coś o sobie i swoim doświadczeniu</app-input
                 >
                 <div class="char-counter">
@@ -28,7 +28,7 @@
         </form>
         <app-button
             type="color"
-            [disabled]="!joinProjectForm.valid"
+            [disabled]="!joinProjectForm.valid || inTransit"
             (click)="sendJoinRequest()"
             >Wyślij zgłoszenie</app-button
         >

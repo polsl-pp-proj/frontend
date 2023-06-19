@@ -75,15 +75,6 @@ export class ProjectApiService {
         );
     }
 
-    getOrganizationOpenPositions(organizationId: number) {
-        return this.apiService.request<OpenPositionForProjectDto[]>(
-            projectApiRoutes.GET_organizationOpenPositions,
-            new ApiOptions({
-                routeParams: { organizationId },
-            }) as ApiOptionsBody
-        );
-    }
-
     updateProject(
         projectId: number,
         updateProjectDto: UpdateProjectDto,
