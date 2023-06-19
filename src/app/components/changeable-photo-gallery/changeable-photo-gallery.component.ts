@@ -128,7 +128,6 @@ export class ChangeablePhotoGalleryComponent implements OnInit, DoCheck {
     }
 
     addImage(file: File) {
-        console.log(file);
         this.newAsset.emit(file);
     }
 
