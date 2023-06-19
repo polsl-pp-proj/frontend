@@ -14,6 +14,10 @@ export class OrganizationService {
         return this.organizationApiService.createOrganization(name);
     }
 
+    getOwnOrganizations() {
+        return this.organizationApiService.getOwnOrganizations();
+    }
+
     getOrganization(organizationId: number) {
         return this.organizationApiService.getOrganization(organizationId);
     }

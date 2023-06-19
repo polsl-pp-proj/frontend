@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { ModalService } from 'src/app/modules/modal/services/modal.service';
+import { OpenPositionForProjectDto } from 'src/app/modules/project/modules/project-api/dtos/open-position-for-project.dto';
+import { OpenPositionService } from 'src/app/modules/project/services/open-position.service';
 
 @Component({
     selector: 'app-join-team-modal',
@@ -14,19 +18,36 @@ export class JoinTeamModalComponent implements OnInit {
 
     displayErrorMessage: boolean = false;
 
-    projectName = 'Projekt zielonej architektury';
-    positionName = 'full stack developer';
+    @Input()
+    openPosition: OpenPositionForProjectDto = {
+        id: -1,
+        name: 'Ładowanie...',
+        projectId: -1,
+        projectName: 'Ładowanie...',
+        description: 'Ładowanie...',
+        requirements: ['Ładowanie...'],
+    };
 
     actualInputValue: string = '';
     inputSize: number = 0;
     maxInputSize: number = 500;
 
     joinProjectForm = new FormGroup({
-        candidateSummary: new FormControl<string>('', [
-            Validators.required,
-            Validators.maxLength(this.maxInputSize),
-        ]),
+        candidateSummary: new FormControl<string>('', {
+            nonNullable: true,
+            validators: [
+                Validators.required,
+                Validators.maxLength(this.maxInputSize),
+            ],
+        }),
     });
+    inTransit = false;
+
+    constructor(
+        private readonly openPositionService: OpenPositionService,
+        private readonly modalService: ModalService,
+        private readonly toastrService: ToastrService
+    ) {}
 
     ngOnInit(): void {
         this.joinProjectForm
@@ -37,7 +58,29 @@ export class JoinTeamModalComponent implements OnInit {
     }
 
     sendJoinRequest() {
-        console.log(this.joinProjectForm.get('candidateSummary')?.value);
+        this.inTransit = true;
+        this.openPositionService
+            .applyForOpenPosition(
+                this.openPosition.id,
+                this.joinProjectForm.controls.candidateSummary.value
+            )
+            .subscribe({
+                next: () => {
+                    this.inTransit = false;
+                    this.toastrService.success(
+                        'Wiadomość o Twojej chęci dołączenia do projektu została wysłana.',
+                        'Zgłoszenie wysłane'
+                    );
+                    this.modalService.updateModalState(this.modalName, 'close');
+                },
+                error: () => {
+                    this.inTransit = false;
+                    this.toastrService.success(
+                        'Podczas wysyłania wiadomości o Twojej chęci dołączenia do projektu wystąpił błąd. Spróbuj ponownie.',
+                        'Błąd wysyłania zgłoszenia'
+                    );
+                },
+            });
     }
 
     modalClosed() {

@@ -1,3 +1,5 @@
+const webpack = require("webpack");
+
 module.exports = {
     module: {
         rules: [
@@ -12,4 +14,9 @@ module.exports = {
             url: require.resolve("url"),
         },
     },
+    plugins: [
+        new webpack.ProvidePlugin({
+            process: "process/browser",
+        }),
+    ],
 };

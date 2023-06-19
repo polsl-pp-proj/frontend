@@ -1,9 +1,9 @@
 import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Subscription } from 'rxjs';
+import { ProjectDto } from 'src/app/dtos/project.dto';
 import { ModalService } from 'src/app/modules/modal/services/modal.service';
 import { SubmissionService } from 'src/app/modules/submission/services/submission.service';
 
@@ -19,10 +19,10 @@ export class RejectProjectModalComponent {
     }
 
     @Input()
-    projectDraftDto: ProjectDraftDto = {
+    projectDto: ProjectDto = {
         name: 'Projekt zielonej architektury',
         updatedAt: -1,
-    } as ProjectDraftDto;
+    } as ProjectDto;
     @Input()
     submissionId!: number;
 
@@ -38,6 +38,8 @@ export class RejectProjectModalComponent {
         }),
     });
 
+    inTransit = false;
+
     constructor(
         private readonly modalService: ModalService,
         private readonly submissionService: SubmissionService,
@@ -46,10 +48,11 @@ export class RejectProjectModalComponent {
     ) {}
 
     sendRejectRequest() {
+        this.inTransit = true;
         this.submissionService
             .rejectSubmission({
                 submissionId: this.submissionId,
-                draftLastModified: this.projectDraftDto.updatedAt,
+                draftLastModified: this.projectDto.updatedAt,
                 reason: this.rejectProjectForm.controls.reason.value,
             })
             .subscribe({
@@ -60,6 +63,7 @@ export class RejectProjectModalComponent {
                     );
                     this.modalService.updateModalState(this.modalName, 'close');
                     this.router.navigate(['admin', 'moderate', 'projects']);
+                    this.inTransit = false;
                 },
                 error: (err) => {
                     if (err instanceof HttpErrorResponse) {
@@ -77,6 +81,7 @@ export class RejectProjectModalComponent {
                                 'moderate',
                                 'projects',
                             ]);
+                            this.inTransit = false;
                             return;
                         }
                     }
@@ -84,6 +89,7 @@ export class RejectProjectModalComponent {
                         'Podczas próby odrzucenia zgłoszenia wystąpił błąd',
                         'Błąd odrzucania zgłoszenia'
                     );
+                    this.inTransit = false;
                 },
             });
     }

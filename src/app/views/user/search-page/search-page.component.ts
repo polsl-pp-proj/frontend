@@ -1,18 +1,13 @@
-import {
-    Component,
-    EventEmitter,
-    OnDestroy,
-    OnInit,
-    Output,
-} from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription, debounceTime } from 'rxjs';
-import { ProjectCardDto } from 'src/app/dtos/project-card.dto';
 import { SearchQueryParamsDto } from 'src/app/dtos/search-query-params.dto';
+import { SimpleProjectDto } from 'src/app/dtos/simple-project.dto';
 import { SearchSortBy } from 'src/app/enums/search-sort-by.enum';
 import { CategoryDto } from 'src/app/modules/category/modules/category-api/dtos/category.dto';
 import { CategoryService } from 'src/app/modules/category/services/category.service';
 import { HelpService } from 'src/app/modules/help/services/help.service';
+import { ProjectService } from 'src/app/modules/project/services/project.service';
 
 @Component({
     selector: 'app-search-page',
@@ -24,16 +19,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
 
     searchQueryParamsChange = new EventEmitter<SearchQueryParamsDto>();
 
-    projectCards: ProjectCardDto[] = [
-        {
-            projectId: 2,
-            imageUrl: 'https://placehold.co/1200x630',
-            imageAlt: 'alt',
-            projectName: 'rakieta',
-            projectDescription: 'fajna rakieta',
-            projectOrg: 'Zmitac studio original',
-        },
-    ];
+    projectCards: SimpleProjectDto[] = [];
 
     categories: CategoryDto[] = [];
 
@@ -53,19 +39,21 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     constructor(
         private readonly router: Router,
         private readonly helpService: HelpService,
-        private readonly categoryService: CategoryService
-    ) {
-        for (let i = 0; i < 25; ++i) {
-            this.projectCards.push(this.projectCards[0]);
-        }
-    }
+        private readonly categoryService: CategoryService,
+        private readonly projectService: ProjectService
+    ) {}
 
     ngOnInit(): void {
         this.helpService.registerPageHelp('user/search-page');
         this.subsink.push(
             this.searchQueryParamsChange.pipe(debounceTime(500)).subscribe({
                 next: (params: SearchQueryParamsDto) => {
-                    console.log(params);
+                    this.projectService
+                        .searchProjects(params)
+                        .subscribe(
+                            (searchResults) =>
+                                (this.projectCards = searchResults.projects)
+                        );
                 },
             }),
             this.categoryService.getCategories().subscribe({

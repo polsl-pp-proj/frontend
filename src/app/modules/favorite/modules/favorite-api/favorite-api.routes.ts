@@ -1,6 +1,11 @@
 import { ApiRoute } from 'src/app/modules/api/classes/api-route.class';
 
 export const favoriteApiRoutes = {
+    GET_favorites: {
+        authorized: true,
+        method: 'GET',
+        path: 'v1/favorite',
+    },
     GET_simpleFavorites: {
         authorized: true,
         method: 'GET',

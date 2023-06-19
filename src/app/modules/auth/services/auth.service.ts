@@ -86,6 +86,10 @@ export class AuthService {
         }
     }
 
+    changePassword(newPassword: string) {
+        return this.authApiService.changePassword(newPassword);
+    }
+
     setEmailTokenParams(emailAddress: string, token: string) {
         this.lastEmailTokenParams = new EmailTokenParamsDto({
             emailAddress,

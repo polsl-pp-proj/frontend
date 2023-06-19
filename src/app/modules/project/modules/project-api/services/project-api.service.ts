@@ -13,6 +13,7 @@ import { SimpleProjectDto } from 'src/app/dtos/simple-project.dto';
 import { ProjectDto } from 'src/app/dtos/project.dto';
 import { UpdateProjectDto } from 'src/app/dtos/update-project.dto';
 import { CreateProjectDto } from 'src/app/dtos/create-project.dto';
+import { OpenPositionForProjectDto } from '../dtos/open-position-for-project.dto';
 @Injectable({
     providedIn: 'root',
 })

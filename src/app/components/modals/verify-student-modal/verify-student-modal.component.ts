@@ -1,6 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { Subscription, map } from 'rxjs';
+import { StudentshipService } from 'src/app/modules/auth/services/studentship.service';
+import { ModalService } from 'src/app/modules/modal/services/modal.service';
 import { PolonService } from 'src/app/modules/polon/services/polon.service';
 @Component({
     selector: 'app-verify-student-modal',
@@ -12,7 +15,6 @@ export class VerifyStudentModalComponent implements OnInit {
     get modalName() {
         return VerifyStudentModalComponent.ModalName;
     }
-    private universitiesSubscription!: Subscription;
 
     form = new FormGroup({
         university: new FormControl<string>('', {
@@ -25,23 +27,59 @@ export class VerifyStudentModalComponent implements OnInit {
         }),
     });
 
-    constructor(private polonService: PolonService) {}
-
     universities: { text: string; value: string }[] = [];
 
+    inTransit = false;
+
+    constructor(
+        private readonly polonService: PolonService,
+        private readonly studentshipService: StudentshipService,
+        private readonly modalService: ModalService,
+        private readonly toastrService: ToastrService
+    ) {}
+
+    ngOnInit(): void {
+        this.loadUniversities();
+    }
+
+    verify() {
+        this.inTransit = true;
+        this.studentshipService
+            .requestStudentshipVerification(
+                this.form.controls.email.value,
+                this.form.controls.university.value
+            )
+            .subscribe({
+                next: () => {
+                    this.inTransit = false;
+                    this.modalService.updateModalState(this.modalName, 'close');
+                    this.toastrService.success(
+                        'Wysłaliśmy wiadomość z linkiem potwierdzającym na podany adres.',
+                        'Weryfikacja rozpoczęta'
+                    );
+                },
+                error: () => {
+                    this.inTransit = false;
+                    this.toastrService.error(
+                        'Podczas próby weryfikacji wystąpił błąd.',
+                        'Błąd weryfikacji'
+                    );
+                },
+            });
+    }
+
+    modalClosed() {
+        this.form.reset();
+    }
+
     private loadUniversities(): void {
-        this.universitiesSubscription = this.polonService
+        this.polonService
             .getAcademicInstitutions('OPERATING')
             .subscribe((institutions) => {
-                console.log(institutions);
                 this.universities = institutions.map((institution) => ({
                     text: institution.name,
                     value: institution.uid,
                 }));
             });
-    }
-
-    ngOnInit(): void {
-        this.loadUniversities();
     }
 }

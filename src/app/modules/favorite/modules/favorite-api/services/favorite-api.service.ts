@@ -5,6 +5,7 @@ import {
     ApiOptions,
     ApiOptionsBody,
 } from 'src/app/modules/api/classes/api-options.class';
+import { SimpleProjectDto } from 'src/app/dtos/simple-project.dto';
 
 @Injectable({
     providedIn: 'root',
@@ -15,6 +16,13 @@ export class FavoriteApiService {
     getSimpleFavorites() {
         return this.apiService.request<number[]>(
             favoriteApiRoutes.GET_simpleFavorites,
+            new ApiOptions() as ApiOptionsBody
+        );
+    }
+
+    getFullFavorites() {
+        return this.apiService.request<SimpleProjectDto[]>(
+            favoriteApiRoutes.GET_favorites,
             new ApiOptions() as ApiOptionsBody
         );
     }

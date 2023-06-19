@@ -69,4 +69,12 @@ export class AuthApiService {
             }) as ApiOptionsBody
         );
     }
+
+    changePassword(newPassword: string) {
+        return this.coreApiService.request<PasswordDto, void>(
+            authApiRoutes.PATCH_changePassword,
+            new PasswordDto({ password: newPassword }),
+            new ApiOptions() as ApiOptionsBody
+        );
+    }
 }

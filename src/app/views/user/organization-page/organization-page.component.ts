@@ -1,88 +1,55 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
+import { JoinTeamModalComponent } from 'src/app/components/modals/join-team-modal/join-team-modal.component';
+import { OpenPositionDto } from 'src/app/dtos/open-position.dto';
+import { SimpleProjectDto } from 'src/app/dtos/simple-project.dto';
 import { AuthTokenPayloadDto } from 'src/app/modules/auth/dtos/auth-token-payload.dto';
 import { AuthService } from 'src/app/modules/auth/services/auth.service';
+import { ModalService } from 'src/app/modules/modal/services/modal.service';
 import { OrganizationMemberRole } from 'src/app/modules/organization/enums/organization-member-role.enum';
 import { OrganizationService } from 'src/app/modules/organization/services/organization.service';
+import { OpenPositionForProjectDto } from 'src/app/modules/project/modules/project-api/dtos/open-position-for-project.dto';
+import { OpenPositionService } from 'src/app/modules/project/services/open-position.service';
+import { ProjectService } from 'src/app/modules/project/services/project.service';
 
 @Component({
     selector: 'app-organization-page',
     templateUrl: './organization-page.component.html',
     styleUrls: ['./organization-page.component.scss'],
 })
-export class OrganizationPageComponent implements OnInit {
+export class OrganizationPageComponent implements OnInit, OnDestroy {
     organizationId = -1;
     organizationName = 'Trwa ładowanie...';
-    isMember!: boolean;
-    isOwner!: boolean;
+    isMember = false;
+    isOwner = false;
+    isStudent = false;
 
-    test_projects = [
-        {
-            name: 'Rakieta Elona',
-            description:
-                'Super szybka rakieta lecaca z predkoscia swiatla, mega szybka jest!!!!',
-            image_url: 'assets/img/illustrations/about1.svg',
-        },
-        {
-            name: 'Rakieta Elona',
-            description:
-                'Super szybka rakieta lecaca z predkoscia swiatla, mega szybka jest!!!!',
-            image_url: 'assets/img/illustrations/about1.svg',
-        },
-        {
-            name: 'Rakieta Elona',
-            description:
-                'Super szybka rakieta lecaca z predkoscia swiatla, mega szybka jest!!!!',
-            image_url: 'assets/img/illustrations/about1.svg',
-        },
-        {
-            name: 'Rakieta Elona',
-            description:
-                'Super szybka rakieta lecaca z predkoscia swiatla, mega szybka jest!!!!',
-            image_url: 'assets/img/illustrations/about1.svg',
-        },
-        {
-            name: 'Rakieta Elona',
-            description:
-                'Super szybka rakieta lecaca z predkoscia swiatla, mega szybka jest!!!!',
-            image_url: 'assets/img/illustrations/about1.svg',
-        },
-        {
-            name: 'Rakieta Elona',
-            description:
-                'Super szybka rakieta lecaca z predkoscia swiatla, mega szybka jest!!!!',
-            image_url: 'assets/img/illustrations/about1.svg',
-        },
-    ];
+    organizationProjects: SimpleProjectDto[] = [];
 
-    test_positions = [
-        {
-            name: 'Programista Fullstack',
-            description:
-                'Programista z umiejętnościami analitycznymi i dobrym skillem',
-            requirements: ['React', 'Django', 'Postgres'],
-        },
-        {
-            name: 'Programista Fullstack',
-            description:
-                'Programista z umiejętnościami analitycznymi i dobrym skillem',
-            requirements: ['React', 'Django', 'Postgres'],
-        },
-        {
-            name: 'Programista Fullstack',
-            description:
-                'Programista z umiejętnościami analitycznymi i dobrym skillem',
-            requirements: ['React', 'Django', 'Postgres'],
-        },
-    ];
+    openPositions: OpenPositionForProjectDto[] = [];
+
+    chosenOpenPosition: OpenPositionForProjectDto = {
+        id: -1,
+        name: 'Ładowanie...',
+        projectId: -1,
+        projectName: 'Ładowanie...',
+        description: 'Ładowanie...',
+        requirements: ['Ładowanie...'],
+    };
+
+    subsink: Subscription[] = [];
 
     constructor(
         private readonly activatedRoute: ActivatedRoute,
         private readonly organizationService: OrganizationService,
         private readonly router: Router,
         private readonly toastrService: ToastrService,
-        private readonly authService: AuthService
+        private readonly authService: AuthService,
+        private readonly projectService: ProjectService,
+        private readonly openPositionService: OpenPositionService,
+        private readonly modalService: ModalService
     ) {}
 
     ngOnInit(): void {
@@ -95,30 +62,6 @@ export class OrganizationPageComponent implements OnInit {
                 .subscribe({
                     next: (organization) => {
                         this.organizationName = organization.name;
-                        this.authService.authTokenPayload.subscribe(
-                            (
-                                authTokenPayload:
-                                    | AuthTokenPayloadDto
-                                    | null
-                                    | undefined
-                            ) => {
-                                if (authTokenPayload) {
-                                    const userOrganization =
-                                        authTokenPayload.organizations.find(
-                                            (org: { organizationId: number }) =>
-                                                org.organizationId ===
-                                                this.organizationId
-                                        );
-
-                                    if (userOrganization) {
-                                        this.isMember = true;
-                                        this.isOwner =
-                                            userOrganization.role ===
-                                            OrganizationMemberRole.Owner;
-                                    }
-                                }
-                            }
-                        );
                     },
                     error: () => {
                         this.router.navigate(['/']);
@@ -128,9 +71,62 @@ export class OrganizationPageComponent implements OnInit {
                         );
                     },
                 });
+            this.subsink.push(
+                this.authService.authTokenPayload.subscribe(
+                    (
+                        authTokenPayload: AuthTokenPayloadDto | null | undefined
+                    ) => {
+                        if (authTokenPayload) {
+                            const userOrganization =
+                                authTokenPayload.organizations.find(
+                                    (org: { organizationId: number }) =>
+                                        org.organizationId ===
+                                        this.organizationId
+                                );
+
+                            if (userOrganization) {
+                                this.isMember = true;
+                                this.isOwner =
+                                    userOrganization.role ===
+                                    OrganizationMemberRole.Owner;
+                            } else {
+                                this.isMember = false;
+                                this.isOwner = false;
+                            }
+                        }
+                        this.isStudent =
+                            authTokenPayload?.isVerifiedStudent ?? false;
+                    }
+                )
+            );
+            this.projectService
+                .getOrganizationProjects(this.organizationId)
+                .subscribe(
+                    (projects) => (this.organizationProjects = projects)
+                );
+            this.openPositionService
+                .getOrganizationOpenPositions(this.organizationId)
+                .subscribe(
+                    (openPositions) => (this.openPositions = openPositions)
+                );
 
             return;
         }
         this.router.navigate(['/']);
+    }
+    ngOnDestroy(): void {
+        this.subsink.forEach((sub) => sub.unsubscribe());
+    }
+
+    visitProject(projectId: number) {
+        this.router.navigate(['/project', projectId]);
+    }
+
+    openJoinTeamModal(openPosition: OpenPositionForProjectDto) {
+        this.chosenOpenPosition = openPosition;
+        this.modalService.updateModalState(
+            JoinTeamModalComponent.ModalName,
+            'open'
+        );
     }
 }

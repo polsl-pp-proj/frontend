@@ -28,6 +28,7 @@
         "marked": "^5.0.2",
         "ngx-image-cropper": "^6.3.4",
         "ngx-toastr": "^16.2.0",
+        "process": "^0.11.10",
         "rxjs": "~7.8.0",
         "stream-http": "^3.2.0",
         "swiper": "^9.2.4",
@@ -36,6 +37,7 @@
         "url": "^0.11.1",
         "util": "^0.12.5",
         "vditor": "^3.9.3",
+        "webpack": "^5.87.0",
         "zone.js": "~0.12.0"
     },
     "devDependencies": {

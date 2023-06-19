@@ -3,21 +3,24 @@
     [modalName]="modalName"
     transitionDuration="200ms"
     [closable]="true"
+    (closed)="modalClosed()"
 >
-    <div class="container">
-        <form [formGroup]="form">
-            <app-select
-                [multiple]="false"
-                name="university"
-                [formControl]="form.controls.university"
-                [options]="universities"
-                [displayErrors]="false"
-                >Uczelnia</app-select
-            >
-            <app-input [formControl]="form.controls.email"
-                >Adres e-mail</app-input
-            >
-            <app-button type="color">Zweryfikuj</app-button>
-        </form>
-    </div>
+    <form [formGroup]="form">
+        <app-select
+            [multiple]="false"
+            name="university"
+            resetText="Wybierz uczelnię"
+            [formControl]="form.controls.university"
+            [options]="universities"
+            [displayErrors]="false"
+            >Uczelnia</app-select
+        >
+        <app-input [formControl]="form.controls.email">Adres e-mail</app-input>
+        <app-button
+            type="color"
+            (click)="verify()"
+            [disabled]="!form.valid || inTransit"
+            >Zweryfikuj</app-button
+        >
+    </form>
 </app-base-modal>

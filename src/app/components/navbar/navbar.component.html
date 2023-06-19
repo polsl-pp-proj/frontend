@@ -62,14 +62,32 @@
             <li><app-button routerLink="/">Strona główna</app-button></li>
             <li><app-button routerLink="/search">Projekty</app-button></li>
             <li><app-button routerLink="/about">O nas</app-button></li>
-            <span>
-                <li *ngIf="logged">
-                    <app-button>Moje organizacje</app-button>
+            <li *ngIf="isVerifiedStudent">
+                <app-button (click)="openCreateOrganization()"
+                    >Stwórz organizację</app-button
+                >
+            </li>
+            <ng-container *ngIf="userRole === UserRole.Administrator">
+                <li>
+                    <app-button [routerLink]="['/admin', 'manage', 'category']"
+                        >Kategorie</app-button
+                    >
                 </li>
-                <li *ngIf="logged">
-                    <app-button routerLink="/account">Moje konto</app-button>
+                <li>
+                    <app-button [routerLink]="['/admin', 'manage', 'users']"
+                        >Użytkownicy</app-button
+                    >
                 </li>
-            </span>
+                <li>
+                    <app-button
+                        [routerLink]="['/admin', 'manage', 'organizations']"
+                        >Organizacje</app-button
+                    >
+                </li></ng-container
+            >
+            <li *ngIf="logged">
+                <app-button routerLink="/account">Moje konto</app-button>
+            </li>
         </ul>
         <ul class="nav-links-left-bottom">
             <li *ngIf="!logged">
@@ -77,8 +95,12 @@
                     >Zaloguj się</app-button
                 >
             </li>
-            <li *ngIf="logged">
-                <app-button type="color">Moderuj</app-button>
+            <li *ngIf="logged && userRole !== UserRole.BasicUser">
+                <app-button
+                    type="color"
+                    [routerLink]="['/admin', 'moderate', 'projects']"
+                    >Moderuj</app-button
+                >
             </li>
             <li *ngIf="logged">
                 <app-button type="color" (click)="logout()"
@@ -92,9 +114,27 @@
         <ul class="nav-links-right-top">
             <li *ngIf="isVerifiedStudent">
                 <app-button (click)="openCreateOrganization()"
-                    >Dodaj organizację</app-button
+                    >Stwórz organizację</app-button
                 >
             </li>
+            <ng-container *ngIf="userRole === UserRole.Administrator">
+                <li>
+                    <app-button [routerLink]="['/admin', 'manage', 'category']"
+                        >Kategorie</app-button
+                    >
+                </li>
+                <li>
+                    <app-button [routerLink]="['/admin', 'manage', 'users']"
+                        >Użytkownicy</app-button
+                    >
+                </li>
+                <li>
+                    <app-button
+                        [routerLink]="['/admin', 'manage', 'organizations']"
+                        >Organizacje</app-button
+                    >
+                </li></ng-container
+            >
             <li><app-button routerLink="/account">Moje konto</app-button></li>
         </ul>
         <ul class="nav-links-right-bottom">
@@ -103,8 +143,12 @@
                     >Zaloguj się</app-button
                 >
             </li>
-            <li *ngIf="logged">
-                <app-button type="color">Moderuj</app-button>
+            <li *ngIf="logged && userRole !== UserRole.BasicUser">
+                <app-button
+                    type="color"
+                    [routerLink]="['/admin', 'moderate', 'projects']"
+                    >Moderuj</app-button
+                >
             </li>
             <li *ngIf="logged">
                 <app-button

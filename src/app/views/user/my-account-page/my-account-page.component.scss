@@ -29,7 +29,7 @@ span {
     flex-direction: row;
     justify-content: flex-start;
     flex-wrap: wrap;
-    gap: var(--padding);
+    column-gap: var(--padding);
 
     .with-label {
         min-width: 40%;
@@ -52,17 +52,26 @@ span {
 .additional-info-container {
     width: 100%;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
     gap: var(--padding);
+
+    .with-label {
+        min-width: 40%;
+        width: fit-content;
+    }
 }
 
 .buttons-container {
     padding: 5px;
-    width: 80%;
+    min-width: 40%;
+    width: fit-content;
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: calc(var(--padding) / 2);
+    align-self: center;
+    justify-self: center;
 
     app-button {
         min-width: fit-content;
@@ -76,7 +85,7 @@ span {
     flex-direction: row;
     justify-content: flex-start;
     flex-wrap: wrap;
-    gap: var(--padding);
+    column-gap: var(--padding);
 
     .with-label {
         min-width: 40%;
@@ -102,16 +111,31 @@ ul {
     padding: 0;
 }
 
+a,
+a:link,
+a:visited {
+    color: #fff;
+    text-decoration: none;
+}
+
 .organizations {
     width: 100%;
     display: flex;
     flex-direction: column;
     gap: calc(var(--padding) / 2);
-}
 
-.organization {
-    width: fit-content;
-    display: flex;
-    flex-direction: row;
-    gap: calc(var(--padding) / 2);
+    & > ul {
+        list-style-type: square;
+        padding: unset;
+        padding-left: 2em;
+    }
+
+    .name {
+        font-weight: 600;
+    }
+
+    .role {
+        font-weight: 300;
+        font-style: italic;
+    }
 }

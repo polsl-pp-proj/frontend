@@ -8,9 +8,9 @@
     <div class="container">
         <div class="description">
             Wysyłasz zgłoszenie możliwości dołączenia do zespołu projektu
-            <span class="projectName">{{ this.projectName }}</span>
+            <span class="projectName">{{ openPosition.projectName }}</span>
             jako
-            <span class="positionName">{{ this.positionName }}</span>
+            <span class="positionName">{{ openPosition.name }}</span>
         </div>
         <form [formGroup]="joinProjectForm">
             <div class="input-container">
@@ -18,17 +18,17 @@
                     name="candidateSummary"
                     [formControl]="joinProjectForm.controls.candidateSummary"
                     [displayErrors]="false"
-                    [type]="'multiline'"
+                    type="multiline"
                     >Powiedz coś o sobie i swoim doświadczeniu</app-input
                 >
                 <div class="char-counter">
-                    {{ this.inputSize }}/{{ this.maxInputSize }}
+                    {{ inputSize }}/{{ maxInputSize }}
                 </div>
             </div>
         </form>
         <app-button
             type="color"
-            [disabled]="!joinProjectForm.valid"
+            [disabled]="!joinProjectForm.valid || inTransit"
             (click)="sendJoinRequest()"
             >Wyślij zgłoszenie</app-button
         >

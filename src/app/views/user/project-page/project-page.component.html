@@ -92,7 +92,7 @@
                 [innerHTML]="this.projectDto.fundingObjectives | markdown"
             ></article>
         </div>
-        <div class="open-positions">
+        <div class="open-positions" *ngIf="isStudent">
             <h2>Dołącz do organizacji</h2>
             <h3>
                 Organizacja poszukuje osób, które pomogą w rozwinięciu projektu.
@@ -103,6 +103,7 @@
                     [positionName]="position.name"
                     [positionRequirements]="position.requirements"
                     [positionDescription]="position.description"
+                    (trigger)="openJoinTeamModal(position)"
                 >
                 </app-open-position-card>
             </div>
@@ -122,3 +123,4 @@
 </app-page>
 <app-payment-modal [projectDto]="projectDto"></app-payment-modal>
 <app-message-modal [id]="projectDto.id"></app-message-modal>
+<app-join-team-modal [openPosition]="chosenOpenPosition"></app-join-team-modal>
