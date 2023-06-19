@@ -26,6 +26,12 @@ export class OrganizationService {
         return this.organizationApiService.getOrganization(organizationId);
     }
 
+    getOrganizationMembers(organizationId: number) {
+        return this.organizationApiService.getOrganizationMembers(
+            organizationId
+        );
+    }
+
     addOrganizationMembers(organizationId: number, members: MemberDto[]) {
         return this.organizationApiService.addOrganizationMembers(
             organizationId,

@@ -26,41 +26,20 @@ export class RemoveOrganizationMembersModalComponent implements OnInit {
         return RemoveOrganizationMembersModalComponent.ModalName;
     }
 
+    private _organizationId = -1;
+
     @Input()
-    organizationId!: number;
+    set organizationId(organizationId: number) {
+        this._organizationId = organizationId;
+        this.getOrganizationMembers();
+    }
+    get organizationId() {
+        return this._organizationId;
+    }
 
     displayErrorMessage: boolean = false;
 
-    members: OrganizationMemberDto[] = [
-        {
-            id: 1,
-            firstName: 'xxxxxxx',
-            lastName: 'xxxxxxxxx',
-            emailAddress: 'kamil3232@op.pl',
-            role: OrganizationMemberRole.Member,
-        },
-        {
-            id: 321,
-            firstName: 'yyyyy',
-            lastName: 'yyyyyyyy',
-            emailAddress: 'kamil321232@op.pl',
-            role: OrganizationMemberRole.Member,
-        },
-        {
-            id: 55555,
-            firstName: 'zzzzzz',
-            lastName: 'zzzzzzzzz',
-            emailAddress: 'kamil32121232@op.pl',
-            role: OrganizationMemberRole.Member,
-        },
-        {
-            id: 2324,
-            firstName: 'Lorem',
-            lastName: 'Ipsum',
-            emailAddress: 'kamddil3232@op.pl',
-            role: OrganizationMemberRole.Owner,
-        },
-    ];
+    members: OrganizationMemberDto[] = [];
 
     membersToDisplay: MemberToDisplay[] = [];
 
@@ -91,6 +70,15 @@ export class RemoveOrganizationMembersModalComponent implements OnInit {
                 } else {
                     this.currentUserId = -1;
                 }
+            });
+    }
+
+    getOrganizationMembers() {
+        this.organizationService
+            .getOrganizationMembers(this.organizationId)
+            .subscribe((organizationMembers) => {
+                this.members = organizationMembers;
+                this.updateMembersToDisplay();
             });
     }
 

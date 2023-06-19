@@ -26,6 +26,11 @@ export const organizationApiRoutes = {
         method: 'POST',
         path: 'v1/organization',
     },
+    GET_organizationMembers: {
+        authorized: true,
+        method: 'GET',
+        path: 'v1/organization/:organizationId/member',
+    },
     POST_addOrganizationMembers: {
         authorized: true,
         method: 'POST',
