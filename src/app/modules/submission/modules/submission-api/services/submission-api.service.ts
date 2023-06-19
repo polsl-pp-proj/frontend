@@ -7,6 +7,7 @@ import {
 } from 'src/app/modules/api/classes/api-options.class';
 import { SubmissionDto } from '../dtos/submission.dto';
 import { SubmissionPatchDto } from '../dtos/submission-patch.dto';
+import { ProjectDto } from 'src/app/dtos/project.dto';
 
 @Injectable({
     providedIn: 'root',
@@ -22,8 +23,7 @@ export class SubmissionApiService {
     }
 
     getSubmission(submissionId: number) {
-        // TODO: specify return type
-        return this.apiService.request(
+        return this.apiService.request<ProjectDto>(
             submissionApiRoutes.GET_submission,
             new ApiOptions({ routeParams: { submissionId } }) as ApiOptionsBody
         );
