@@ -109,6 +109,10 @@ export class DonationService {
         );
     }
 
+    getProjectDonationStats(projectId: number) {
+        return this.donationApiService.getProjectDonationStats(projectId);
+    }
+
     private displayDonationPaymentResult(
         paymentIntentResult?: PaymentIntentResult
     ) {

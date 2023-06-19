@@ -14,6 +14,7 @@ import { ProjectDto } from 'src/app/dtos/project.dto';
 import { UpdateProjectDto } from 'src/app/dtos/update-project.dto';
 import { CreateProjectDto } from 'src/app/dtos/create-project.dto';
 import { OpenPositionForProjectDto } from '../dtos/open-position-for-project.dto';
+import { ProjectMessageDto } from '../dtos/project-message.dto';
 @Injectable({
     providedIn: 'root',
 })
@@ -98,6 +99,14 @@ export class ProjectApiService {
             new ApiOptions({
                 routeParams: { projectId },
             }) as ApiOptionsBody
+        );
+    }
+
+    sendProjectMessage(projectId: number, message: ProjectMessageDto) {
+        return this.apiService.request<ProjectMessageDto, void>(
+            projectApiRoutes.POST_sendProjectMessage,
+            message,
+            new ApiOptions({ routeParams: { projectId } }) as ApiOptionsBody
         );
     }
 

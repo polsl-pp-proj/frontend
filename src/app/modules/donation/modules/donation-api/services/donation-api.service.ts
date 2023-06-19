@@ -7,6 +7,7 @@ import {
     ApiOptions,
     ApiOptionsBody,
 } from 'src/app/modules/api/classes/api-options.class';
+import { DonationStatsDto } from '../dtos/donation-stats.dto';
 
 @Injectable({
     providedIn: 'root',
@@ -24,6 +25,13 @@ export class DonationApiService {
         >(
             donationApiRoutes.POST_prepareDonationForProject,
             new PrepareProjectDonationDto(projectDonationData),
+            new ApiOptions({ routeParams: { projectId } }) as ApiOptionsBody
+        );
+    }
+
+    getProjectDonationStats(projectId: number) {
+        return this.coreApiService.request<DonationStatsDto>(
+            donationApiRoutes.GET_projectDonationStats,
             new ApiOptions({ routeParams: { projectId } }) as ApiOptionsBody
         );
     }

@@ -32,6 +32,7 @@
                         <app-button
                             (click)="openMessageModal()"
                             type="translucent"
+                            *ngIf="isUserPartOfProject"
                             >Skontaktuj się</app-button
                         >
                         <app-button
@@ -53,9 +54,13 @@
                     >
                         <h2>Zebrana kwota</h2>
                         <h3>Ostatnie 30 dni:</h3>
-                        <div class="money">1337 zł</div>
+                        <div class="money">
+                            {{ donationStats.raised.lastMonth }} zł
+                        </div>
                         <h3>Ogólnie:</h3>
-                        <div class="money">2674 zł</div>
+                        <div class="money">
+                            {{ donationStats.raised.total }} zł
+                        </div>
                     </div>
                 </div>
             </div>
@@ -112,8 +117,8 @@
             <h2>Ostatnie wpłaty</h2>
             <div class="recent-payments-container">
                 <app-recent-payment-card
-                    *ngFor="let payment of recentPaymentsDtos"
-                    [userName]="payment.userName"
+                    *ngFor="let payment of donationStats.lastFunders"
+                    [userName]="payment.isAnonymous ? 'Anonim' : payment.name"
                     [amount]="payment.amount"
                 >
                 </app-recent-payment-card>

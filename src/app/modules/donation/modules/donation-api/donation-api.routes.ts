@@ -6,4 +6,9 @@ export const donationApiRoutes = {
         method: 'POST',
         path: 'v1/donation/:projectId',
     },
+    GET_projectDonationStats: {
+        authorized: true,
+        method: 'GET',
+        path: 'v1/donation/:projectId/stats',
+    },
 } satisfies { [key: string]: ApiRoute };

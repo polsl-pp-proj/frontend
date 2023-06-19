@@ -11,6 +11,7 @@ import { OrganizationDto } from '../dtos/organization.dto';
 import { AddMembersDto } from '../dtos/add-members.dto';
 import { RemoveMembersDto } from '../dtos/remove-members.dto';
 import { FullOrganizationDto } from '../dtos/full-organization.dto';
+import { OrganizationMemberDto } from '../dtos/organization-member.dto';
 
 @Injectable({
     providedIn: 'root',
@@ -52,6 +53,15 @@ export class OrganizationApiService {
     getFullOrganization(organizationId: number) {
         return this.coreApiService.request<FullOrganizationDto, never>(
             organizationApiRoutes.GET_fullOrganization,
+            new ApiOptions({
+                routeParams: { organizationId },
+            }) as ApiOptionsBody
+        );
+    }
+
+    getOrganizationMembers(organizationId: number) {
+        return this.coreApiService.request<OrganizationMemberDto[], void>(
+            organizationApiRoutes.GET_organizationMembers,
             new ApiOptions({
                 routeParams: { organizationId },
             }) as ApiOptionsBody
