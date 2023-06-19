@@ -103,6 +103,7 @@
                     [positionName]="position.name"
                     [positionRequirements]="position.requirements"
                     [positionDescription]="position.description"
+                    (trigger)="openJoinTeamModal(position)"
                 >
                 </app-open-position-card>
             </div>
@@ -122,3 +123,4 @@
 </app-page>
 <app-payment-modal [projectDto]="projectDto"></app-payment-modal>
 <app-message-modal [id]="projectDto.id"></app-message-modal>
+<app-join-team-modal [openPosition]="chosenOpenPosition"></app-join-team-modal>

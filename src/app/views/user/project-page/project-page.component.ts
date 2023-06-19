@@ -18,6 +18,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { FavoriteService } from 'src/app/modules/favorite/services/favorite.service';
 import { Subscription } from 'rxjs';
+import { OpenPositionForProjectDto } from 'src/app/modules/project/modules/project-api/dtos/open-position-for-project.dto';
+import { JoinTeamModalComponent } from 'src/app/components/modals/join-team-modal/join-team-modal.component';
+import { OpenPositionDto } from 'src/app/dtos/open-position.dto';
 
 @Component({
     selector: 'app-project-page',
@@ -136,6 +139,8 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
 
     subSink: Subscription[] = [];
 
+    chosenOpenPosition!: OpenPositionForProjectDto;
+
     constructor(
         private readonly helpService: HelpService,
         private readonly modalService: ModalService,
@@ -188,6 +193,18 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
     openMessageModal() {
         this.modalService.updateModalState(
             MessageModalComponent.ModalName,
+            'open'
+        );
+    }
+
+    openJoinTeamModal(openPosition: OpenPositionDto) {
+        this.chosenOpenPosition = {
+            ...openPosition,
+            projectId: this.projectDto.id,
+            projectName: this.projectDto.name,
+        };
+        this.modalService.updateModalState(
+            JoinTeamModalComponent.ModalName,
             'open'
         );
     }

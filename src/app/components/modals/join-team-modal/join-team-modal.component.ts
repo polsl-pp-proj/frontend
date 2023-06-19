@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { OpenPositionForProjectDto } from 'src/app/modules/project/modules/project-api/dtos/open-position-for-project.dto';
 
 @Component({
     selector: 'app-join-team-modal',
@@ -14,8 +15,8 @@ export class JoinTeamModalComponent implements OnInit {
 
     displayErrorMessage: boolean = false;
 
-    projectName = 'Projekt zielonej architektury';
-    positionName = 'full stack developer';
+    @Input()
+    openPosition!: OpenPositionForProjectDto;
 
     actualInputValue: string = '';
     inputSize: number = 0;
