@@ -2,7 +2,11 @@
     <h1 pageHeader>{{ organizationName }}</h1>
     <section class="organization-projects">
         <h3>Projekty organizacji</h3>
-        <app-button type="color" class="button-margin" *ngIf="isMember"
+        <app-button
+            type="color"
+            class="button-margin"
+            *ngIf="isMember"
+            (click)="addProject()"
             >Dodaj projekt</app-button
         >
 

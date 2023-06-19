@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SafeHtml } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription, timer } from 'rxjs';
 import { ChangeablePhotoGalleryComponent } from 'src/app/components/changeable-photo-gallery/changeable-photo-gallery.component';
@@ -65,7 +66,7 @@ export class AddProjectPageComponent implements OnInit, OnDestroy {
     inTransit = false;
 
     @Input()
-    organizationDto!: OrganizationDto;
+    organizationDto: OrganizationDto = { name: 'Trwa ładowanie...', id: -1 };
 
     get mappedCategories() {
         return this.categories.map((category) => ({
@@ -82,6 +83,7 @@ export class AddProjectPageComponent implements OnInit, OnDestroy {
     }
 
     constructor(
+        private readonly router: Router,
         private readonly iconVaultService: IconVaultService,
         private readonly modalService: ModalService,
         private readonly toastrService: ToastrService,
@@ -89,7 +91,13 @@ export class AddProjectPageComponent implements OnInit, OnDestroy {
         private readonly categoryService: CategoryService
     ) {}
 
-    ngOnInit(): void {
+    async ngOnInit() {
+        const state = history.state?.organization;
+        if (!history.state?.organization) {
+            await this.router.navigate(['/']);
+        }
+        this.organizationDto = state;
+
         this.subsink.push(
             this.addProjectForm.controls.shortDescription.valueChanges.subscribe(
                 (value) => {
