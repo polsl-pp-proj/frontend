@@ -4,12 +4,14 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { SetNewPasswordModalComponent } from 'src/app/components/modals/set-new-password-modal/set-new-password-modal.component';
+import { SimpleProjectDto } from 'src/app/dtos/simple-project.dto';
 import { AuthService } from 'src/app/modules/auth/services/auth.service';
 import { SignupService } from 'src/app/modules/auth/services/signup.service';
 import { StudentshipService } from 'src/app/modules/auth/services/studentship.service';
 import { DonationService } from 'src/app/modules/donation/services/donation.service';
 import { HelpService } from 'src/app/modules/help/services/help.service';
 import { ModalService } from 'src/app/modules/modal/services/modal.service';
+import { ProjectService } from 'src/app/modules/project/services/project.service';
 
 @Component({
     selector: 'app-home-page',
@@ -17,50 +19,8 @@ import { ModalService } from 'src/app/modules/modal/services/modal.service';
     styleUrls: ['./home-page.component.scss'],
 })
 export class HomePageComponent implements OnInit {
-    test_projects = [
-        {
-            id: 1,
-            name: 'Rakieta Elona',
-            description:
-                'Super szybka rakieta lecaca z predkoscia swiatla, mega szybka jest!!!!',
-            image_url: 'assets/img/illustrations/pobrane.png',
-        },
-        {
-            id: 1,
-            name: 'Rakieta Elona',
-            description:
-                'Super szybka rakieta lecaca z predkoscia swiatla, mega szybka jest!!!!',
-            image_url: 'assets/img/illustrations/pobrane.png',
-        },
-        {
-            id: 1,
-            name: 'Rakieta Elona',
-            description:
-                'Super szybka rakieta lecaca z predkoscia swiatla, mega szybka jest!!!!',
-            image_url: 'assets/img/illustrations/pobrane.png',
-        },
-        {
-            id: 1,
-            name: 'Rakieta Elona',
-            description:
-                'Super szybka rakieta lecaca z predkoscia swiatla, mega szybka jest!!!!',
-            image_url: 'assets/img/illustrations/pobrane.png',
-        },
-        {
-            id: 1,
-            name: 'Rakieta Elona',
-            description:
-                'Super szybka rakieta lecaca z predkoscia swiatla, mega szybka jest!!!!',
-            image_url: 'assets/img/illustrations/pobrane.png',
-        },
-        {
-            id: 1,
-            name: 'Rakieta Elona',
-            description:
-                'Super szybka rakieta lecaca z predkoscia swiatla, mega szybka jest!!!!',
-            image_url: 'assets/img/illustrations/pobrane.png',
-        },
-    ];
+    mostLikedProjects: SimpleProjectDto[] = [];
+    newestProjects: SimpleProjectDto[] = [];
 
     constructor(
         private readonly router: Router,
@@ -72,11 +32,20 @@ export class HomePageComponent implements OnInit {
         private readonly helpService: HelpService,
         private readonly modalService: ModalService,
         private readonly donationService: DonationService,
-        private readonly studentshipService: StudentshipService
+        private readonly studentshipService: StudentshipService,
+        private readonly projectService: ProjectService
     ) {}
 
     ngOnInit(): void {
         this.helpService.registerPageHelp('user/home-page');
+
+        this.projectService
+            .getMostLikedProjects()
+            .subscribe((mostLiked) => (this.mostLikedProjects = mostLiked));
+        this.projectService
+            .getNewestProjects()
+            .subscribe((newest) => (this.newestProjects = newest));
+
         const params = this.activatedRoute.snapshot.queryParamMap;
         this.replaceState();
         if (params.has('signup')) {
