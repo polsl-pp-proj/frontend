@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router, RouterEvent } from '@angular/router';
 import { Subscription, skipWhile } from 'rxjs';
+import { ChangePasswordModalComponent } from 'src/app/components/modals/change-password-modal/change-password-modal.component';
 import { VerifyStudentModalComponent } from 'src/app/components/modals/verify-student-modal/verify-student-modal.component';
 import { PastPaymentDto } from 'src/app/dtos/past-payment.dto';
 import { ProjectCardDto } from 'src/app/dtos/project-card.dto';
@@ -88,6 +89,13 @@ export class MyAccountPageComponent implements OnInit, OnDestroy {
     verifyStudentship() {
         this.modalService.updateModalState(
             VerifyStudentModalComponent.ModalName,
+            'open'
+        );
+    }
+
+    changePassword() {
+        this.modalService.updateModalState(
+            ChangePasswordModalComponent.ModalName,
             'open'
         );
     }

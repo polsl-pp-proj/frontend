@@ -58,6 +58,7 @@ import { SubmissionModule } from './modules/submission/submission.module';
 import { ProjectModule } from './modules/project/project.module';
 import { FavoriteModule } from './modules/favorite/favorite.module';
 import { ManageOrganizationsPageComponent } from './views/admin/manage-organizations-page/manage-organizations-page.component';
+import { ChangePasswordModalComponent } from './components/modals/change-password-modal/change-password-modal.component';
 
 @NgModule({
     declarations: [
@@ -104,6 +105,7 @@ import { ManageOrganizationsPageComponent } from './views/admin/manage-organizat
         NotificationModalComponent,
         VerifyStudentModalComponent,
         ManageOrganizationsPageComponent,
+        ChangePasswordModalComponent,
     ],
     imports: [
         BrowserModule,

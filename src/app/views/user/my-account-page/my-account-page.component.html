@@ -38,7 +38,9 @@
             </div>
         </div>
         <div class="buttons-container">
-            <app-button type="color">Zmień hasło</app-button>
+            <app-button type="color" (click)="changePassword()"
+                >Zmień hasło</app-button
+            >
             <app-button type="color" (click)="verifyStudentship()"
                 >Zweryfikuj status studenta</app-button
             >
@@ -73,3 +75,4 @@
     </div>
 </app-page>
 <app-verify-student-modal></app-verify-student-modal>
+<app-change-password-modal></app-change-password-modal>
