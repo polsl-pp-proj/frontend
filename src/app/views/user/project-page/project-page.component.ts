@@ -139,7 +139,14 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
 
     subSink: Subscription[] = [];
 
-    chosenOpenPosition!: OpenPositionForProjectDto;
+    chosenOpenPosition: OpenPositionForProjectDto = {
+        id: -1,
+        name: 'Ładowanie...',
+        projectId: -1,
+        projectName: 'Ładowanie...',
+        description: 'Ładowanie...',
+        requirements: ['Ładowanie...'],
+    };
 
     constructor(
         private readonly helpService: HelpService,

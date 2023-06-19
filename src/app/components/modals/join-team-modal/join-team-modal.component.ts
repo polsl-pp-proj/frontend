@@ -16,7 +16,14 @@ export class JoinTeamModalComponent implements OnInit {
     displayErrorMessage: boolean = false;
 
     @Input()
-    openPosition!: OpenPositionForProjectDto;
+    openPosition: OpenPositionForProjectDto = {
+        id: -1,
+        name: 'Ładowanie...',
+        projectId: -1,
+        projectName: 'Ładowanie...',
+        description: 'Ładowanie...',
+        requirements: ['Ładowanie...'],
+    };
 
     actualInputValue: string = '';
     inputSize: number = 0;
