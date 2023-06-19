@@ -13,6 +13,7 @@ import { SimpleProjectDto } from 'src/app/dtos/simple-project.dto';
 import { ProjectDto } from 'src/app/dtos/project.dto';
 import { UpdateProjectDto } from 'src/app/dtos/update-project.dto';
 import { CreateProjectDto } from 'src/app/dtos/create-project.dto';
+import { OpenPositionForProjectDto } from '../dtos/open-position-for-project.dto';
 @Injectable({
     providedIn: 'root',
 })
@@ -68,6 +69,15 @@ export class ProjectApiService {
     getOrganizationProjects(organizationId: number) {
         return this.apiService.request<SimpleProjectDto[]>(
             projectApiRoutes.GET_organizationProjects,
+            new ApiOptions({
+                routeParams: { organizationId },
+            }) as ApiOptionsBody
+        );
+    }
+
+    getOrganizationOpenPositions(organizationId: number) {
+        return this.apiService.request<OpenPositionForProjectDto[]>(
+            projectApiRoutes.GET_organizationOpenPositions,
             new ApiOptions({
                 routeParams: { organizationId },
             }) as ApiOptionsBody

@@ -32,6 +32,12 @@ export class ProjectService {
         return this.projectApiService.getOrganizationProjects(organizationId);
     }
 
+    getOrganizationOpenPositions(organizationId: number) {
+        return this.projectApiService.getOrganizationOpenPositions(
+            organizationId
+        );
+    }
+
     updateProject(
         projectId: number,
         updateProjectDto: UpdateProjectDto,
