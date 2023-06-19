@@ -22,6 +22,12 @@
                     (visitProject)="visitProject(project.id)"
                 ></app-project-card>
             </div>
+            <p
+                *ngIf="organizationProjects.length === 0"
+                class="no-organizations"
+            >
+                Organizacja nie dodała jeszcze projektów
+            </p>
         </div>
     </section>
     <div class="container" *ngIf="isOwner">
@@ -39,7 +45,10 @@
             >Usuń członka organizacji</app-button
         >
     </div>
-    <section class="join-organization" *ngIf="!isMember && isStudent">
+    <section
+        class="join-organization"
+        *ngIf="!isMember && isStudent && organizationProjects.length"
+    >
         <div class="container">
             <h3>Dołącz do organizacji</h3>
             <h4>Organizacja poszukuje osób, które mogą pomóc w jej rozwoju.</h4>
