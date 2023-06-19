@@ -88,11 +88,37 @@ export class OrganizationPageComponent implements OnInit, OnDestroy {
                                 );
 
                             if (userOrganization) {
+                                this.projectService
+                                    .getOrganizationProjectDrafts(
+                                        this.organizationId
+                                    )
+                                    .subscribe(
+                                        (projects) =>
+                                            (this.organizationProjects =
+                                                projects)
+                                    );
                                 this.isMember = true;
                                 this.isOwner =
                                     userOrganization.role ===
                                     OrganizationMemberRole.Owner;
                             } else {
+                                this.projectService
+                                    .getOrganizationProjects(
+                                        this.organizationId
+                                    )
+                                    .subscribe(
+                                        (projects) =>
+                                            (this.organizationProjects =
+                                                projects)
+                                    );
+                                this.openPositionService
+                                    .getOrganizationOpenPositions(
+                                        this.organizationId
+                                    )
+                                    .subscribe(
+                                        (openPositions) =>
+                                            (this.openPositions = openPositions)
+                                    );
                                 this.isMember = false;
                                 this.isOwner = false;
                             }
@@ -102,27 +128,21 @@ export class OrganizationPageComponent implements OnInit, OnDestroy {
                     }
                 )
             );
-            this.projectService
-                .getOrganizationProjects(this.organizationId)
-                .subscribe(
-                    (projects) => (this.organizationProjects = projects)
-                );
-            this.openPositionService
-                .getOrganizationOpenPositions(this.organizationId)
-                .subscribe(
-                    (openPositions) => (this.openPositions = openPositions)
-                );
 
             return;
         }
         this.router.navigate(['/']);
     }
+
     ngOnDestroy(): void {
         this.subsink.forEach((sub) => sub.unsubscribe());
     }
 
     visitProject(projectId: number) {
-        this.router.navigate(['/project', projectId]);
+        if (this.isMember) {
+        } else {
+            this.router.navigate(['/project', projectId]);
+        }
     }
 
     openJoinTeamModal(openPosition: OpenPositionForProjectDto) {
