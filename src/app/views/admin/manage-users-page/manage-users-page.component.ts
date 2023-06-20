@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SafeHtml } from '@angular/platform-browser';
 import { UserOrganizationDto } from 'src/app/modules/auth/dtos/user-organization.dto';
+import { HelpService } from 'src/app/modules/help/services/help.service';
 import { IconVaultService } from 'src/app/modules/icon-vault/services/icon-vault.service';
 import { SimpleUserDto } from 'src/app/modules/user/modules/user-api/dtos/user.dto';
 import { UserService } from 'src/app/modules/user/services/user.service';
@@ -17,10 +18,13 @@ export class ManageUsersPageComponent implements OnInit {
 
     constructor(
         private readonly userService: UserService,
-        private readonly iconVaultService: IconVaultService
+        private readonly iconVaultService: IconVaultService,
+        private readonly helpService: HelpService
     ) {}
 
     ngOnInit() {
+        this.helpService.registerPageHelp('admin/manage-users-page');
+
         this.userService
             .getUsers()
             .subscribe((users) => (this.usersList = users));

@@ -9,6 +9,7 @@ import { ModalService } from 'src/app/modules/modal/services/modal.service';
 import { SubmissionService } from 'src/app/modules/submission/services/submission.service';
 import Swiper from 'swiper';
 import { ProjectDto } from 'src/app/dtos/project.dto';
+import { HelpService } from 'src/app/modules/help/services/help.service';
 
 @Component({
     selector: 'app-project-moderation-page',
@@ -114,10 +115,13 @@ export class ProjectModerationPageComponent implements OnInit {
         private readonly activatedRoute: ActivatedRoute,
         private readonly router: Router,
         private readonly modalService: ModalService,
-        private readonly toastrService: ToastrService
+        private readonly toastrService: ToastrService,
+        private readonly helpService: HelpService
     ) {}
 
     ngOnInit() {
+        this.helpService.registerPageHelp('admin/project-moderation-page');
+
         const submissionId =
             this.activatedRoute.snapshot.paramMap.get('submissionId');
         if (!submissionId) {

@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { CreateCategoryModalComponent } from 'src/app/components/modals/create-category-modal/create-category-modal.component';
 import { CategoryDto } from 'src/app/dtos/category.dto';
 import { CategoryService } from 'src/app/modules/category/services/category.service';
+import { HelpService } from 'src/app/modules/help/services/help.service';
 import { IconVaultService } from 'src/app/modules/icon-vault/services/icon-vault.service';
 import { ModalService } from 'src/app/modules/modal/services/modal.service';
 
@@ -22,10 +23,13 @@ export class CategoryPageComponent implements OnInit {
         private readonly iconVaultService: IconVaultService,
         private readonly categoryService: CategoryService,
         private readonly modalService: ModalService,
-        private readonly toastrService: ToastrService
+        private readonly toastrService: ToastrService,
+        private readonly helpService: HelpService
     ) {}
 
     ngOnInit() {
+        this.helpService.registerPageHelp('admin/category-page');
+
         this.iconVaultService
             .getIcon('ion_add-circle-outline')
             .subscribe(

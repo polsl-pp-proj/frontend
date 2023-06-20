@@ -12,6 +12,7 @@ import { UserRole } from 'src/app/modules/auth/enums/user-role.enum';
 import { AuthService } from 'src/app/modules/auth/services/auth.service';
 import { StudentshipService } from 'src/app/modules/auth/services/studentship.service';
 import { FavoriteService } from 'src/app/modules/favorite/services/favorite.service';
+import { HelpService } from 'src/app/modules/help/services/help.service';
 import { ModalService } from 'src/app/modules/modal/services/modal.service';
 import { OrganizationMemberRole } from 'src/app/modules/organization/enums/organization-member-role.enum';
 import { OrganizationDto } from 'src/app/modules/organization/modules/organization-api/dtos/organization.dto';
@@ -59,10 +60,13 @@ export class MyAccountPageComponent implements OnInit, OnDestroy {
         private readonly router: Router,
         private readonly modalService: ModalService,
         private readonly organizationService: OrganizationService,
-        private readonly favoriteService: FavoriteService
+        private readonly favoriteService: FavoriteService,
+        private readonly helpService: HelpService
     ) {}
 
     ngOnInit(): void {
+        this.helpService.registerPageHelp('user/my-account-page');
+
         this.subsink.push(
             this.authService.authTokenPayload
                 .pipe(skipWhile((payload) => payload === undefined))
