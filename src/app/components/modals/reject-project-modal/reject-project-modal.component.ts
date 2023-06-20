@@ -77,7 +77,7 @@ export class RejectProjectModalComponent {
                                 'close'
                             );
                             this.router.navigate([
-                                'admin',
+                                '/admin',
                                 'moderate',
                                 'projects',
                             ]);

@@ -9,6 +9,7 @@ import { ModalService } from 'src/app/modules/modal/services/modal.service';
 import { SubmissionService } from 'src/app/modules/submission/services/submission.service';
 import Swiper from 'swiper';
 import { ProjectDto } from 'src/app/dtos/project.dto';
+import { environment } from 'src/environments/environment';
 import { HelpService } from 'src/app/modules/help/services/help.service';
 
 @Component({
@@ -18,94 +19,29 @@ import { HelpService } from 'src/app/modules/help/services/help.service';
 })
 export class ProjectModerationPageComponent implements OnInit {
     projectDto: ProjectDto = {
-        id: 5,
-        name: 'Projekt rakiety studenckiej',
-        shortDescription: 'Projekt rakiety studenckiej we współpracy z SpaceX.',
-        description:
-            'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
+        id: -1,
+        name: 'Ładowanie...',
+        shortDescription: 'Ładowanie...',
+        description: 'Ładowanie...',
         fundingObjectives: '',
         organizationId: -1,
-        organizationName: 'SKN SpaceLauncher',
+        organizationName: 'Ładowanie...',
         assets: [
             {
-                title: 'zdj',
-                url: 'https://placehold.co/1200x630',
-                type: AssetType.Image,
-            },
-            {
-                title: 'zdj',
-                url: 'https://placehold.co/1200x630',
-                type: AssetType.Image,
-            },
-            {
-                title: 'zdj',
-                url: 'https://placehold.co/1200x630',
-                type: AssetType.Image,
-            },
-            {
-                title: 'zdj',
-                url: 'https://placehold.co/1200x630',
-                type: AssetType.Image,
-            },
-            {
-                title: 'zdj',
-                url: 'https://placehold.co/1200x630',
-                type: AssetType.Image,
-            },
-            {
-                title: 'zdj',
-                url: 'https://placehold.co/1200x630',
-                type: AssetType.Image,
-            },
-            {
-                title: 'zdj',
-                url: 'https://placehold.co/1200x630',
-                type: AssetType.Image,
-            },
-            {
-                title: 'zdj',
-                url: 'https://placehold.co/1200x630',
-                type: AssetType.Image,
-            },
-            {
-                title: 'zdj',
+                title: 'Ładowanie...',
                 url: 'https://placehold.co/1200x630',
                 type: AssetType.Image,
             },
         ],
-
         categories: [
             {
-                id: 1,
-                name: 'biotechnologia',
+                id: -1,
+                name: '',
             },
         ],
-        openPositions: [
-            {
-                id: 67,
-                name: 'Full stack developer',
-                description:
-                    'Full Stack Developer będzie zajmował się stworzeniem aplikacji internetowej do monitorowania aktualnego stanu zielonej architektury.',
-                requirements: ['Angular', 'Java', 'NodeJS', 'C++'],
-            },
-            {
-                id: 67,
-                name: 'Full stack developer',
-                description:
-                    'Full Stack Developer będzie zajmował się stworzeniem aplikacji internetowej do monitorowania aktualnego stanu zielonej architektury.',
-                requirements: ['Angular', 'Java', 'NodeJS', 'C++'],
-            },
-            {
-                id: 67,
-                name: 'Full stack developer',
-                description:
-                    'Full Stack Developer będzie zajmował się stworzeniem aplikacji internetowej do monitorowania aktualnego stanu zielonej architektury.',
-                requirements: ['Angular', 'Java', 'NodeJS', 'C++'],
-            },
-        ],
-
-        createdAt: 121,
-        updatedAt: 122,
+        openPositions: [],
+        createdAt: -1,
+        updatedAt: -1,
     };
 
     submissionId: number = -1;
@@ -145,7 +81,7 @@ export class ProjectModerationPageComponent implements OnInit {
                     'Podczas próby pobrania zgłoszenia wystąpił błąd. Spróbuj ponownie.',
                     'Błąd pobierania zgłoszenia'
                 );
-                this.router.navigate(['admin', 'moderate', 'projects']);
+                this.router.navigate(['/admin', 'moderate', 'projects']);
             },
         });
     }
@@ -162,7 +98,7 @@ export class ProjectModerationPageComponent implements OnInit {
                         'Zgłoszenie projektu zostało zatwierdzone.',
                         'Zgłoszenie zatwierdzone'
                     );
-                    this.router.navigate(['admin', 'moderate', 'projects']);
+                    this.router.navigate(['/admin', 'moderate', 'projects']);
                 },
                 error: (err) => {
                     if (err instanceof HttpErrorResponse) {
@@ -172,7 +108,7 @@ export class ProjectModerationPageComponent implements OnInit {
                                 'Błąd zatwierdzania zgłoszenia'
                             );
                             this.router.navigate([
-                                'admin',
+                                '/admin',
                                 'moderate',
                                 'projects',
                             ]);
@@ -193,4 +129,6 @@ export class ProjectModerationPageComponent implements OnInit {
             'open'
         );
     }
+
+    remoteAssetsPath = environment.remoteAssetsPath;
 }

@@ -26,7 +26,7 @@ export class NotificationApiService {
         >(notificationApiRoutes.SSE_notificationEvents, new SseApiOptions());
     }
 
-    getNotifications(paginationData: PaginationDto = new PaginationDto()) {
+    getNotifications(paginationData: PaginationDto = new PaginationDto({})) {
         return this.apiService.request<NotificationsDto>(
             notificationApiRoutes.GET_notifications,
             new ApiOptions({

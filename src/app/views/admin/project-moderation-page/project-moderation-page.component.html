@@ -14,7 +14,10 @@
                         thumbs-swiper=".thumbnail-swiper"
                     >
                         <swiper-slide *ngFor="let asset of projectDto.assets">
-                            <img class="swiper-img" [src]="asset.url" />
+                            <img
+                                class="swiper-img"
+                                src="{{ remoteAssetsPath }}/{{ asset.url }}"
+                            />
                         </swiper-slide>
                     </swiper-container>
                 </div>
@@ -45,7 +48,10 @@
                     *ngFor="let asset of projectDto.assets"
                     class="thumbnail-swiper-slide"
                 >
-                    <img class="swiper-thumb-img" [src]="asset.url" />
+                    <img
+                        class="swiper-thumb-img"
+                        src="{{ remoteAssetsPath }}/{{ asset.url }}"
+                    />
                 </swiper-slide>
             </swiper-container>
         </div>
@@ -64,7 +70,10 @@
                 [innerHTML]="projectDto.fundingObjectives | markdown"
             ></article>
         </div>
-        <div class="open-positions">
+        <div
+            class="open-positions"
+            *ngIf="projectDto.openPositions.length !== 0"
+        >
             <h2>Dostępne pozycje w organizacji</h2>
             <div class="open-positions-container">
                 <app-open-position-card
@@ -79,4 +88,7 @@
         </div>
     </div>
 </app-page>
-<app-reject-project-modal></app-reject-project-modal>
+<app-reject-project-modal
+    [projectDto]="projectDto"
+    [submissionId]="submissionId"
+></app-reject-project-modal>

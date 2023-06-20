@@ -3,7 +3,14 @@ import { NotificationDto } from '../modules/notification-api/dtos/notification.d
 import { NotificationApiService } from '../modules/notification-api/services/notification-api.service';
 import { NotificationEventType } from '../enums/notification-event-type.enum';
 import { EventStreamData } from '../../api/types/event-stream-observable.type';
-import { Subscription, mergeMap, of, tap } from 'rxjs';
+import {
+    BehaviorSubject,
+    Subscription,
+    mergeMap,
+    of,
+    tap,
+    throwError,
+} from 'rxjs';
 import * as EventSource from 'eventsource';
 import { NotificationReceiver } from '../types/notification-receiver.type';
 import { NotificationType } from '../modules/notification-api/enums/notification-type.enum';
@@ -17,10 +24,17 @@ export class NotificationService {
     private notificationEventsSubscription!: Subscription;
     //        notification identifier, notification
     private notifications: Map<string, NotificationDto> = new Map();
-    private pageCount = 1;
 
     private eventSource!: EventSource;
-    private notificationsChanged = new EventEmitter<void>();
+    private notificationsChanged = new EventEmitter<boolean>(); // true = have to go to first page, false = don't have to go to first page
+    private pageCount = new BehaviorSubject<number>(1);
+
+    get notificationsChangedObservable() {
+        return this.notificationsChanged.asObservable();
+    }
+    get pageCountChangedObservable() {
+        return this.pageCount.asObservable();
+    }
 
     constructor(
         private readonly notificationApiService: NotificationApiService
@@ -29,12 +43,14 @@ export class NotificationService {
     getNotifications(page = 1) {
         if (this.notifications.size > (page - 1) * notificationsPerPage) {
             return of(this.getNotificationsSlice(page, notificationsPerPage));
-        } else {
+        } else if (page <= this.pageCount.value) {
             return this.fetchNotifications().pipe(
                 mergeMap(() =>
                     of(this.getNotificationsSlice(page, notificationsPerPage))
                 )
             );
+        } else {
+            return throwError(() => new Error('page_over_page_count'));
         }
     }
 
@@ -44,7 +60,7 @@ export class NotificationService {
             .pipe(
                 tap({
                     next: (notificationsDto) => {
-                        this.pageCount = notificationsDto.pageCount;
+                        this.pageCount.next(notificationsDto.pageCount);
                         notificationsDto.notifications.forEach((notification) =>
                             this.notifications.set(
                                 this.notificationIdentifierByReceiverAndId(
@@ -205,10 +221,13 @@ export class NotificationService {
             event.data
         );
 
-        if (this.notifications.size > this.pageCount * notificationsPerPage) {
-            ++this.pageCount;
+        if (
+            this.notifications.size >
+            this.pageCount.value * notificationsPerPage
+        ) {
+            this.pageCount.next(this.pageCount.value + 1);
         }
-        this.notificationsChanged.emit();
+        this.notificationsChanged.emit(true);
     }
 
     private handleNotificationSeen(
@@ -223,7 +242,7 @@ export class NotificationService {
 
         if (notification) {
             notification.seen = true;
-            this.notificationsChanged.emit();
+            this.notificationsChanged.emit(false);
         }
     }
 
@@ -239,7 +258,7 @@ export class NotificationService {
 
         if (notification) {
             notification.seen = false;
-            this.notificationsChanged.emit();
+            this.notificationsChanged.emit(false);
         }
     }
 
@@ -256,14 +275,14 @@ export class NotificationService {
         ) {
             if (
                 this.notifications.size <
-                    this.pageCount * notificationsPerPage &&
+                    this.pageCount.value * notificationsPerPage &&
                 this.notifications.size >=
-                    (this.pageCount - 1) * notificationsPerPage
+                    (this.pageCount.value - 1) * notificationsPerPage
             ) {
-                --this.pageCount;
+                this.pageCount.next(this.pageCount.value - 1);
             }
 
-            this.notificationsChanged.emit();
+            this.notificationsChanged.emit(true);
         }
     }
 
