@@ -44,29 +44,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         private readonly iconVaultService: IconVaultService,
         private readonly modalService: ModalService,
         private readonly authService: AuthService
-    ) {
-        const notification: NotificationDto = {
-            id: 1,
-            subject: 'New Notification',
-            message: 'You have a new notification!',
-            project: {
-                id: 123,
-                name: 'Project XYZ',
-            },
-            organization: {
-                id: 456,
-                name: 'Organization ABC',
-            },
-            type: NotificationType.OpenPositionApplication,
-            seen: false,
-            createdAt: 1624136453000,
-            updatedAt: 1624136453000,
-        };
-
-        for (let i = 0; i < 22; ++i) {
-            this.notifications.push(notification);
-        }
-    }
+    ) {}
 
     ngOnInit(): void {
         this.iconVaultService
@@ -164,13 +142,13 @@ export class NavbarComponent implements OnInit, OnDestroy {
         }
     }
 
-    getNotifSize(): string {
-        let val = this.notifications.length.toString();
-        if (this.notifications.length > 99) {
-            val = '99+';
-        }
-        return val;
-    }
+    // getNotifSize(): string {
+    //     let val = this.notifications.filter((notifica)).length.toString();
+    //     if (this.notifications.length > 99) {
+    //         val = '99+';
+    //     }
+    //     return val;
+    // }
 
     UserRole = UserRole;
 }

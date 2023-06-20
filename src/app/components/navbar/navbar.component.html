@@ -47,7 +47,7 @@
                     [icon]="this.notifIcon"
                     (click)="openNotifications()"
                 ></app-button>
-                <div class="notif-counter">{{ this.getNotifSize() }}</div>
+                <!-- <div class="notif-counter">{{ this.getNotifSize() }}</div> -->
             </div>
         </div>
         <div class="right-nav-container">
@@ -59,7 +59,7 @@
                     [icon]="this.notifIcon"
                     (click)="openNotifications()"
                 ></app-button>
-                <div class="notif-counter">{{ this.getNotifSize() }}</div>
+                <!-- <div class="notif-counter">{{ this.getNotifSize() }}</div> -->
             </div>
             <div
                 *ngIf="logged"
@@ -84,6 +84,8 @@
             <li><app-button routerLink="/">Strona główna</app-button></li>
             <li><app-button routerLink="/search">Projekty</app-button></li>
             <li><app-button routerLink="/about">O nas</app-button></li>
+        </ul>
+        <ul class="nav-links-left-bottom">
             <li *ngIf="isVerifiedStudent">
                 <app-button (click)="openCreateOrganization()"
                     >Stwórz organizację</app-button
@@ -110,8 +112,6 @@
             <li *ngIf="logged">
                 <app-button routerLink="/account">Moje konto</app-button>
             </li>
-        </ul>
-        <ul class="nav-links-left-bottom">
             <li *ngIf="!logged">
                 <app-button type="color" (click)="openLogin()"
                     >Zaloguj się</app-button
@@ -184,10 +184,7 @@
 
     <div *ngIf="this.showNotifications" class="notif-menu">
         <div class="notif-container">
-            <div
-                *ngFor="let notif of this.notifications.slice(0, 7)"
-                class="notif"
-            >
+            <div *ngFor="let notif of this.notifications" class="notif">
                 <div class="notif-left">
                     <i
                         [innerHTML]="this.mapNotificationTypeToIcon(notif.type)"
@@ -198,6 +195,9 @@
                     <div class="bottom">{{ notif.organization.name }}</div>
                 </div>
             </div>
+            <p *ngIf="this.notifications.length === 0" class="no-notifications">
+                Brak powiadomień
+            </p>
         </div>
     </div>
 </div>
