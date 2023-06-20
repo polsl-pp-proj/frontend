@@ -90,7 +90,7 @@ export const routes: Routes = [
                 component: ProjectsModerationPageComponent,
             },
             {
-                path: 'moderate/project/:projectId',
+                path: 'moderate/project/:submissionId',
                 component: ProjectModerationPageComponent,
             },
             { path: 'manage/users', component: ManageUsersPageComponent },
