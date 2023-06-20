@@ -1,0 +1,23 @@
+<app-page>
+    <h1 #pageHeader>Zarządzaj użytkownikami</h1>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Adres e-mail</th>
+            <th>Aktywny?</th>
+            <th></th>
+        </tr>
+        <tr *ngFor="let user of usersList">
+            <td>{{ user.id }}</td>
+            <td>{{ user.emailAddress }}</td>
+            <td>{{ user.isActive ? "Tak" : "Nie" }}</td>
+            <td>
+                <app-button
+                    type="clear"
+                    class="last-column"
+                    [icon]="eyeIcon"
+                ></app-button>
+            </td>
+        </tr>
+    </table>
+</app-page>

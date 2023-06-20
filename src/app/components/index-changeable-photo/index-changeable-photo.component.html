@@ -1,0 +1,18 @@
+<img [src]="asset?.url ?? ''" [alt]="asset?.title ?? ''" />
+<div class="buttons-container">
+    <app-button
+        *ngIf="showDeleteAsset"
+        type="danger"
+        [icon]="xIcon"
+        (click)="onDelete()"
+    >
+    </app-button>
+    <div class="move-buttons-container">
+        <app-button type="color" *ngIf="showMoveLeft" (click)="onMoveLeft()">
+            ←
+        </app-button>
+        <app-button type="color" *ngIf="showMoveRight" (click)="onMoveRight()">
+            →
+        </app-button>
+    </div>
+</div>

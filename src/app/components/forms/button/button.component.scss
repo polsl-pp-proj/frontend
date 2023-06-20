@@ -1,0 +1,80 @@
+:host {
+    display: block;
+    width: fit-content;
+}
+
+.button {
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.7rem 1rem;
+    border: none;
+    height: var(--button-height);
+    border-radius: calc(var(--button-height) / 2);
+    cursor: pointer;
+    transition: color 0.2s ease-out, background-color 0.2s ease-out;
+    color: var(--foreground-100);
+    width: 100%;
+    font-weight: 500;
+
+    &:disabled {
+        filter: brightness(50%) contrast(50%) saturate(50%);
+        cursor: not-allowed;
+        opacity: 0.5;
+    }
+
+    ::ng-deep * {
+        pointer-events: none;
+    }
+
+    i {
+        width: 1.8375rem;
+        height: 1.8375rem;
+
+        &.button-icon-before {
+            margin-right: 0.5rem;
+        }
+
+        &.button-icon-after {
+            margin-left: 0.5rem;
+        }
+    }
+
+    &.button-clear {
+        background-color: rgba(255, 255, 255, 0);
+
+        &:hover:not([disabled]) {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+    }
+
+    &.button-translucent {
+        background-color: rgba(255, 255, 255, 0.05);
+
+        &:hover:not([disabled]) {
+            background-color: rgba(255, 255, 255, 0);
+        }
+    }
+
+    &.button-color {
+        background-color: var(--primary-25);
+
+        &:hover:not([disabled]) {
+            background-color: var(--primary-50);
+        }
+    }
+
+    &.button-danger {
+        background-color: var(--danger-25);
+
+        &:hover:not([disabled]) {
+            background-color: var(--danger-50);
+        }
+    }
+
+    &.button-icon-only {
+        padding: 0;
+        width: var(--button-height);
+    }
+}

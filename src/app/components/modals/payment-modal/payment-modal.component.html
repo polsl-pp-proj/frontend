@@ -1,0 +1,59 @@
+<app-base-modal
+    modalTitle="Wesprzyj projekt"
+    [modalName]="modalName"
+    transitionDuration="200ms"
+    [closable]="true"
+    (closed)="modalClosed()"
+>
+    <div class="container">
+        <div class="description">
+            Właśnie wspierasz projekt
+            <span class="projectName">{{ this.projectDto.name }}</span
+            >.<ng-container *ngIf="step === 1">
+                Twoja darowizna może być imienna, bądź anonimowa. Możesz
+                wesprzeć projekt dowolną kwotą.</ng-container
+            >
+        </div>
+        <ng-container *ngIf="step === 1; else step2">
+            <form [formGroup]="paymentForm">
+                <div class="amount-container">
+                    <app-input
+                        name="amount"
+                        [formControl]="paymentForm.controls.amount"
+                        [errors]="paymentForm.controls.amount.errors"
+                        [errorMessages]="{
+                            required: 'Wprowadź kwotę darowizny',
+                            pattern: 'Wprowadź poprawną kwotę',
+                            min: 'Kwota darowizny musi być większa niż 0 PLN'
+                        }"
+                        >Kwota darowizny (w PLN)</app-input
+                    >
+                </div>
+                <div class="checkbox-container">
+                    <app-input
+                        type="checkbox"
+                        name="anonymous"
+                        [formControl]="paymentForm.controls.anonymous"
+                        [displayErrors]="false"
+                        >Chcę, aby moja darowizna była anonimowa</app-input
+                    >
+                </div>
+            </form>
+            <app-button
+                type="color"
+                [disabled]="!paymentForm.valid || step1InTransit"
+                (click)="sendPaymentRequest()"
+                >Wyślij darowiznę</app-button
+            ></ng-container
+        >
+        <ng-template #step2>
+            <div id="{{ modalName }}--stripe-payment-wrapper"></div>
+            <app-button
+                type="color"
+                [disabled]="step2InTransit || !stripeElements"
+                (click)="confirmPayment()"
+                >Wykonaj płatność</app-button
+            >
+        </ng-template>
+    </div>
+</app-base-modal>

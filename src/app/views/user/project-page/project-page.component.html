@@ -1,0 +1,137 @@
+<app-page>
+    <h1 pageHeader>{{ projectDto.name }}</h1>
+    <div class="main-container">
+        <h3>{{ projectDto.organizationName }}</h3>
+        <div class="summary-container">
+            <div class="top">
+                <div class="main-swiper-wrapper">
+                    <swiper-container
+                        class="main-swiper"
+                        initial-slide="0"
+                        slides-per-view="1"
+                        navigation="true"
+                        auto-height="true"
+                        thumbs-swiper=".thumbnail-swiper"
+                    >
+                        <swiper-slide *ngFor="let asset of projectDto.assets">
+                            <img
+                                class="swiper-img"
+                                src="{{ remoteAssetsPath }}{{ asset.url }}"
+                            />
+                        </swiper-slide>
+                    </swiper-container>
+                </div>
+                <div class="aside">
+                    <div class="button-container">
+                        <app-button
+                            type="color"
+                            (click)="makeDonation()"
+                            *ngIf="
+                                projectDto.fundingObjectives &&
+                                projectDto.fundingObjectives.trim() !== ''
+                            "
+                            >Wesprzyj</app-button
+                        >
+                        <app-button
+                            (click)="openMessageModal()"
+                            type="translucent"
+                            *ngIf="isUserPartOfProject"
+                            >Skontaktuj się</app-button
+                        >
+                        <app-button
+                            type="translucent"
+                            (click)="toggleFavoriteState()"
+                            >{{
+                                isFavorite
+                                    ? "Usuń z ulubionych"
+                                    : "Dodaj do ulubionych"
+                            }}</app-button
+                        >
+                    </div>
+                    <div
+                        class="gathered-funds-container"
+                        *ngIf="
+                            projectDto.fundingObjectives &&
+                            projectDto.fundingObjectives.trim() !== ''
+                        "
+                    >
+                        <h2>Zebrana kwota</h2>
+                        <h3>Ostatnie 30 dni:</h3>
+                        <div class="money">
+                            {{ donationStats.raised.lastMonth }} zł
+                        </div>
+                        <h3>Ogólnie:</h3>
+                        <div class="money">
+                            {{ donationStats.raised.total }} zł
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <swiper-container
+                initial-slide="0"
+                navigation="true"
+                slides-per-view="auto"
+                class="thumbnail-swiper"
+                slides-offset-before="50"
+                slides-offset-after="50"
+                space-between="25"
+            >
+                <swiper-slide
+                    *ngFor="let asset of projectDto.assets"
+                    class="thumbnail-swiper-slide"
+                >
+                    <img
+                        class="swiper-thumb-img"
+                        src="{{ remoteAssetsPath }}/{{ asset.url }}"
+                    />
+                </swiper-slide>
+            </swiper-container>
+        </div>
+        <div
+            class="project-description"
+            [innerHTML]="this.projectDto.description | markdown"
+        ></div>
+        <div
+            class="project-funding-objectives"
+            *ngIf="
+                projectDto.fundingObjectives &&
+                projectDto.fundingObjectives.trim() !== ''
+            "
+        >
+            <h2>Cel zbiórki</h2>
+            <article
+                [innerHTML]="this.projectDto.fundingObjectives | markdown"
+            ></article>
+        </div>
+        <div class="open-positions" *ngIf="isStudent">
+            <h2>Dołącz do organizacji</h2>
+            <h3>
+                Organizacja poszukuje osób, które pomogą w rozwinięciu projektu.
+            </h3>
+            <div class="open-positions-container">
+                <app-open-position-card
+                    *ngFor="let position of projectDto.openPositions"
+                    [positionName]="position.name"
+                    [positionRequirements]="position.requirements"
+                    [positionDescription]="position.description"
+                    (trigger)="openJoinTeamModal(position)"
+                >
+                </app-open-position-card>
+            </div>
+        </div>
+        <div class="recent-payments">
+            <h2>Ostatnie wpłaty</h2>
+            <div class="recent-payments-container">
+                <app-recent-payment-card
+                    *ngFor="let payment of donationStats.lastFunders"
+                    [userName]="payment.isAnonymous ? 'Anonim' : payment.name"
+                    [amount]="payment.amount"
+                >
+                </app-recent-payment-card>
+            </div>
+        </div>
+    </div>
+</app-page>
+<app-payment-modal [projectDto]="projectDto"></app-payment-modal>
+<app-message-modal [id]="projectDto.id"></app-message-modal>
+<app-join-team-modal [openPosition]="chosenOpenPosition"></app-join-team-modal>

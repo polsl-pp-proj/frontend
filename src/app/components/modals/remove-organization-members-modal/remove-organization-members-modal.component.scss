@@ -1,0 +1,10 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--padding);
+    justify-content: space-between;
+
+    app-button {
+        align-self: center;
+    }
+}

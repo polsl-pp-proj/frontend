@@ -1,0 +1,45 @@
+app-page ::ng-deep {
+    header {
+        margin-bottom: 0;
+    }
+}
+
+.container {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.container_flex {
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.card {
+    margin-right: 20px;
+    margin-top: 20px;
+}
+
+section:not(:last-of-type) {
+    margin-bottom: var(--padding);
+}
+
+.button-margin {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.button-margin-top {
+    margin-top: 20px;
+}
+
+.no-organizations {
+    font-weight: 900;
+    font-size: 3rem;
+    color: var(--foreground-75);
+    text-align: center;
+}

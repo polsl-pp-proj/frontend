@@ -1,0 +1,16 @@
+<app-page>
+    <h1 pageHeader>Moderuj projekty</h1>
+    <div class="project-container">
+        <app-project-card
+            *ngFor="let submission of projectSubmissions"
+            class="card"
+            [projectName]="submission.projectDraft.name"
+            [projectDescription]="submission.projectDraft.shortDescription"
+            [projectOrg]="submission.projectDraft.organizationName"
+            [imageUrl]="submission.projectDraft.thumbnail.url"
+            [imageAlt]="submission.projectDraft.thumbnail.title"
+            buttonText="Moderuj"
+            (visitProject)="goToProjectModeration(submission.id)"
+        ></app-project-card>
+    </div>
+</app-page>

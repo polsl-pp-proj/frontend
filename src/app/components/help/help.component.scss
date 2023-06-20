@@ -1,0 +1,58 @@
+:host {
+    position: relative;
+    z-index: 1;
+}
+
+app-button {
+    position: fixed;
+    right: 2em;
+    bottom: 2em;
+}
+
+main {
+    display: none;
+    position: fixed;
+    right: calc(2rem + 1 * var(--button-height));
+    bottom: calc(2rem + 1 * var(--button-height));
+    max-width: calc(100vw - 2 * calc(2rem + 1 * var(--button-height)));
+    min-width: 16.875rem;
+    border-radius: calc(var(--el-height) / 2) calc(var(--el-height) / 2) 0
+        calc(var(--el-height) / 2);
+    background-color: var(--deep-background-100);
+    padding: var(--padding);
+
+    article ::ng-deep {
+        font-size: 0.75em;
+
+        h1 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5em;
+        }
+        h2 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5em;
+        }
+        h3 {
+            font-size: 0.95rem;
+            margin-bottom: 0.5em;
+        }
+        h4 {
+            font-size: 0.85rem;
+            margin-bottom: 0.5em;
+        }
+        h5 {
+            font-size: 0.8rem;
+            margin-bottom: 0.5em;
+        }
+        h6 {
+            font-size: 0.75rem;
+            margin-bottom: 0.5em;
+        }
+    }
+}
+
+:host.show-help {
+    main {
+        display: initial;
+    }
+}

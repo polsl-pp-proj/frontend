@@ -1,0 +1,14 @@
+<div class="modal-wrapper" (click)="$event.stopPropagation()">
+    <i
+        class="close-icon"
+        [innerHTML]="closeIcon"
+        (click)="closeModal()"
+        *ngIf="closable"
+    ></i>
+    <h1>{{ modalTitle }}</h1>
+    <span class="smooth-hide-top"></span>
+    <main>
+        <ng-content></ng-content>
+    </main>
+    <span class="smooth-hide-bottom"></span>
+</div>

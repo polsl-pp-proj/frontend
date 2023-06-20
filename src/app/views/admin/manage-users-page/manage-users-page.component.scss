@@ -1,0 +1,31 @@
+table {
+    border-collapse: collapse;
+    border-radius: calc(var(--el-height) / 2);
+    width: 100%;
+    overflow: hidden;
+}
+
+th,
+td {
+    text-align: left;
+    padding: 1rem;
+    width: 20%;
+}
+
+.last-column {
+    float: right;
+}
+
+.inline {
+    display: inline;
+    padding-right: 5px;
+}
+
+tr:nth-child(even) {
+    background-color: #212121;
+}
+
+.image {
+    min-width: 32px;
+    min-height: 32px;
+}

@@ -1,0 +1,15 @@
+<div class="content-wrapper">
+    <img
+        src="{{ remoteAssetsPath }}/{{ imageUrl }}"
+        [alt]="imageAlt"
+        class="thumbnail"
+    />
+    <main class="main-content">
+        <h2 class="name">{{ projectName }}</h2>
+        <p class="description">{{ projectDescription }}</p>
+        <h4 class="organization">{{ projectOrg }}</h4>
+    </main>
+    <app-button class="visit-btn" type="color" (click)="visitProject.emit()">
+        {{ buttonText }}
+    </app-button>
+</div>

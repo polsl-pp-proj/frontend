@@ -1,0 +1,78 @@
+<app-page>
+    <h1 pageHeader>{{ organizationName }}</h1>
+    <section class="organization-projects">
+        <h3>Projekty organizacji</h3>
+        <app-button
+            type="color"
+            class="button-margin-top"
+            *ngIf="isMember"
+            (click)="addProject()"
+            >Dodaj projekt</app-button
+        >
+
+        <div class="container_flex">
+            <div *ngFor="let project of organizationProjects">
+                <app-project-card
+                    class="card"
+                    [projectName]="project.name"
+                    [projectDescription]="project.shortDescription"
+                    [projectOrg]="project.organizationName"
+                    [imageUrl]="project.thumbnail.url"
+                    [imageAlt]="project.thumbnail.title"
+                    (visitProject)="visitProject(project.id)"
+                ></app-project-card>
+            </div>
+            <p
+                *ngIf="organizationProjects.length === 0"
+                class="no-organizations"
+            >
+                Organizacja nie dodała jeszcze projektów
+            </p>
+        </div>
+    </section>
+    <div class="container" *ngIf="isOwner">
+        <h3>Zarządzaj organizacją</h3>
+        <app-button
+            type="color"
+            class="button-margin"
+            (click)="openAddMembersModal()"
+            >Dodaj nowego członka organizacji</app-button
+        >
+        <app-button
+            type="danger"
+            class="button-margin"
+            (click)="openRemoveMembersModal()"
+            >Usuń członka organizacji</app-button
+        >
+    </div>
+    <section
+        class="join-organization"
+        *ngIf="!isMember && isStudent && organizationProjects.length"
+    >
+        <div class="container">
+            <h3>Dołącz do organizacji</h3>
+            <h4>Organizacja poszukuje osób, które mogą pomóc w jej rozwoju.</h4>
+        </div>
+
+        <div class="container_flex">
+            <div *ngFor="let position of openPositions">
+                <app-open-position-card
+                    class="card"
+                    [positionName]="position.name"
+                    [positionDescription]="position.description"
+                    [positionRequirements]="position.requirements"
+                    (trigger)="openJoinTeamModal(position)"
+                ></app-open-position-card>
+            </div>
+        </div>
+    </section>
+</app-page>
+<app-add-organization-members-modal
+    *ngIf="isOwner"
+    [organizationId]="organizationId"
+></app-add-organization-members-modal>
+<app-remove-organization-members-modal
+    *ngIf="isOwner"
+    [organizationId]="organizationId"
+></app-remove-organization-members-modal>
+<app-join-team-modal [openPosition]="chosenOpenPosition"></app-join-team-modal>

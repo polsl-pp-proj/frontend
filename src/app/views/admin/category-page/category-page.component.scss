@@ -1,0 +1,48 @@
+.container {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+}
+
+table {
+    border-collapse: collapse;
+    border-radius: calc(var(--el-height) / 2);
+    width: 100%;
+    overflow: hidden;
+}
+
+th,
+td {
+    text-align: left;
+    padding: 1rem;
+    width: 45%;
+
+    &:last-child {
+        app-button {
+            margin-right: 0;
+            margin-left: auto;
+        }
+    }
+}
+
+.third-row {
+    text-align: right;
+    padding: 8px;
+    width: 10%;
+}
+
+tr:nth-child(even) {
+    background-color: #212121;
+}
+
+.image {
+    min-width: 32px;
+    min-height: 32px;
+}
+
+.button-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}

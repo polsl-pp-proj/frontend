@@ -1,0 +1,23 @@
+<app-base-modal
+    modalTitle="Stwórz kategorię"
+    [modalName]="modalName"
+    transitionDuration="200ms"
+    [closable]="true"
+    (closed)="modalClosed()"
+>
+    <div class="form-wrapper">
+        <form [formGroup]="createCategoryForm">
+            <app-input
+                name="categoryName"
+                [formControl]="createCategoryForm.controls.categoryName"
+                >Nazwa kategorii</app-input
+            >
+        </form>
+        <app-button
+            type="color"
+            [disabled]="!this.createCategoryForm.valid || inTransit"
+            (click)="createCategory()"
+            >Stwórz</app-button
+        >
+    </div>
+</app-base-modal>

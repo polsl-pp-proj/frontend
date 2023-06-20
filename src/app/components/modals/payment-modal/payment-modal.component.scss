@@ -1,0 +1,20 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--padding);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--padding) / 2);
+}
+
+.projectName {
+    font-style: italic;
+    font-weight: 500;
+}
+
+app-button {
+    align-self: center;
+}

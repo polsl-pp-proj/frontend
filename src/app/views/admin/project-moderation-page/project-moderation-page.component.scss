@@ -1,0 +1,189 @@
+@use "sass:math";
+
+app-page ::ng-deep {
+    header {
+        margin-bottom: 0;
+    }
+}
+
+.swiper-img {
+    width: 100%;
+}
+
+.top {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.summary-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: var(--padding);
+    width: 100vw;
+    background-color: var(--secondary-25);
+    border-radius: calc(var(--el-height) / 2);
+    align-items: center;
+    margin-bottom: var(--padding);
+}
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.aside {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h3 {
+    align-self: flex-start;
+}
+
+.button-container {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-top: 32px;
+    height: 100%;
+}
+
+.bottom {
+    justify-self: flex-end;
+    margin-bottom: 20px;
+}
+
+app-button {
+    width: 100%;
+}
+
+.gathered-funds-container {
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top: 30px;
+    align-self: center;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 32px;
+}
+
+.money {
+    align-self: flex-end;
+    color: var(--money);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 32px;
+}
+
+swiper-container {
+    width: 100%;
+}
+
+.thumbnail-swiper {
+    margin-top: 50px;
+    display: none;
+}
+
+.main-swiper {
+    border-radius: calc(var(--el-height) / 2);
+}
+
+.swiper-thumb-img {
+    height: 7.9rem;
+}
+
+.thumbnail-swiper > swiper-slide {
+    border-radius: 0.6rem;
+    overflow: hidden;
+    width: fit-content;
+    &.swiper-slide-thumb-active {
+        border: 5px solid var(--primary-100);
+    }
+}
+
+.project-description {
+    font-size: 1.3rem;
+    margin-bottom: var(--padding);
+    width: 100%;
+}
+
+.project-funding-objectives {
+    width: 100%;
+}
+
+.open-positions {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.open-positions-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: var(--padding);
+    gap: var(--padding);
+}
+
+.main-swiper-wrapper {
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.recent-payments {
+    width: 100%;
+    margin-top: var(--padding);
+    display: flex;
+    flex-direction: column;
+}
+
+.recent-payments-container {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: var(--padding);
+    gap: var(--padding);
+}
+
+app-recent-payment-card {
+    width: 270px;
+}
+
+@media only screen and (min-width: 768px) {
+    .summary-container {
+        width: 100%;
+    }
+}
+
+@media only screen and (min-width: 1800px) {
+    .thumbnail-swiper {
+        display: initial;
+        margin-bottom: var(--padding);
+    }
+
+    .main-swiper-wrapper {
+        width: #{math.div(2, 3) * 100%};
+    }
+
+    .top {
+        flex-direction: row;
+    }
+
+    .bottom {
+        margin-bottom: 5px;
+    }
+}

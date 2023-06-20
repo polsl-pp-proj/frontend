@@ -1,0 +1,9 @@
+<app-button
+    [icon]="helpIcon"
+    title="Pomoc"
+    type="color"
+    (click)="showHelp = !showHelp"
+></app-button>
+<main>
+    <article [innerHTML]="currentHelpDoc"></article>
+</main>

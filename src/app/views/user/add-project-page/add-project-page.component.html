@@ -1,0 +1,161 @@
+<app-page>
+    <h1 pageHeader>Dodaj projekt</h1>
+    <div class="main-container">
+        <h2>
+            Dodajesz projekt jako
+            <span class="organization-name">{{
+                this.organizationDto.name
+            }}</span>
+        </h2>
+        <form [formGroup]="addProjectForm">
+            <app-input
+                name="projectName"
+                [formControl]="addProjectForm.controls.projectName"
+                [displayErrors]="true"
+                [errors]="addProjectForm.controls.projectName.errors"
+                [errorMessages]="{
+                    required: 'Nazwa projektu nie może być pusta'
+                }"
+                type="text"
+                >Nazwa projektu</app-input
+            >
+            <app-select
+                [multiple]="true"
+                name="categories"
+                [formControl]="addProjectForm.controls.categories"
+                [options]="categoryOptions"
+                >Kategorie</app-select
+            >
+            <div class="short-description-container">
+                <app-input
+                    name="shortDescription"
+                    [formControl]="addProjectForm.controls.shortDescription"
+                    [displayErrors]="true"
+                    [errors]="addProjectForm.controls.shortDescription.errors"
+                    [errorMessages]="{
+                        required: 'Opis nie może być pusty',
+                        maxlength: 'Opis jest zbyt długi'
+                    }"
+                    type="multiline"
+                    >Krótki opis projektu</app-input
+                >
+                <div class="char-counter">
+                    {{ this.shortDescriptionInputSize }}/{{
+                        this.maxShortDescriptionInputSize
+                    }}
+                </div>
+            </div>
+            <div>
+                <label class="label">Opis projektu</label>
+                <div
+                    #descriptionMdEditor
+                    class="longDescriptionTextArea"
+                    id="longDescription"
+                ></div>
+            </div>
+            <div>
+                <div class="gallery-container">
+                    <div class="add-photo-container">
+                        <h3>Galeria projektu</h3>
+                        <app-button
+                            type="color"
+                            [icon]="plusIcon"
+                            (click)="assetInput.click()"
+                        ></app-button>
+                    </div>
+                    <app-changable-photo-gallery
+                        [ngClass]="{
+                            emptyGallery:
+                                this.addProjectDto.assets.length == 0 &&
+                                this.newAssets.length == 0
+                        }"
+                        #photoGallery
+                        id="projectGallery"
+                        [assets]="addProjectDto.assets"
+                        [newAssets]="newAssets"
+                        (newAsset)="addNewAsset($event)"
+                    ></app-changable-photo-gallery>
+                </div>
+            </div>
+            <app-input
+                name="recruitmentOpen"
+                [formControl]="addProjectForm.controls.recruitmentOpen"
+                [displayErrors]="false"
+                type="checkbox"
+                >Chcemy prowadzić nabór na członków tego projektu</app-input
+            >
+            <div *ngIf="this.addProjectForm.controls.recruitmentOpen.value">
+                <div class="recruitment-container">
+                    <div class="add-member-container">
+                        <h3>Członkowie projektu</h3>
+                        <app-button
+                            type="color"
+                            [icon]="plusIcon"
+                            (click)="addOpenPosition()"
+                        ></app-button>
+                    </div>
+                    <div
+                        class="open-position-cards"
+                        *ngIf="addProjectDto.openPositions.length > 0"
+                    >
+                        <app-open-position-card
+                            *ngFor="
+                                let openPosition of addProjectDto.openPositions;
+                                index as i
+                            "
+                            [positionName]="openPosition.name"
+                            [positionDescription]="openPosition.description"
+                            [positionRequirements]="openPosition.requirements"
+                            buttonText="Usuń"
+                            (trigger)="this.deleteOpenPosition(i)"
+                        >
+                        </app-open-position-card>
+                    </div>
+                </div>
+            </div>
+            <app-input
+                name="fundingOpen"
+                [formControl]="addProjectForm.controls.fundingOpen"
+                [displayErrors]="false"
+                type="checkbox"
+                >Chcemy gromadzić środki na cel związany z projektem</app-input
+            >
+            <div
+                [ngClass]="{
+                    fundingDisabled:
+                        !this.addProjectForm.controls.fundingOpen.value
+                }"
+            >
+                <label class="label">Cel zbiórki</label>
+                <div
+                    #fundingGoalsMdEditor
+                    class="longDescriptionTextArea"
+                    id="fundingGoals"
+                ></div>
+            </div>
+            <app-button
+                class="add-project-button"
+                [disabled]="
+                    !this.addProjectForm.valid ||
+                    this.newAssets.length == 0 ||
+                    inTransit
+                "
+                type="color"
+                (click)="addProject()"
+                >Zgłoś projekt do moderacji</app-button
+            >
+        </form>
+    </div></app-page
+>
+
+<input
+    type="file"
+    id="asset-input"
+    accept="image/png, image/jpeg"
+    (change)="photoGallery.onAddAsset($event)"
+    #assetInput
+/>
+
+<app-add-open-position-modal
+    (newOpenPosition)="onAddOpenPosition($event)"
+></app-add-open-position-modal>

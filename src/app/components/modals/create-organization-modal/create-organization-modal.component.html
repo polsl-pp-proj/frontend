@@ -1,0 +1,23 @@
+<app-base-modal
+    modalTitle="Stwórz organizację"
+    [modalName]="modalName"
+    transitionDuration="200ms"
+    [closable]="true"
+    (closed)="modalClosed()"
+>
+    <div class="form-wrapper">
+        <form [formGroup]="createOrganizationForm">
+            <app-input
+                name="organizationName"
+                [formControl]="createOrganizationForm.controls.organizationName"
+                >Nazwa organizacji</app-input
+            >
+        </form>
+        <app-button
+            type="color"
+            [disabled]="!this.createOrganizationForm.valid || inTransit"
+            (click)="createOrganization()"
+            >Stwórz</app-button
+        >
+    </div>
+</app-base-modal>

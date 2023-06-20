@@ -1,0 +1,36 @@
+<app-base-modal
+    modalTitle="Odrzuć projekt"
+    [modalName]="modalName"
+    transitionDuration="200ms"
+    [closable]="true"
+    (closed)="modalClosed()"
+>
+    <div class="container">
+        <div class="description">
+            Odrzucasz projekt
+            <span class="projectName">{{ projectDto.name }}</span>
+        </div>
+        <form [formGroup]="rejectProjectForm">
+            <div class="input-container">
+                <app-input
+                    name="reason"
+                    [formControl]="rejectProjectForm.controls.reason"
+                    [displayErrors]="false"
+                    type="multiline"
+                    >Powód odrzucenia</app-input
+                >
+                <div class="char-counter">
+                    {{ rejectProjectForm.controls.reason.value.length }}/{{
+                        maxInputSize
+                    }}
+                </div>
+            </div>
+        </form>
+        <app-button
+            type="color"
+            [disabled]="!rejectProjectForm.valid || inTransit"
+            (click)="sendRejectRequest()"
+            >Odrzuć</app-button
+        >
+    </div>
+</app-base-modal>

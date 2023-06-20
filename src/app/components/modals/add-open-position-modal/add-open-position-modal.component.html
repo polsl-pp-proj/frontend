@@ -1,0 +1,90 @@
+<app-base-modal
+    modalTitle="Dodaj nowe ogłoszenie na członka projektu"
+    [modalName]="modalName"
+    transitionDuration="200ms"
+    [closable]="true"
+    (closed)="modalClosed()"
+>
+    <div class="container">
+        <form [formGroup]="addOpenPositionForm">
+            <app-input
+                name="positionName"
+                formControlName="positionName"
+                [errors]="addOpenPositionForm.controls.positionName.errors"
+                [errorMessages]="{
+                    required: 'Pole nie może być puste'
+                }"
+                >Nazwa pozycji</app-input
+            >
+            <app-input
+                name="description"
+                formControlName="description"
+                [errors]="addOpenPositionForm.controls.description.errors"
+                [errorMessages]="{
+                    required: 'Pole nie może być puste',
+                    maxlength: 'Opis jest zbyt długi'
+                }"
+                type="multiline"
+                >Opis stanowiska</app-input
+            >
+            <div class="requirements">
+                <ng-container formArrayName="requirements">
+                    <label
+                        *ngIf="requirements.length > 0"
+                        class="requirements-label"
+                        >Wymagania</label
+                    >
+                    <div
+                        *ngIf="requirements.length == 0"
+                        class="empty-requirements"
+                    >
+                        <h3>Wymagania</h3>
+                        <app-button
+                            *ngIf="requirements.length == 0"
+                            type="color"
+                            (click)="addRequirement()"
+                            >+</app-button
+                        >
+                    </div>
+                    <ng-container
+                        *ngFor="
+                            let requirement of requirements.controls;
+                            let i = index
+                        "
+                    >
+                        <div class="requirement" [formGroupName]="i">
+                            <app-input
+                                name="newRequirement"
+                                formControlName="newRequirement"
+                                [errors]="
+                                    requirement.get('newRequirement')!.errors
+                                "
+                                [errorMessages]="{
+                                    required: 'Pole nie może być puste'
+                                }"
+                            ></app-input>
+                            <app-button
+                                type="color"
+                                (click)="removeRequirement(i)"
+                                >-</app-button
+                            >
+                            <app-button
+                                *ngIf="i == requirements.length - 1"
+                                type="color"
+                                (click)="addRequirement()"
+                                >+</app-button
+                            >
+                        </div>
+                    </ng-container>
+                </ng-container>
+            </div>
+        </form>
+        <app-button
+            class="add-button"
+            type="color"
+            [disabled]="!addOpenPositionForm.valid"
+            (click)="addOpenPosition()"
+            >Dodaj</app-button
+        >
+    </div>
+</app-base-modal>

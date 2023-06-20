@@ -1,0 +1,20 @@
+<app-page>
+    <h1 #pageHeader>Zarządzaj organizacjami</h1>
+    <table>
+        <tr>
+            <th>Nazwa organizacji</th>
+            <th></th>
+        </tr>
+        <tr *ngFor="let org of organizations">
+            <td>{{ org.name }}</td>
+            <td>
+                <app-button
+                    type="clear"
+                    class="last-column"
+                    [icon]="eyeIcon"
+                    [routerLink]="['/organization', org.id]"
+                ></app-button>
+            </td>
+        </tr>
+    </table>
+</app-page>
