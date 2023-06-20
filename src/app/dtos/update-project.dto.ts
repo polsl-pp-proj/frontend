@@ -6,7 +6,6 @@ export class UpdateProjectDto {
     shortDescription!: string;
     description!: string;
     fundingObjectives!: string | null;
-    projectGroupName!: string;
     assets!: (number | ProjectAssetDto)[];
     categories!: number[];
     openPositions!: (CreateOpenPositionDto | number)[];

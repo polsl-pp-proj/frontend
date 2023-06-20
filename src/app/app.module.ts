@@ -60,6 +60,7 @@ import { FavoriteModule } from './modules/favorite/favorite.module';
 import { ManageOrganizationsPageComponent } from './views/admin/manage-organizations-page/manage-organizations-page.component';
 import { ChangePasswordModalComponent } from './components/modals/change-password-modal/change-password-modal.component';
 import { CreateCategoryModalComponent } from './components/modals/create-category-modal/create-category-modal.component';
+import { EditProjectPageComponent } from './views/user/edit-project-page/edit-project-page.component';
 
 @NgModule({
     declarations: [
@@ -108,6 +109,7 @@ import { CreateCategoryModalComponent } from './components/modals/create-categor
         ManageOrganizationsPageComponent,
         ChangePasswordModalComponent,
         CreateCategoryModalComponent,
+        EditProjectPageComponent,
     ],
     imports: [
         BrowserModule,
