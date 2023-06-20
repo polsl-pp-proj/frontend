@@ -100,7 +100,7 @@
                     >
                         <app-open-position-card
                             *ngFor="
-                                let openPosition of editProjectDto.openPositions;
+                                let openPosition of normalizaedOpenPositions;
                                 index as i
                             "
                             [positionName]="openPosition.name"
@@ -137,7 +137,7 @@
                 class="add-project-button"
                 [disabled]="
                     !this.editProjectForm.valid ||
-                    this.newAssets.length == 0 ||
+                    this.editProjectDto.assets.length == 0 ||
                     inTransit
                 "
                 type="color"

@@ -14,6 +14,7 @@ import { Subscription, timer } from 'rxjs';
 import { ChangeablePhotoGalleryComponent } from 'src/app/components/changeable-photo-gallery/changeable-photo-gallery.component';
 import { AddOpenPositionModalComponent } from 'src/app/components/modals/add-open-position-modal/add-open-position-modal.component';
 import { CreateOpenPositionDto } from 'src/app/dtos/create-open-position.dto';
+import { OpenPositionDto } from 'src/app/dtos/open-position.dto';
 import { UpdateProjectDto } from 'src/app/dtos/update-project.dto';
 import { AuthTokenPayloadDto } from 'src/app/modules/auth/dtos/auth-token-payload.dto';
 import { CategoryService } from 'src/app/modules/category/services/category.service';
@@ -63,9 +64,17 @@ export class EditProjectPageComponent implements OnInit, OnDestroy {
 
     //TO BE CONTINUED
 
-    // openPositions = {
+    oldOpenPositions: { [key: number]: OpenPositionDto } = {};
 
-    // }
+    get normalizaedOpenPositions() {
+        return this.editProjectDto.openPositions.map((openPosition) => {
+            if (typeof openPosition === 'number') {
+                return this.oldOpenPositions[openPosition];
+            } else {
+                return openPosition;
+            }
+        });
+    }
 
     plusIcon!: SafeHtml;
 
@@ -106,10 +115,15 @@ export class EditProjectPageComponent implements OnInit, OnDestroy {
                         shortDescription: projectDto.shortDescription,
                     });
                     this.editProjectDto.assets = projectDto.assets;
-                    this.editProjectDto.openPositions =
-                        projectDto.openPositions;
                     this.organizationDto.id = projectDto.organizationId;
                     this.organizationDto.name = projectDto.organizationName;
+                    this.oldOpenPositions = {};
+                    this.editProjectDto.openPositions = [];
+                    projectDto.openPositions.forEach((openPosition) => {
+                        this.oldOpenPositions[openPosition.id] = openPosition;
+                        this.editProjectDto.openPositions.push(openPosition.id);
+                    });
+                    this.filledData();
                 },
                 error: () => {
                     this.router.navigate(['/404']);
