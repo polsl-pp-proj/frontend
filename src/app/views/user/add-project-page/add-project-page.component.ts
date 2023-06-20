@@ -18,6 +18,7 @@ import { CreateProjectDto } from 'src/app/dtos/create-project.dto';
 import { AuthTokenPayloadDto } from 'src/app/modules/auth/dtos/auth-token-payload.dto';
 import { CategoryDto } from 'src/app/modules/category/modules/category-api/dtos/category.dto';
 import { CategoryService } from 'src/app/modules/category/services/category.service';
+import { HelpService } from 'src/app/modules/help/services/help.service';
 import { IconVaultService } from 'src/app/modules/icon-vault/services/icon-vault.service';
 import { ModalService } from 'src/app/modules/modal/services/modal.service';
 import { OrganizationDto } from 'src/app/modules/organization/modules/organization-api/dtos/organization.dto';
@@ -75,10 +76,13 @@ export class AddProjectPageComponent implements OnInit, OnDestroy {
         private readonly modalService: ModalService,
         private readonly toastrService: ToastrService,
         private readonly projectService: ProjectService,
-        private readonly categoryService: CategoryService
+        private readonly categoryService: CategoryService,
+        private readonly helpService: HelpService
     ) {}
 
     async ngOnInit() {
+        this.helpService.registerPageHelp('user/add-project-page');
+
         const state = history.state?.organization;
         if (!history.state?.organization) {
             await this.router.navigate(['/']);
