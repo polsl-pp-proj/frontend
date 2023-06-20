@@ -198,6 +198,20 @@
             <p *ngIf="this.notifications.length === 0" class="no-notifications">
                 Brak powiadomień
             </p>
+            <nav class="notification-nav" *ngIf="this.notifications.length > 0">
+                <app-button
+                    type="color"
+                    [icon]="backIcon"
+                    [disabled]="notificationPage === 1"
+                    (click)="prevNotificationPage()"
+                ></app-button
+                ><app-button
+                    type="color"
+                    [icon]="forwardIcon"
+                    [disabled]="notificationPage === notificationPageCount"
+                    (click)="nextNotificationPage()"
+                ></app-button>
+            </nav>
         </div>
     </div>
 </div>

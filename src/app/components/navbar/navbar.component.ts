@@ -9,6 +9,7 @@ import { CreateOrganizationModalComponent } from '../modals/create-organization-
 import { UserRole } from 'src/app/modules/auth/enums/user-role.enum';
 import { NotificationDto } from 'src/app/modules/notification/modules/notification-api/dtos/notification.dto';
 import { NotificationType } from 'src/app/enums/notification-type.enum';
+import { NotificationService } from 'src/app/modules/notification/services/notification.service';
 
 @Component({
     selector: 'app-navbar',
@@ -26,6 +27,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
     notifXIcon!: SafeHtml;
     notifEnvelopeIcon!: SafeHtml;
 
+    backIcon!: SafeHtml;
+    forwardIcon!: SafeHtml;
+
     logged: boolean = false;
     isVerifiedStudent: boolean = false;
     userRole: UserRole = UserRole.BasicUser;
@@ -36,14 +40,18 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     initials: string = '';
 
-    authPayloadSubscription!: Subscription;
+    subsink: Subscription[] = [];
 
     notifications: NotificationDto[] = [];
+
+    notificationPage = 1;
+    notificationPageCount = 1;
 
     constructor(
         private readonly iconVaultService: IconVaultService,
         private readonly modalService: ModalService,
-        private readonly authService: AuthService
+        private readonly authService: AuthService,
+        private readonly notificationService: NotificationService
     ) {}
 
     ngOnInit(): void {
@@ -88,22 +96,49 @@ export class NavbarComponent implements OnInit, OnDestroy {
             .subscribe((icon: SafeHtml | null) => {
                 this.notifEnvelopeIcon = icon!;
             });
-
-        this.authPayloadSubscription = this.authService.authTokenPayload
-            .pipe(skipWhile((payload) => payload === undefined))
-            .subscribe((payload) => {
-                if (payload) {
-                    this.logged = true;
-                    this.isVerifiedStudent = payload.isVerifiedStudent;
-                    this.initials = payload.firstName[0] + payload.lastName[0];
-                    this.userRole = payload.role;
-                    return;
-                }
-                this.logged = false;
+        this.iconVaultService
+            .getIcon('ion_chevron-forward')
+            .subscribe((icon: SafeHtml | null) => {
+                this.forwardIcon = icon!;
             });
+        this.iconVaultService
+            .getIcon('ion_chevron-back')
+            .subscribe((icon: SafeHtml | null) => {
+                this.backIcon = icon!;
+            });
+
+        this.subsink.push(
+            this.authService.authTokenPayload
+                .pipe(skipWhile((payload) => payload === undefined))
+                .subscribe((payload) => {
+                    if (payload) {
+                        this.logged = true;
+                        this.isVerifiedStudent = payload.isVerifiedStudent;
+                        this.initials =
+                            payload.firstName[0] + payload.lastName[0];
+                        this.userRole = payload.role;
+                        return;
+                    }
+                    this.logged = false;
+                }),
+
+            this.notificationService.pageCountChangedObservable.subscribe(
+                (pageCount) => (this.notificationPageCount = pageCount)
+            ),
+            this.notificationService.notificationsChangedObservable.subscribe(
+                (goToFirstPage) => {
+                    if (goToFirstPage) {
+                        this.notificationPage = 1;
+                    }
+                    this.getNotifications();
+                }
+            )
+        );
+        this.getNotifications();
     }
+
     ngOnDestroy(): void {
-        this.authPayloadSubscription.unsubscribe();
+        this.subsink.forEach((sub) => sub.unsubscribe());
     }
 
     openLogin() {
@@ -139,6 +174,38 @@ export class NavbarComponent implements OnInit, OnDestroy {
             return this.notifXIcon;
         } else {
             return this.notifCheckIcon;
+        }
+    }
+
+    getNotifications() {
+        this.notificationService
+            .getNotifications(this.notificationPage)
+            .subscribe({
+                next: (notifications) => {
+                    this.notifications = notifications;
+                },
+                error: (err) => {
+                    if (
+                        err instanceof Error &&
+                        err.message === 'page_over_page_count'
+                    ) {
+                        this.notificationPage--;
+                    }
+                },
+            });
+    }
+
+    prevNotificationPage() {
+        if (this.notificationPage > 1) {
+            this.notificationPage--;
+            this.getNotifications();
+        }
+    }
+
+    nextNotificationPage() {
+        if (this.notificationPage < this.notificationPageCount) {
+            this.notificationPage++;
+            this.getNotifications();
         }
     }
 

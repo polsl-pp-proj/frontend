@@ -2,7 +2,7 @@
     position: relative;
 }
 
-nav {
+nav:not(.notification-nav) {
     position: relative;
     display: flex;
     justify-content: space-between;
@@ -138,6 +138,12 @@ nav {
     padding-bottom: 37px;
     z-index: 5;
     overflow: auto;
+
+    & nav {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+    }
 }
 
 .notif-container {
