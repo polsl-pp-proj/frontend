@@ -8,17 +8,16 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SafeHtml } from '@angular/platform-browser';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription, timer } from 'rxjs';
 import { ChangeablePhotoGalleryComponent } from 'src/app/components/changeable-photo-gallery/changeable-photo-gallery.component';
 import { AddOpenPositionModalComponent } from 'src/app/components/modals/add-open-position-modal/add-open-position-modal.component';
 import { CreateOpenPositionDto } from 'src/app/dtos/create-open-position.dto';
-import { CreateProjectDto } from 'src/app/dtos/create-project.dto';
+import { OpenPositionDto } from 'src/app/dtos/open-position.dto';
+import { UpdateProjectDto } from 'src/app/dtos/update-project.dto';
 import { AuthTokenPayloadDto } from 'src/app/modules/auth/dtos/auth-token-payload.dto';
-import { CategoryDto } from 'src/app/modules/category/modules/category-api/dtos/category.dto';
 import { CategoryService } from 'src/app/modules/category/services/category.service';
-import { HelpService } from 'src/app/modules/help/services/help.service';
 import { IconVaultService } from 'src/app/modules/icon-vault/services/icon-vault.service';
 import { ModalService } from 'src/app/modules/modal/services/modal.service';
 import { OrganizationDto } from 'src/app/modules/organization/modules/organization-api/dtos/organization.dto';
@@ -26,11 +25,11 @@ import { ProjectService } from 'src/app/modules/project/services/project.service
 import Vditor from 'vditor';
 
 @Component({
-    selector: 'app-add-project-page',
-    templateUrl: './add-project-page.component.html',
-    styleUrls: ['./add-project-page.component.scss'],
+    selector: 'app-edit-project-page',
+    templateUrl: './edit-project-page.component.html',
+    styleUrls: ['./edit-project-page.component.scss'],
 })
-export class AddProjectPageComponent implements OnInit, OnDestroy {
+export class EditProjectPageComponent implements OnInit, OnDestroy {
     private viewInitialized = false;
     private dataFilled = false;
     private subsink: Subscription[] = [];
@@ -51,7 +50,9 @@ export class AddProjectPageComponent implements OnInit, OnDestroy {
 
     payload!: AuthTokenPayloadDto;
 
-    addProjectDto: CreateProjectDto = {
+    draftId = -1;
+
+    editProjectDto: UpdateProjectDto = {
         name: '',
         shortDescription: '',
         description: '',
@@ -61,11 +62,24 @@ export class AddProjectPageComponent implements OnInit, OnDestroy {
         openPositions: [],
     };
 
+    //TO BE CONTINUED
+
+    oldOpenPositions: { [key: number]: OpenPositionDto } = {};
+
+    get normalizaedOpenPositions() {
+        return this.editProjectDto.openPositions.map((openPosition) => {
+            if (typeof openPosition === 'number') {
+                return this.oldOpenPositions[openPosition];
+            } else {
+                return openPosition;
+            }
+        });
+    }
+
     plusIcon!: SafeHtml;
 
     inTransit = false;
 
-    @Input()
     organizationDto: OrganizationDto = { name: 'Trwa ładowanie...', id: -1 };
 
     categoryOptions: { text: string; value: number }[] = [];
@@ -77,44 +91,78 @@ export class AddProjectPageComponent implements OnInit, OnDestroy {
         private readonly toastrService: ToastrService,
         private readonly projectService: ProjectService,
         private readonly categoryService: CategoryService,
-        private readonly helpService: HelpService
+        private readonly activatedRoute: ActivatedRoute
     ) {}
 
     async ngOnInit() {
-        this.helpService.registerPageHelp('user/add-project-page');
+        const draftId = this.activatedRoute.snapshot.paramMap.get('draftId');
 
-        const state = history.state?.organization;
-        if (!history.state?.organization) {
-            await this.router.navigate(['/']);
-        }
-        this.organizationDto = state;
-
-        this.subsink.push(
-            this.addProjectForm.controls.shortDescription.valueChanges.subscribe(
-                (value) => {
-                    this.shortDescriptionInputSize = value ? value.length : 0;
-                }
-            ),
-            this.categoryService.getCategories().subscribe((categories) => {
-                this.categoryOptions = categories.map((category) => ({
-                    text: category.name,
-                    value: category.id,
-                }));
-            })
-        );
-
-        this.iconVaultService
-            .getIcon('ion_add')
-            .subscribe((icon: SafeHtml | null) => {
-                this.plusIcon = icon!;
+        if (draftId) {
+            this.draftId = +draftId;
+            this.projectService.getProjectDraftById(this.draftId).subscribe({
+                next: (projectDto) => {
+                    this.editProjectForm.reset({
+                        categories: projectDto.categories.map(
+                            (category) => category.id
+                        ),
+                        description: projectDto.description,
+                        fundingGoals: projectDto.fundingObjectives,
+                        fundingOpen:
+                            !!projectDto.fundingObjectives &&
+                            projectDto.fundingObjectives !== '',
+                        projectName: projectDto.name,
+                        recruitmentOpen: projectDto.openPositions.length > 0,
+                        shortDescription: projectDto.shortDescription,
+                    });
+                    this.editProjectDto.assets = projectDto.assets;
+                    this.organizationDto.id = projectDto.organizationId;
+                    this.organizationDto.name = projectDto.organizationName;
+                    this.oldOpenPositions = {};
+                    this.editProjectDto.openPositions = [];
+                    projectDto.openPositions.forEach((openPosition) => {
+                        this.oldOpenPositions[openPosition.id] = openPosition;
+                        this.editProjectDto.openPositions.push(openPosition.id);
+                    });
+                    this.filledData();
+                },
+                error: () => {
+                    this.router.navigate(['/404']);
+                    this.toastrService.info(
+                        'Odwiedzony przez Ciebie projekt nie istnieje!',
+                        'Projekt nie istnieje'
+                    );
+                },
             });
+
+            this.subsink.push(
+                this.editProjectForm.controls.shortDescription.valueChanges.subscribe(
+                    (value) => {
+                        this.shortDescriptionInputSize = value
+                            ? value.length
+                            : 0;
+                    }
+                ),
+                this.categoryService.getCategories().subscribe((categories) => {
+                    this.categoryOptions = categories.map((category) => ({
+                        text: category.name,
+                        value: category.id,
+                    }));
+                })
+            );
+
+            this.iconVaultService
+                .getIcon('ion_add')
+                .subscribe((icon: SafeHtml | null) => {
+                    this.plusIcon = icon!;
+                });
+        }
     }
 
     ngOnDestroy(): void {
         this.subsink.forEach((sub) => sub.unsubscribe());
     }
 
-    addProjectForm = new FormGroup({
+    editProjectForm = new FormGroup({
         projectName: new FormControl<string>('', {
             nonNullable: true,
             validators: [Validators.required],
@@ -175,7 +223,7 @@ export class AddProjectPageComponent implements OnInit, OnDestroy {
                 width: '100%',
                 minHeight: 360,
                 input: (value: string) => {
-                    this.addProjectForm.controls.description.setValue(value);
+                    this.editProjectForm.controls.description.setValue(value);
                 },
             }
         );
@@ -209,7 +257,7 @@ export class AddProjectPageComponent implements OnInit, OnDestroy {
                 width: '100%',
                 minHeight: 360,
                 input: (value: string) => {
-                    this.addProjectForm.controls.fundingGoals.setValue(value);
+                    this.editProjectForm.controls.fundingGoals.setValue(value);
                 },
                 after: () => {
                     this.viewInitialized = true;
@@ -228,10 +276,10 @@ export class AddProjectPageComponent implements OnInit, OnDestroy {
         timer(50).subscribe(() => {
             if (this.viewInitialized && this.dataFilled) {
                 this.descriptionVditor.setValue(
-                    this.addProjectForm.controls.description.value
+                    this.editProjectForm.controls.description.value
                 );
                 this.fundingGoalsVditor.setValue(
-                    this.addProjectForm.controls.fundingGoals.value
+                    this.editProjectForm.controls.fundingGoals.value
                 );
             }
         });
@@ -239,11 +287,11 @@ export class AddProjectPageComponent implements OnInit, OnDestroy {
 
     addNewAsset(file: File) {
         this.newAssets.push(file);
-        this.addProjectDto?.assets.push(this.newAssets.length - 1);
+        this.editProjectDto?.assets.push(this.newAssets.length - 1);
     }
 
     deleteOpenPosition(index: number) {
-        this.addProjectDto.openPositions.splice(index, 1);
+        this.editProjectDto.openPositions.splice(index, 1);
     }
 
     addOpenPosition() {
@@ -254,7 +302,7 @@ export class AddProjectPageComponent implements OnInit, OnDestroy {
     }
 
     onAddOpenPosition(newOpenPosition: CreateOpenPositionDto) {
-        this.addProjectDto.openPositions.push(newOpenPosition);
+        this.editProjectDto.openPositions.push(newOpenPosition);
 
         this.toastrService.success(
             'Nowe ogłoszenie na członka projektu zostało dodane!',
@@ -268,22 +316,22 @@ export class AddProjectPageComponent implements OnInit, OnDestroy {
     }
 
     addProject() {
-        Object.assign(this.addProjectDto, {
-            name: this.addProjectForm.controls.projectName.value,
+        Object.assign(this.editProjectDto, {
+            name: this.editProjectForm.controls.projectName.value,
             shortDescription:
-                this.addProjectForm.controls.shortDescription.value,
-            description: this.addProjectForm.controls.description.value.trim(),
-            fundingObjectives: this.addProjectForm.controls.fundingOpen.value
-                ? this.addProjectForm.controls.fundingGoals.value.trim()
+                this.editProjectForm.controls.shortDescription.value,
+            description: this.editProjectForm.controls.description.value.trim(),
+            fundingObjectives: this.editProjectForm.controls.fundingOpen.value
+                ? this.editProjectForm.controls.fundingGoals.value.trim()
                 : '',
-            categories: this.addProjectForm.controls.categories.value,
-        } satisfies Omit<CreateProjectDto, 'assets' | 'openPositions'>);
+            categories: this.editProjectForm.controls.categories.value,
+        } satisfies Omit<UpdateProjectDto, 'assets' | 'openPositions'>);
 
         this.inTransit = true;
         this.projectService
-            .createProjectDraft(
-                this.organizationDto.id,
-                this.addProjectDto,
+            .updateProjectDraft(
+                this.draftId,
+                this.editProjectDto,
                 this.newAssets
             )
             .subscribe({

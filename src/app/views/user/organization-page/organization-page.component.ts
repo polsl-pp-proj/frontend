@@ -8,6 +8,7 @@ import { RemoveOrganizationMembersModalComponent } from 'src/app/components/moda
 import { SimpleProjectDto } from 'src/app/dtos/simple-project.dto';
 import { AuthTokenPayloadDto } from 'src/app/modules/auth/dtos/auth-token-payload.dto';
 import { AuthService } from 'src/app/modules/auth/services/auth.service';
+import { HelpService } from 'src/app/modules/help/services/help.service';
 import { ModalService } from 'src/app/modules/modal/services/modal.service';
 import { OrganizationMemberRole } from 'src/app/modules/organization/enums/organization-member-role.enum';
 import { OrganizationDto } from 'src/app/modules/organization/modules/organization-api/dtos/organization.dto';
@@ -51,10 +52,13 @@ export class OrganizationPageComponent implements OnInit, OnDestroy {
         private readonly authService: AuthService,
         private readonly projectService: ProjectService,
         private readonly openPositionService: OpenPositionService,
-        private readonly modalService: ModalService
+        private readonly modalService: ModalService,
+        private readonly helpService: HelpService
     ) {}
 
     ngOnInit(): void {
+        this.helpService.registerPageHelp('user/organization-page');
+
         const organizationId =
             this.activatedRoute.snapshot.paramMap.get('organizationId');
         if (organizationId) {
@@ -139,7 +143,7 @@ export class OrganizationPageComponent implements OnInit, OnDestroy {
 
     visitProject(projectId: number) {
         if (this.isMember) {
-            // TODO: visit draft edit page
+            this.router.navigate(['/project/draft', projectId]);
         } else {
             this.router.navigate(['/project', projectId]);
         }

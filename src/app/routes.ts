@@ -20,6 +20,7 @@ import { AddProjectPageComponent } from './views/user/add-project-page/add-proje
 import { ManageUsersPageComponent } from './views/admin/manage-users-page/manage-users-page.component';
 import { CategoryPageComponent } from './views/admin/category-page/category-page.component';
 import { ManageOrganizationsPageComponent } from './views/admin/manage-organizations-page/manage-organizations-page.component';
+import { EditProjectPageComponent } from './views/user/edit-project-page/edit-project-page.component';
 
 const customRouteMatcher = (
     segments: UrlSegment[],
@@ -73,6 +74,10 @@ export const routes: Routes = [
             { path: 'about', component: AboutPageComponent },
             { path: 'search', component: SearchPageComponent },
             { path: 'project/add', component: AddProjectPageComponent },
+            {
+                path: 'project/draft/:draftId',
+                component: EditProjectPageComponent,
+            },
             { path: 'project/:projectId', component: ProjectPageComponent },
             { path: 'account', component: MyAccountPageComponent },
             {
