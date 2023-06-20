@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Component({
     selector: 'app-project-card',
@@ -13,4 +14,6 @@ export class ProjectCardComponent {
     @Input() buttonText: string = 'Odwiedź projekt';
     @Input() projectOrg!: string;
     @Output() visitProject = new EventEmitter<void>();
+
+    remoteAssetsPath = environment.remoteAssetsPath;
 }

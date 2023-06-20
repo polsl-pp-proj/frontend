@@ -14,7 +14,10 @@
                         thumbs-swiper=".thumbnail-swiper"
                     >
                         <swiper-slide *ngFor="let asset of projectDto.assets">
-                            <img class="swiper-img" [src]="asset.url" />
+                            <img
+                                class="swiper-img"
+                                src="{{ remoteAssetsPath }}{{ asset.url }}"
+                            />
                         </swiper-slide>
                     </swiper-container>
                 </div>
@@ -77,7 +80,10 @@
                     *ngFor="let asset of projectDto.assets"
                     class="thumbnail-swiper-slide"
                 >
-                    <img class="swiper-thumb-img" [src]="asset.url" />
+                    <img
+                        class="swiper-thumb-img"
+                        src="{{ remoteAssetsPath }}/{{ asset.url }}"
+                    />
                 </swiper-slide>
             </swiper-container>
         </div>
