@@ -24,7 +24,7 @@ app-page ::ng-deep {
     background-color: var(--secondary-25);
     border-radius: calc(var(--el-height) / 2);
     align-items: center;
-    margin-bottom: var(--padding)
+    margin-bottom: var(--padding);
 }
 
 .main-container {
@@ -106,13 +106,18 @@ swiper-container {
 
 .project-description {
     font-size: 1.3rem;
-    margin-bottom: var(--padding)
+    margin-bottom: var(--padding);
+    width: 100%;
+}
+
+.project-funding-objectives {
+    width: 100%;
 }
 
 .open-positions {
     width: 100%;
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
 }
 
 .open-positions-container {
@@ -122,7 +127,7 @@ swiper-container {
     align-items: center;
     flex-wrap: wrap;
     margin-top: var(--padding);
-    gap: var(--padding)
+    gap: var(--padding);
 }
 
 .main-swiper-wrapper {
@@ -143,7 +148,7 @@ swiper-container {
     justify-content: center;
     flex-wrap: wrap;
     margin-top: var(--padding);
-    gap: var(--padding)
+    gap: var(--padding);
 }
 
 app-recent-payment-card {
@@ -156,7 +161,6 @@ app-recent-payment-card {
     }
 }
 
-
 @media only screen and (min-width: 1800px) {
     .thumbnail-swiper {
         display: initial;
@@ -164,12 +168,10 @@ app-recent-payment-card {
     }
 
     .main-swiper-wrapper {
-        width: #{math.div(2,3) * 100%};
+        width: #{math.div(2, 3) * 100%};
     }
 
     .top {
         flex-direction: row;
     }
 }
-
-

@@ -55,9 +55,10 @@
                 </swiper-slide>
             </swiper-container>
         </div>
-        <div class="project-description">
-            {{ projectDto.description }}
-        </div>
+        <div
+            class="project-description"
+            [innerHTML]="projectDto.description | markdown"
+        ></div>
         <div
             class="project-funding-objectives"
             *ngIf="
