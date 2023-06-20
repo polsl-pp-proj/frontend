@@ -29,10 +29,17 @@ section:not(:last-of-type) {
 }
 
 .button-margin {
-margin-top: 20px;
-margin-bottom: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .button-margin-top {
     margin-top: 20px;
+}
+
+.no-organizations {
+    font-weight: 900;
+    font-size: 3rem;
+    color: var(--foreground-75);
+    text-align: center;
 }

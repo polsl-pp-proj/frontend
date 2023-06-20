@@ -16,53 +16,23 @@ export class ProjectService {
     constructor(private readonly projectApiService: ProjectApiService) {}
 
     searchProjects(params: SearchQueryParamsDto, page: number = 1) {
-        return this.projectApiService
-            .searchProjects(params, page, resultsPerPage)
-            .pipe(
-                tap((results) => {
-                    results.projects.forEach(
-                        (project) =>
-                            (project.thumbnail.url = `${environment.remoteAssetsPath}/${project.thumbnail.url}`)
-                    );
-                })
-            );
-    }
-
-    getProjects() {
-        return this.projectApiService.getProjects().pipe(
-            tap((projects) => {
-                projects.forEach(
-                    (project) =>
-                        (project.thumbnail.url = `${environment.remoteAssetsPath}/${project.thumbnail.url}`)
-                );
-            })
+        return this.projectApiService.searchProjects(
+            params,
+            page,
+            resultsPerPage
         );
     }
 
+    getProjects() {
+        return this.projectApiService.getProjects();
+    }
+
     getProjectById(projectId: number) {
-        return this.projectApiService
-            .getProjectById(projectId)
-            .pipe(
-                tap((project) =>
-                    project.assets.forEach(
-                        (asset) =>
-                            (asset.url = `${environment.remoteAssetsPath}/${asset.url}`)
-                    )
-                )
-            );
+        return this.projectApiService.getProjectById(projectId);
     }
 
     getOrganizationProjects(organizationId: number) {
-        return this.projectApiService
-            .getOrganizationProjects(organizationId)
-            .pipe(
-                tap((projects) => {
-                    projects.forEach(
-                        (project) =>
-                            (project.thumbnail.url = `${environment.remoteAssetsPath}/${project.thumbnail.url}`)
-                    );
-                })
-            );
+        return this.projectApiService.getOrganizationProjects(organizationId);
     }
 
     updateProject(
@@ -86,29 +56,13 @@ export class ProjectService {
     }
 
     getOrganizationProjectDrafts(organizationId: number) {
-        return this.projectApiService
-            .getOrganizationProjectDrafts(organizationId)
-            .pipe(
-                tap((projects) => {
-                    projects.forEach(
-                        (project) =>
-                            (project.thumbnail.url = `${environment.remoteAssetsPath}/${project.thumbnail.url}`)
-                    );
-                })
-            );
+        return this.projectApiService.getOrganizationProjectDrafts(
+            organizationId
+        );
     }
 
     getProjectDraftById(draftId: number) {
-        return this.projectApiService
-            .getProjectDraftById(draftId)
-            .pipe(
-                tap((project) =>
-                    project.assets.forEach(
-                        (asset) =>
-                            (asset.url = `${environment.remoteAssetsPath}/${asset.url}`)
-                    )
-                )
-            );
+        return this.projectApiService.getProjectDraftById(draftId);
     }
 
     createProjectDraft(
@@ -136,24 +90,10 @@ export class ProjectService {
     }
 
     getNewestProjects() {
-        return this.projectApiService.getNewestProjects().pipe(
-            tap((projects) => {
-                projects.forEach(
-                    (project) =>
-                        (project.thumbnail.url = `${environment.remoteAssetsPath}/${project.thumbnail.url}`)
-                );
-            })
-        );
+        return this.projectApiService.getNewestProjects();
     }
 
     getMostLikedProjects() {
-        return this.projectApiService.getMostLikedProjects().pipe(
-            tap((projects) => {
-                projects.forEach(
-                    (project) =>
-                        (project.thumbnail.url = `${environment.remoteAssetsPath}/${project.thumbnail.url}`)
-                );
-            })
-        );
+        return this.projectApiService.getMostLikedProjects();
     }
 }

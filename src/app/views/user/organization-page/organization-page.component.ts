@@ -5,7 +5,6 @@ import { Subscription } from 'rxjs';
 import { AddOrganizationMembersModalComponent } from 'src/app/components/modals/add-organization-members-modal/add-organization-members-modal.component';
 import { JoinTeamModalComponent } from 'src/app/components/modals/join-team-modal/join-team-modal.component';
 import { RemoveOrganizationMembersModalComponent } from 'src/app/components/modals/remove-organization-members-modal/remove-organization-members-modal.component';
-import { OpenPositionDto } from 'src/app/dtos/open-position.dto';
 import { SimpleProjectDto } from 'src/app/dtos/simple-project.dto';
 import { AuthTokenPayloadDto } from 'src/app/modules/auth/dtos/auth-token-payload.dto';
 import { AuthService } from 'src/app/modules/auth/services/auth.service';
@@ -140,6 +139,7 @@ export class OrganizationPageComponent implements OnInit, OnDestroy {
 
     visitProject(projectId: number) {
         if (this.isMember) {
+            // TODO: visit draft edit page
         } else {
             this.router.navigate(['/project', projectId]);
         }

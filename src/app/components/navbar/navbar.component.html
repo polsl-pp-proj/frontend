@@ -38,7 +38,29 @@
                 </div>
             </div>
         </div>
+        <div class="notif-phone">
+            <div class="notif-icon-container">
+                <app-button
+                    class="notif-button"
+                    *ngIf="true"
+                    type="clear"
+                    [icon]="this.notifIcon"
+                    (click)="openNotifications()"
+                ></app-button>
+                <div class="notif-counter">{{ this.getNotifSize() }}</div>
+            </div>
+        </div>
         <div class="right-nav-container">
+            <div class="notif-icon-container">
+                <app-button
+                    class="notif-button"
+                    *ngIf="true"
+                    type="clear"
+                    [icon]="this.notifIcon"
+                    (click)="openNotifications()"
+                ></app-button>
+                <div class="notif-counter">{{ this.getNotifSize() }}</div>
+            </div>
             <div
                 *ngIf="logged"
                 (click)="expandedRightMenu = !expandedRightMenu"
@@ -158,5 +180,24 @@
                 >
             </li>
         </ul>
+    </div>
+
+    <div *ngIf="this.showNotifications" class="notif-menu">
+        <div class="notif-container">
+            <div
+                *ngFor="let notif of this.notifications.slice(0, 7)"
+                class="notif"
+            >
+                <div class="notif-left">
+                    <i
+                        [innerHTML]="this.mapNotificationTypeToIcon(notif.type)"
+                    ></i>
+                </div>
+                <div class="notif-right">
+                    <div class="top">{{ notif.message }}</div>
+                    <div class="bottom">{{ notif.organization.name }}</div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

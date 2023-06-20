@@ -24,6 +24,7 @@ import { OpenPositionDto } from 'src/app/dtos/open-position.dto';
 import { AuthService } from 'src/app/modules/auth/services/auth.service';
 import { DonationService } from 'src/app/modules/donation/services/donation.service';
 import { DonationStatsDto } from 'src/app/modules/donation/modules/donation-api/dtos/donation-stats.dto';
+import { environment } from 'src/environments/environment';
 
 @Component({
     selector: 'app-project-page',
@@ -247,4 +248,6 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
     private removeFromFavorites() {
         this.favoriteService.removeFromFavorites(this.projectId).subscribe();
     }
+
+    remoteAssetsPath = environment.remoteAssetsPath;
 }
