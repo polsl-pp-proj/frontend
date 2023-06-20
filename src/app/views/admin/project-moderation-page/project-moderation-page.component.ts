@@ -158,7 +158,7 @@ export class ProjectModerationPageComponent implements OnInit {
                         'Zgłoszenie projektu zostało zatwierdzone.',
                         'Zgłoszenie zatwierdzone'
                     );
-                    this.router.navigate(['admin', 'moderate', 'projects']);
+                    this.router.navigate(['/admin', 'moderate', 'projects']);
                 },
                 error: (err) => {
                     if (err instanceof HttpErrorResponse) {
@@ -168,7 +168,7 @@ export class ProjectModerationPageComponent implements OnInit {
                                 'Błąd zatwierdzania zgłoszenia'
                             );
                             this.router.navigate([
-                                'admin',
+                                '/admin',
                                 'moderate',
                                 'projects',
                             ]);
