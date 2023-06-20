@@ -42,7 +42,7 @@
             <div class="notif-icon-container">
                 <app-button
                     class="notif-button"
-                    *ngIf="true"
+                    *ngIf="logged"
                     type="clear"
                     [icon]="this.notifIcon"
                     (click)="openNotifications()"
@@ -54,7 +54,7 @@
             <div class="notif-icon-container">
                 <app-button
                     class="notif-button"
-                    *ngIf="true"
+                    *ngIf="logged"
                     type="clear"
                     [icon]="this.notifIcon"
                     (click)="openNotifications()"
