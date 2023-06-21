@@ -203,18 +203,17 @@ export class CoreApiService {
         route: EventStreamApiRoute,
         options: SseApiOptions
     ): EventStreamObservable<RS> {
-        if (route.authorized && !options.headers?.has('Authorization')) {
+        if (route.authorized && !options.headers?.['Authorization']) {
             return this.apiAuthService.token.pipe(
                 skipWhile((token) => !token),
                 timeout({ each: 10000 }),
                 take(1),
                 mergeMap((token) => {
-                    options.headers =
-                        options.headers?.append(
-                            'Authorization',
-                            `Bearer ${token}`
-                        ) ??
-                        new HttpHeaders({ Authorization: `Bearer ${token}` });
+                    if (options.headers) {
+                        options.headers['Authorization'] = `Bearer ${token}`;
+                    } else {
+                        options.headers = { Authorization: `Bearer ${token}` };
+                    }
 
                     return this.makeEventStreamRequest<RS>(route, options);
                 })
@@ -244,6 +243,9 @@ export class CoreApiService {
         return new Observable<EventStreamData<RS>>((subscriber) => {
             eventSource.onmessage = (event) => {
                 subscriber.next({ ...event, eventSource });
+            };
+            eventSource.onerror = (event) => {
+                subscriber.error(event);
             };
         });
     }
