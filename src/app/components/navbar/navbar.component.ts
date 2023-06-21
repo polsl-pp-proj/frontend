@@ -112,12 +112,21 @@ export class NavbarComponent implements OnInit, OnDestroy {
                 .pipe(skipWhile((payload) => payload === undefined))
                 .subscribe((payload) => {
                     if (payload) {
+                        if (!this.logged) {
+                            this.getNotifications();
+                        }
+
                         this.logged = true;
                         this.isVerifiedStudent = payload.isVerifiedStudent;
                         this.initials =
                             payload.firstName[0] + payload.lastName[0];
                         this.userRole = payload.role;
                         return;
+                    }
+                    if (this.logged) {
+                        this.notificationPage = 1;
+                        this.notificationPageCount = 1;
+                        this.notifications = [];
                     }
                     this.logged = false;
                 }),

@@ -207,6 +207,7 @@ export class NotificationService {
                     return;
                 }
                 this.unsubscribeNotificationEvents();
+                this.notifications.clear();
             });
     }
 
