@@ -134,6 +134,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
                 }
             )
         );
+        this.notificationService.init();
         this.getNotifications();
     }
 
