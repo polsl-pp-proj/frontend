@@ -149,11 +149,11 @@ export class NotificationService {
     }
 
     private getNotificationsSlice(page: number, pageSize: number) {
-        const notifications: NotificationDto[] = Object.values(
-            this.notifications
+        const notifications: NotificationDto[] = Array.from(
+            this.notifications.values()
         );
         return notifications
-            .sort((a, b) => a.createdAt - b.createdAt)
+            .sort((a, b) => b.createdAt - a.createdAt)
             .slice((page - 1) * pageSize, page * pageSize);
     }
 
