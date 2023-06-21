@@ -129,6 +129,7 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
     };
 
     projectId: number = -1;
+    isLogged = false;
     isFavorite = false;
     isStudent = false;
 
@@ -191,6 +192,7 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
                 this.authService.authTokenPayload
                     .pipe(skipWhile((payload) => payload === undefined))
                     .subscribe((payload) => {
+                        this.isLogged = !!payload;
                         this.isStudent = payload?.isVerifiedStudent ?? false;
                         this.usersOrganizationIds =
                             payload?.organizations.map(
