@@ -9,6 +9,8 @@ import { CreateOrganizationModalComponent } from '../modals/create-organization-
 import { UserRole } from 'src/app/modules/auth/enums/user-role.enum';
 import { NotificationDto } from 'src/app/modules/notification/modules/notification-api/dtos/notification.dto';
 import { NotificationType } from 'src/app/enums/notification-type.enum';
+import { NotificationService } from 'src/app/modules/notification/services/notification.service';
+import { NotificationModalComponent } from '../modals/notification-modal/notification-modal.component';
 
 @Component({
     selector: 'app-navbar',
@@ -43,29 +45,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
     constructor(
         private readonly iconVaultService: IconVaultService,
         private readonly modalService: ModalService,
-        private readonly authService: AuthService
+        private readonly authService: AuthService,
+        private readonly notificationService: NotificationService
     ) {
-        const notification: NotificationDto = {
-            id: 1,
-            subject: 'New Notification',
-            message: 'You have a new notification!',
-            project: {
-                id: 123,
-                name: 'Project XYZ',
-            },
-            organization: {
-                id: 456,
-                name: 'Organization ABC',
-            },
-            type: NotificationType.OpenPositionApplication,
-            seen: false,
-            createdAt: 1624136453000,
-            updatedAt: 1624136453000,
-        };
-
-        for (let i = 0; i < 22; ++i) {
-            this.notifications.push(notification);
-        }
     }
 
     ngOnInit(): void {
@@ -123,6 +105,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
                 }
                 this.logged = false;
             });
+
+        this.notificationService
+            .getNotifications()
+            .subscribe((notifs: NotificationDto[]) => {
+                this.notifications = notifs;
+            });
     }
     ngOnDestroy(): void {
         this.authPayloadSubscription.unsubscribe();
@@ -146,10 +134,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.authService.logout().subscribe();
     }
 
-    openNotifications() {
-        this.showNotifications = !this.showNotifications;
-    }
-
     mapNotificationTypeToIcon(type: NotificationType): SafeHtml {
         if (type === NotificationType.ProjectMessage) {
             return this.notifEnvelopeIcon;
@@ -170,6 +154,33 @@ export class NavbarComponent implements OnInit, OnDestroy {
             val = '99+';
         }
         return val;
+    }
+
+    currentNotif: NotificationDto = {
+        id: -1,
+        subject: 'Trwa ładowanie...',
+        message: 'Trwa ładowanie...',
+        project: {
+            id: -1,
+            name: 'Trwa ładowanie...',
+        },
+        organization: {
+            id: -1,
+            name: 'Trwa ładowanie...',
+        },
+        type: NotificationType.OpenPositionApplication,
+        seen: false,
+        createdAt: -1,
+        updatedAt: -1,
+    };
+
+    openNotification(notif: NotificationDto) {
+        console.log(notif);
+        this.currentNotif = notif;
+        this.modalService.updateModalState(
+            NotificationModalComponent.ModalName,
+            'open'
+        );
     }
 
     UserRole = UserRole;

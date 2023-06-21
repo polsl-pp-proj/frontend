@@ -38,32 +38,40 @@
                 </div>
             </div>
         </div>
-        <div class="notif-phone">
+        <div class="notif-phone" *ngIf="logged">
             <div class="notif-icon-container">
                 <app-button
                     class="notif-button"
-                    *ngIf="true"
                     type="clear"
                     [icon]="this.notifIcon"
-                    (click)="openNotifications()"
+                    (click)="
+                        this.showNotifications = !this.showNotifications;
+                        this.expandedRightMenu = false
+                    "
                 ></app-button>
                 <div class="notif-counter">{{ this.getNotifSize() }}</div>
             </div>
         </div>
         <div class="right-nav-container">
-            <div class="notif-icon-container">
+            <div class="notif-icon-container" *ngIf="logged">
                 <app-button
                     class="notif-button"
                     *ngIf="true"
                     type="clear"
                     [icon]="this.notifIcon"
-                    (click)="openNotifications()"
+                    (click)="
+                        this.showNotifications = !this.showNotifications;
+                        this.expandedRightMenu = false
+                    "
                 ></app-button>
                 <div class="notif-counter">{{ this.getNotifSize() }}</div>
             </div>
             <div
                 *ngIf="logged"
-                (click)="expandedRightMenu = !expandedRightMenu"
+                (click)="
+                    expandedRightMenu = !expandedRightMenu;
+                    showNotifications = false
+                "
                 class="dropdown-button"
                 [ngClass]="{ expanded: expandedRightMenu }"
             >
@@ -182,11 +190,15 @@
         </ul>
     </div>
 
-    <div *ngIf="this.showNotifications" class="notif-menu">
+    <div
+        [ngClass]="{ notifMenuOpen: this.showNotifications }"
+        class="notif-menu"
+    >
         <div class="notif-container">
             <div
                 *ngFor="let notif of this.notifications.slice(0, 7)"
                 class="notif"
+                (click)="openNotification(notif)"
             >
                 <div class="notif-left">
                     <i
@@ -201,3 +213,5 @@
         </div>
     </div>
 </div>
+
+<app-notification-modal [notif]="this.currentNotif"></app-notification-modal>

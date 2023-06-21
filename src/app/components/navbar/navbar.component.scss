@@ -120,8 +120,7 @@ nav {
 }
 
 .notif-menu {
-    display: inline;
-    width: 435px;
+    width: 335px;
     background-color: var(--black-50);
     border-radius: calc(var(--el-height) / 2);
     backdrop-filter: blur(10px);
@@ -129,7 +128,7 @@ nav {
     right: 0;
     position: absolute;
     transition: opacity 0.2s ease-out;
-    opacity: 100%;
+    opacity: 0%;
     pointer-events: none;
     padding-top: 102px;
     padding-left: 20px;
@@ -139,24 +138,29 @@ nav {
     overflow: auto;
 }
 
+.notifMenuOpen {
+    opacity: 100%;
+    pointer-events: initial;
+}
+
 .notif-container {
     display: flex;
     flex-direction: column;
     gap: calc(var(--padding) / 2);
 
     .notif {
+        cursor: pointer;
         display: flex;
         flex-direction: row;
         justify-content: flex-start;
         gap: calc(var(--padding) / 2);
 
         .notif-left {
-            flex: 1;
             align-self: center;
+            width: 20%;
         }
 
         .notif-right {
-            flex: 7;
             display: flex;
             flex-direction: column;
             margin-top: 2px;
