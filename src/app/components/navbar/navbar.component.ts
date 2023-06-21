@@ -159,7 +159,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
                 }),
 
             this.notificationService.pageCountChangedObservable.subscribe(
-                (pageCount) => (this.notificationPageCount = pageCount)
+                (pageCount) => {
+                    this.notificationPageCount = pageCount;
+
+                    if (this.notificationPage > pageCount) {
+                        this.notificationPage = pageCount;
+                        this.getNotifications();
+                    }
+                }
             ),
             this.notificationService.notificationsChangedObservable.subscribe(
                 (goToFirstPage) => {
