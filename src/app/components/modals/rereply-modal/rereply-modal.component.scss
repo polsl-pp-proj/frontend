@@ -1,0 +1,19 @@
+.message-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.char-counter {
+    margin-top: 0px;
+    align-self: flex-end;
+    margin-right: 22px;
+}
+
+.limit {
+    color: var(--danger);
+}
+
+app-button {
+    margin: auto;
+}

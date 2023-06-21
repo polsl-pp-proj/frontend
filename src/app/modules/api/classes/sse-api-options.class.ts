@@ -1,8 +1,7 @@
-import { HttpHeaders, HttpParams } from '@angular/common/http';
 import * as EventSource from 'eventsource';
 
 export class SseApiOptions implements EventSource.EventSourceInitDict {
-    headers?: HttpHeaders;
+    headers?: { [key: string]: string };
     routeParams?: { [key: string]: string | number };
     addHost: boolean = true;
 

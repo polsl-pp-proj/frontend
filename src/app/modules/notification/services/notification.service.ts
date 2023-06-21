@@ -6,21 +6,26 @@ import { EventStreamData } from '../../api/types/event-stream-observable.type';
 import {
     BehaviorSubject,
     Subscription,
+    merge,
     mergeMap,
     of,
+    skipWhile,
+    take,
     tap,
     throwError,
 } from 'rxjs';
 import * as EventSource from 'eventsource';
 import { NotificationReceiver } from '../types/notification-receiver.type';
 import { NotificationType } from '../modules/notification-api/enums/notification-type.enum';
+import { AuthService } from '../../auth/services/auth.service';
 
-const notificationsPerPage = 5;
+export const notificationsPerPage = 5;
 
 @Injectable({
     providedIn: 'root',
 })
 export class NotificationService {
+    private authenticatedSubscription!: Subscription;
     private notificationEventsSubscription!: Subscription;
     //        notification identifier, notification
     private notifications: Map<string, NotificationDto> = new Map();
@@ -37,18 +42,27 @@ export class NotificationService {
     }
 
     constructor(
-        private readonly notificationApiService: NotificationApiService
+        private readonly notificationApiService: NotificationApiService,
+        private readonly authService: AuthService
     ) {}
 
     getNotifications(page = 1) {
-        if (this.notifications.size > (page - 1) * notificationsPerPage) {
+        if (this.notifications.size > page * notificationsPerPage - 1) {
             return of(this.getNotificationsSlice(page, notificationsPerPage));
         } else if (page <= this.pageCount.value) {
-            return this.fetchNotifications().pipe(
-                mergeMap(() =>
-                    of(this.getNotificationsSlice(page, notificationsPerPage))
+            return merge(
+                of(this.getNotificationsSlice(page, notificationsPerPage)),
+                this.fetchNotifications(page).pipe(
+                    mergeMap(() =>
+                        of(
+                            this.getNotificationsSlice(
+                                page,
+                                notificationsPerPage
+                            )
+                        )
+                    )
                 )
-            );
+            ).pipe(take(2));
         } else {
             return throwError(() => new Error('page_over_page_count'));
         }
@@ -141,18 +155,19 @@ export class NotificationService {
 
     destroy() {
         this.unsubscribeNotificationEvents();
+        this.authenticatedSubscription.unsubscribe();
     }
 
     private getNotificationsSlice(page: number, pageSize: number) {
-        const notifications: NotificationDto[] = Object.values(
-            this.notifications
+        const notifications: NotificationDto[] = Array.from(
+            this.notifications.values()
         );
         return notifications
-            .sort((a, b) => a.createdAt - b.createdAt)
+            .sort((a, b) => b.createdAt - a.createdAt)
             .slice((page - 1) * pageSize, page * pageSize);
     }
 
-    private subscribeNotificationEvents() {
+    private setNotificationEventSubscriptionUp() {
         this.notificationEventsSubscription = this.notificationApiService
             .getNotificationEventObservable()
             .subscribe((event) => {
@@ -190,6 +205,19 @@ export class NotificationService {
                         break;
                     }
                 }
+            });
+    }
+
+    private subscribeNotificationEvents() {
+        this.authenticatedSubscription = this.authService.authenticated
+            .pipe(skipWhile((auth) => auth === undefined))
+            .subscribe((auth) => {
+                if (auth) {
+                    this.setNotificationEventSubscriptionUp();
+                    return;
+                }
+                this.unsubscribeNotificationEvents();
+                this.notifications.clear();
             });
     }
 

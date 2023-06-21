@@ -38,32 +38,49 @@
                 </div>
             </div>
         </div>
-        <div class="notif-phone">
+        <div class="notif-phone" *ngIf="logged">
             <div class="notif-icon-container">
                 <app-button
                     class="notif-button"
-                    *ngIf="logged"
                     type="clear"
-                    [icon]="this.notifIcon"
-                    (click)="openNotifications()"
+                    [icon]="notifIcon"
+                    (click)="
+                        openNotifications();
+                        expandedLeftMenu = expandedRightMenu = false
+                    "
                 ></app-button>
-                <!-- <div class="notif-counter">{{ this.getNotifSize() }}</div> -->
+                <div
+                    class="notif-counter"
+                    *ngIf="numberOfNotifications !== '0'"
+                >
+                    {{ numberOfNotifications }}
+                </div>
             </div>
         </div>
         <div class="right-nav-container">
-            <div class="notif-icon-container">
+            <div class="notif-icon-container" *ngIf="logged">
                 <app-button
                     class="notif-button"
-                    *ngIf="logged"
                     type="clear"
-                    [icon]="this.notifIcon"
-                    (click)="openNotifications()"
+                    [icon]="notifIcon"
+                    (click)="
+                        openNotifications();
+                        expandedLeftMenu = expandedRightMenu = false
+                    "
                 ></app-button>
-                <!-- <div class="notif-counter">{{ this.getNotifSize() }}</div> -->
+                <div
+                    class="notif-counter"
+                    *ngIf="numberOfNotifications !== '0'"
+                >
+                    {{ numberOfNotifications }}
+                </div>
             </div>
             <div
                 *ngIf="logged"
-                (click)="expandedRightMenu = !expandedRightMenu"
+                (click)="
+                    expandedRightMenu = !expandedRightMenu;
+                    showNotifications = false
+                "
                 class="dropdown-button"
                 [ngClass]="{ expanded: expandedRightMenu }"
             >
@@ -182,36 +199,48 @@
         </ul>
     </div>
 
-    <div *ngIf="this.showNotifications" class="notif-menu">
+    <div [ngClass]="{ open: showNotifications }" class="notif-menu">
         <div class="notif-container">
-            <div *ngFor="let notif of this.notifications" class="notif">
+            <div
+                *ngFor="let notification of notifications"
+                class="notif"
+                (click)="showNotification(notification)"
+                [ngClass]="{ seen: notification.seen }"
+            >
                 <div class="notif-left">
                     <i
-                        [innerHTML]="this.mapNotificationTypeToIcon(notif.type)"
+                        [innerHTML]="
+                            mapNotificationTypeToIcon(notification.type)
+                        "
                     ></i>
                 </div>
                 <div class="notif-right">
-                    <div class="top">{{ notif.message }}</div>
-                    <div class="bottom">{{ notif.organization.name }}</div>
+                    <div class="top">{{ notification.subject }}</div>
+                    <div class="bottom">
+                        {{ notification.organization.name }}
+                    </div>
                 </div>
             </div>
-            <p *ngIf="this.notifications.length === 0" class="no-notifications">
+            <p *ngIf="notifications.length === 0" class="no-notifications">
                 Brak powiadomień
             </p>
-            <nav class="notification-nav" *ngIf="this.notifications.length > 0">
-                <app-button
-                    type="color"
-                    [icon]="backIcon"
-                    [disabled]="notificationPage === 1"
-                    (click)="prevNotificationPage()"
-                ></app-button
-                ><app-button
-                    type="color"
-                    [icon]="forwardIcon"
-                    [disabled]="notificationPage === notificationPageCount"
-                    (click)="nextNotificationPage()"
-                ></app-button>
-            </nav>
         </div>
+        <nav class="notification-nav" *ngIf="notifications.length > 0">
+            <app-button
+                type="color"
+                [icon]="backIcon"
+                [disabled]="notificationPage === 1"
+                (click)="prevNotificationPage()"
+            ></app-button
+            ><app-button
+                type="color"
+                [icon]="forwardIcon"
+                [disabled]="notificationPage === notificationPageCount"
+                (click)="nextNotificationPage()"
+            ></app-button>
+        </nav>
     </div>
 </div>
+<app-notification-modal
+    [notification]="currentNotification"
+></app-notification-modal>
