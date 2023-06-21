@@ -8,12 +8,14 @@ import {
     Subscription,
     mergeMap,
     of,
+    skipWhile,
     tap,
     throwError,
 } from 'rxjs';
 import * as EventSource from 'eventsource';
 import { NotificationReceiver } from '../types/notification-receiver.type';
 import { NotificationType } from '../modules/notification-api/enums/notification-type.enum';
+import { AuthService } from '../../auth/services/auth.service';
 
 const notificationsPerPage = 5;
 
@@ -21,6 +23,7 @@ const notificationsPerPage = 5;
     providedIn: 'root',
 })
 export class NotificationService {
+    private authenticatedSubscription!: Subscription;
     private notificationEventsSubscription!: Subscription;
     //        notification identifier, notification
     private notifications: Map<string, NotificationDto> = new Map();
@@ -37,7 +40,8 @@ export class NotificationService {
     }
 
     constructor(
-        private readonly notificationApiService: NotificationApiService
+        private readonly notificationApiService: NotificationApiService,
+        private readonly authService: AuthService
     ) {}
 
     getNotifications(page = 1) {
@@ -141,6 +145,7 @@ export class NotificationService {
 
     destroy() {
         this.unsubscribeNotificationEvents();
+        this.authenticatedSubscription.unsubscribe();
     }
 
     private getNotificationsSlice(page: number, pageSize: number) {
@@ -152,7 +157,7 @@ export class NotificationService {
             .slice((page - 1) * pageSize, page * pageSize);
     }
 
-    private subscribeNotificationEvents() {
+    private setNotificationEventSubscriptionUp() {
         this.notificationEventsSubscription = this.notificationApiService
             .getNotificationEventObservable()
             .subscribe((event) => {
@@ -190,6 +195,18 @@ export class NotificationService {
                         break;
                     }
                 }
+            });
+    }
+
+    private subscribeNotificationEvents() {
+        this.authenticatedSubscription = this.authService.authenticated
+            .pipe(skipWhile((auth) => auth === undefined))
+            .subscribe((auth) => {
+                if (auth) {
+                    this.setNotificationEventSubscriptionUp();
+                    return;
+                }
+                this.unsubscribeNotificationEvents();
             });
     }
 

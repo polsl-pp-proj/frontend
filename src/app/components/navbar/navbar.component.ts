@@ -191,7 +191,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
                         err instanceof Error &&
                         err.message === 'page_over_page_count'
                     ) {
-                        this.notificationPage--;
+                        this.notificationPage = 1;
+                        this.getNotifications();
                     }
                 },
             });
