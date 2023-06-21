@@ -31,11 +31,19 @@ export class MessageModalComponent {
 
     messageForm = new FormGroup({
         subject: new FormControl<string>('', {
-            validators: [Validators.required, Validators.maxLength(50)],
+            validators: [
+                Validators.required,
+                Validators.minLength(5),
+                Validators.maxLength(50),
+            ],
             nonNullable: true,
         }),
         message: new FormControl<string>('', {
-            validators: [Validators.required, Validators.maxLength(500)],
+            validators: [
+                Validators.required,
+                Validators.minLength(5),
+                Validators.maxLength(500),
+            ],
             nonNullable: true,
         }),
     });

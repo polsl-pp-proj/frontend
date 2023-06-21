@@ -8,8 +8,12 @@ import { LoginModalComponent } from '../modals/login-modal/login-modal.component
 import { CreateOrganizationModalComponent } from '../modals/create-organization-modal/create-organization-modal.component';
 import { UserRole } from 'src/app/modules/auth/enums/user-role.enum';
 import { NotificationDto } from 'src/app/modules/notification/modules/notification-api/dtos/notification.dto';
-import { NotificationType } from 'src/app/enums/notification-type.enum';
-import { NotificationService } from 'src/app/modules/notification/services/notification.service';
+import {
+    notificationsPerPage,
+    NotificationService,
+} from 'src/app/modules/notification/services/notification.service';
+import { NotificationModalComponent } from '../modals/notification-modal/notification-modal.component';
+import { NotificationType } from 'src/app/modules/notification/modules/notification-api/enums/notification-type.enum';
 
 @Component({
     selector: 'app-navbar',
@@ -46,6 +50,29 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     notificationPage = 1;
     notificationPageCount = 1;
+
+    currentNotification: NotificationDto = {
+        id: -1,
+        createdAt: -1,
+        subject: 'Ładowanie...',
+        message: 'Ładowanie...',
+        organization: { id: -1, name: 'Ładowanie...' },
+        project: { id: -1, name: 'Ładowanie...' },
+        seen: false,
+        type: NotificationType.MessageAnswer,
+        updatedAt: -1,
+    };
+
+    get numberOfNotifications(): string {
+        let val = (this.notificationPageCount - 1) * notificationsPerPage;
+        if (val > 99) {
+            return '99+';
+        }
+        if (val === 0) {
+            return `${this.notifications.length}`;
+        }
+        return `${val - 1}+`;
+    }
 
     constructor(
         private readonly iconVaultService: IconVaultService,
@@ -112,6 +139,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
                 .pipe(skipWhile((payload) => payload === undefined))
                 .subscribe((payload) => {
                     if (payload) {
+                        if (!this.logged) {
+                            this.getNotifications();
+                        }
+
                         this.logged = true;
                         this.isVerifiedStudent = payload.isVerifiedStudent;
                         this.initials =
@@ -119,11 +150,23 @@ export class NavbarComponent implements OnInit, OnDestroy {
                         this.userRole = payload.role;
                         return;
                     }
+                    if (this.logged) {
+                        this.notificationPage = 1;
+                        this.notificationPageCount = 1;
+                        this.notifications = [];
+                    }
                     this.logged = false;
                 }),
 
             this.notificationService.pageCountChangedObservable.subscribe(
-                (pageCount) => (this.notificationPageCount = pageCount)
+                (pageCount) => {
+                    this.notificationPageCount = pageCount;
+
+                    if (this.notificationPage > pageCount) {
+                        this.notificationPage = pageCount;
+                        this.getNotifications();
+                    }
+                }
             ),
             this.notificationService.notificationsChangedObservable.subscribe(
                 (goToFirstPage) => {
@@ -134,10 +177,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
                 }
             )
         );
+        this.notificationService.init();
         this.getNotifications();
     }
 
     ngOnDestroy(): void {
+        this.notificationService.destroy();
         this.subsink.forEach((sub) => sub.unsubscribe());
     }
 
@@ -189,7 +234,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
                         err instanceof Error &&
                         err.message === 'page_over_page_count'
                     ) {
-                        this.notificationPage--;
+                        this.notificationPage = 1;
+                        this.getNotifications();
                     }
                 },
             });
@@ -209,13 +255,13 @@ export class NavbarComponent implements OnInit, OnDestroy {
         }
     }
 
-    // getNotifSize(): string {
-    //     let val = this.notifications.filter((notifica)).length.toString();
-    //     if (this.notifications.length > 99) {
-    //         val = '99+';
-    //     }
-    //     return val;
-    // }
+    showNotification(notification: NotificationDto) {
+        this.currentNotification = notification;
+        this.modalService.updateModalState(
+            NotificationModalComponent.ModalName,
+            'open'
+        );
+    }
 
     UserRole = UserRole;
 }

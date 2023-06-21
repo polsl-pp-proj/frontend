@@ -6,26 +6,32 @@ import { EventStreamData } from '../../api/types/event-stream-observable.type';
 import {
     BehaviorSubject,
     Subscription,
+    merge,
     mergeMap,
     of,
+    skipWhile,
+    take,
     tap,
     throwError,
+    timer,
 } from 'rxjs';
-import * as EventSource from 'eventsource';
+import * as EventSource2 from 'eventsource';
 import { NotificationReceiver } from '../types/notification-receiver.type';
 import { NotificationType } from '../modules/notification-api/enums/notification-type.enum';
+import { AuthService } from '../../auth/services/auth.service';
 
-const notificationsPerPage = 5;
+export const notificationsPerPage = 5;
 
 @Injectable({
     providedIn: 'root',
 })
 export class NotificationService {
+    private authenticatedSubscription!: Subscription;
     private notificationEventsSubscription!: Subscription;
     //        notification identifier, notification
     private notifications: Map<string, NotificationDto> = new Map();
 
-    private eventSource!: EventSource;
+    private eventSource!: EventSource2;
     private notificationsChanged = new EventEmitter<boolean>(); // true = have to go to first page, false = don't have to go to first page
     private pageCount = new BehaviorSubject<number>(1);
 
@@ -37,18 +43,27 @@ export class NotificationService {
     }
 
     constructor(
-        private readonly notificationApiService: NotificationApiService
+        private readonly notificationApiService: NotificationApiService,
+        private readonly authService: AuthService
     ) {}
 
     getNotifications(page = 1) {
-        if (this.notifications.size > (page - 1) * notificationsPerPage) {
+        if (this.notifications.size > page * notificationsPerPage - 1) {
             return of(this.getNotificationsSlice(page, notificationsPerPage));
         } else if (page <= this.pageCount.value) {
-            return this.fetchNotifications().pipe(
-                mergeMap(() =>
-                    of(this.getNotificationsSlice(page, notificationsPerPage))
+            return merge(
+                of(this.getNotificationsSlice(page, notificationsPerPage)),
+                this.fetchNotifications(page).pipe(
+                    mergeMap(() =>
+                        of(
+                            this.getNotificationsSlice(
+                                page,
+                                notificationsPerPage
+                            )
+                        )
+                    )
                 )
-            );
+            ).pipe(take(2));
         } else {
             return throwError(() => new Error('page_over_page_count'));
         }
@@ -139,16 +154,21 @@ export class NotificationService {
         this.subscribeNotificationEvents();
     }
 
+    destroy() {
+        this.unsubscribeNotificationEvents();
+        this.authenticatedSubscription.unsubscribe();
+    }
+
     private getNotificationsSlice(page: number, pageSize: number) {
-        const notifications: NotificationDto[] = Object.values(
-            this.notifications
+        const notifications: NotificationDto[] = Array.from(
+            this.notifications.values()
         );
         return notifications
-            .sort((a, b) => a.createdAt - b.createdAt)
+            .sort((a, b) => b.createdAt - a.createdAt)
             .slice((page - 1) * pageSize, page * pageSize);
     }
 
-    private subscribeNotificationEvents() {
+    private setNotificationEventSubscriptionUp() {
         this.notificationEventsSubscription = this.notificationApiService
             .getNotificationEventObservable()
             .subscribe((event) => {
@@ -158,34 +178,63 @@ export class NotificationService {
                     case NotificationEventType.CloseConnection: {
                         this.handleCloseConnection(
                             event as unknown as MessageEvent<string> & {
-                                eventSource: EventSource;
+                                eventSource: EventSource2;
                             }
                         );
                         break;
                     }
                     case NotificationEventType.NotificationCreated: {
                         this.handleNotificationCreated(
-                            event as EventStreamData<
-                                NotificationDto & {
-                                    receiver: NotificationReceiver;
-                                }
-                            >
+                            JSON.parse(
+                                event.data as string
+                            ) as NotificationDto & {
+                                receiver: NotificationReceiver;
+                            }
                         );
                         break;
                     }
                     case NotificationEventType.NotificationSeen: {
-                        this.handleNotificationSeen(event);
+                        this.handleNotificationSeen(
+                            JSON.parse(event.data as string) as {
+                                id: number;
+                                receiver: NotificationReceiver;
+                            }
+                        );
                         break;
                     }
                     case NotificationEventType.NotificationNotSeen: {
-                        this.handleNotificationNotSeen(event);
+                        this.handleNotificationNotSeen(
+                            JSON.parse(event.data as string) as {
+                                id: number;
+                                receiver: NotificationReceiver;
+                            }
+                        );
                         break;
                     }
                     case NotificationEventType.NotificationRemoved: {
-                        this.handleNotificationRemoved(event);
+                        this.handleNotificationRemoved(
+                            JSON.parse(event.data as string) as {
+                                id: number;
+                                receiver: NotificationReceiver;
+                            }
+                        );
                         break;
                     }
                 }
+            });
+    }
+
+    private subscribeNotificationEvents() {
+        this.authenticatedSubscription = this.authService.authTokenPayload
+            .pipe(skipWhile((payload) => payload === undefined))
+            .subscribe((payload) => {
+                if (payload) {
+                    this.unsubscribeNotificationEvents();
+                    this.setNotificationEventSubscriptionUp();
+                    return;
+                }
+                this.unsubscribeNotificationEvents();
+                this.notifications.clear();
             });
     }
 
@@ -195,30 +244,26 @@ export class NotificationService {
     }
 
     /* Notification Event Handlers */
-
     private handleCloseConnection(
         event: MessageEvent<string> & {
-            eventSource: EventSource;
+            eventSource: EventSource2;
         }
     ) {
         this.unsubscribeNotificationEvents(event.eventSource);
 
         if (event.data === 'reconnect') {
-            this.subscribeNotificationEvents();
+            timer(100).subscribe(() => {
+                this.subscribeNotificationEvents();
+            });
         }
     }
 
     private handleNotificationCreated(
-        event: EventStreamData<
-            NotificationDto & { receiver: NotificationReceiver }
-        >
+        data: NotificationDto & { receiver: NotificationReceiver }
     ) {
         this.notifications.set(
-            this.notificationIdentifierByReceiverAndId(
-                event.data.receiver,
-                event.data.id
-            ),
-            event.data
+            this.notificationIdentifierByReceiverAndId(data.receiver, data.id),
+            data
         );
 
         if (
@@ -230,14 +275,12 @@ export class NotificationService {
         this.notificationsChanged.emit(true);
     }
 
-    private handleNotificationSeen(
-        event: EventStreamData<{ id: number; receiver: NotificationReceiver }>
-    ) {
+    private handleNotificationSeen(data: {
+        id: number;
+        receiver: NotificationReceiver;
+    }) {
         const notification = this.notifications.get(
-            this.notificationIdentifierByReceiverAndId(
-                event.data.receiver,
-                event.data.id
-            )
+            this.notificationIdentifierByReceiverAndId(data.receiver, data.id)
         );
 
         if (notification) {
@@ -246,14 +289,12 @@ export class NotificationService {
         }
     }
 
-    private handleNotificationNotSeen(
-        event: EventStreamData<{ id: number; receiver: NotificationReceiver }>
-    ) {
+    private handleNotificationNotSeen(data: {
+        id: number;
+        receiver: NotificationReceiver;
+    }) {
         const notification = this.notifications.get(
-            this.notificationIdentifierByReceiverAndId(
-                event.data.receiver,
-                event.data.id
-            )
+            this.notificationIdentifierByReceiverAndId(data.receiver, data.id)
         );
 
         if (notification) {
@@ -262,14 +303,15 @@ export class NotificationService {
         }
     }
 
-    private handleNotificationRemoved(
-        event: EventStreamData<{ id: number; receiver: NotificationReceiver }>
-    ) {
+    private handleNotificationRemoved(data: {
+        id: number;
+        receiver: NotificationReceiver;
+    }) {
         if (
             this.notifications.delete(
                 this.notificationIdentifierByReceiverAndId(
-                    event.data.receiver,
-                    event.data.id
+                    data.receiver,
+                    data.id
                 )
             )
         ) {

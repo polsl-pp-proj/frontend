@@ -3,7 +3,6 @@ import {
     HttpClient,
     HttpEvent,
     HttpEventType,
-    HttpHeaders,
     HttpRequest,
     HttpResponse,
 } from '@angular/common/http';
@@ -27,7 +26,7 @@ import {
 } from '../types/request-method.type';
 import { UrlService } from './url.service';
 import { ApiAuthService } from './api-auth.service';
-import * as EventSource from 'eventsource';
+import * as EventSource2 from 'eventsource';
 import {
     EventStreamData,
     EventStreamObservable,
@@ -199,36 +198,41 @@ export class CoreApiService {
         }
     }
 
-    requestEventStream<RS>(
+    requestEventStream(
         route: EventStreamApiRoute,
-        options: SseApiOptions
-    ): EventStreamObservable<RS> {
-        if (route.authorized && !options.headers?.has('Authorization')) {
+        options: SseApiOptions,
+        eventNames: string[] = []
+    ): EventStreamObservable<string> {
+        if (route.authorized && !options.headers?.['Authorization']) {
             return this.apiAuthService.token.pipe(
                 skipWhile((token) => !token),
                 timeout({ each: 10000 }),
                 take(1),
                 mergeMap((token) => {
-                    options.headers =
-                        options.headers?.append(
-                            'Authorization',
-                            `Bearer ${token}`
-                        ) ??
-                        new HttpHeaders({ Authorization: `Bearer ${token}` });
+                    if (options.headers) {
+                        options.headers['Authorization'] = `Bearer ${token}`;
+                    } else {
+                        options.headers = { Authorization: `Bearer ${token}` };
+                    }
 
-                    return this.makeEventStreamRequest<RS>(route, options);
+                    return this.makeEventStreamRequest(
+                        route,
+                        options,
+                        eventNames
+                    );
                 })
             );
         } else {
-            return this.makeEventStreamRequest<RS>(route, options);
+            return this.makeEventStreamRequest(route, options, eventNames);
         }
     }
 
-    private makeEventStreamRequest<RS>(
+    private makeEventStreamRequest(
         route: EventStreamApiRoute,
-        options: SseApiOptions
-    ): EventStreamObservable<RS> {
-        const eventSource = new EventSource(
+        options: SseApiOptions,
+        eventNames: string[] = []
+    ): EventStreamObservable<string> {
+        const eventSource = new EventSource2(
             options.addHost
                 ? this.urlService.getBoundAPIRouteWithHost(
                       route.path,
@@ -241,9 +245,19 @@ export class CoreApiService {
             options
         );
 
-        return new Observable<EventStreamData<RS>>((subscriber) => {
-            eventSource.onmessage = (event) => {
-                subscriber.next({ ...event, eventSource });
+        return new Observable<EventStreamData<string>>((subscriber) => {
+            const messageHandler = (event: MessageEvent<string>) => {
+                subscriber.next({
+                    ...event,
+                    eventSource,
+                } as EventStreamData<string>);
+            };
+            eventSource.onmessage = messageHandler;
+            eventNames.forEach((eventName) =>
+                eventSource.addEventListener(eventName, messageHandler)
+            );
+            eventSource.onerror = (event) => {
+                subscriber.error(event);
             };
         });
     }

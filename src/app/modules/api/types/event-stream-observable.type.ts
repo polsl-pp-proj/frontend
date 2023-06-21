@@ -1,8 +1,8 @@
 import { Observable } from 'rxjs';
-import * as EventSource from 'eventsource';
+import * as EventSource2 from 'eventsource';
 
 export type EventStreamData<RS> = MessageEvent<RS> & {
-    eventSource: EventSource;
+    eventSource: EventSource2;
 };
 
 export type EventStreamObservable<RS> = Observable<EventStreamData<RS>>;
