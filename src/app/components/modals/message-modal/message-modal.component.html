@@ -12,6 +12,7 @@
             [errors]="messageForm.controls.subject.errors"
             [errorMessages]="{
                 required: 'Pole nie może być puste',
+                minlength: 'Temat jest zbyt krótki',
                 maxlength: 'Temat jest zbyt długi'
             }"
             >Temat</app-input
@@ -23,6 +24,7 @@
                 [errors]="messageForm.controls.message.errors"
                 [errorMessages]="{
                     required: 'Pole nie może być puste',
+                    minlength: 'Wiadomość jest zbyt krótka',
                     maxlength: 'Wiadomość jest zbyt długa'
                 }"
                 type="multiline"
