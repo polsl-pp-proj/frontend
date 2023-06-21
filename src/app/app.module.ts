@@ -61,6 +61,7 @@ import { ManageOrganizationsPageComponent } from './views/admin/manage-organizat
 import { ChangePasswordModalComponent } from './components/modals/change-password-modal/change-password-modal.component';
 import { CreateCategoryModalComponent } from './components/modals/create-category-modal/create-category-modal.component';
 import { EditProjectPageComponent } from './views/user/edit-project-page/edit-project-page.component';
+import { ReReplyModalComponent } from './components/modals/rereply-modal/rereply-modal.component';
 
 @NgModule({
     declarations: [
@@ -110,6 +111,7 @@ import { EditProjectPageComponent } from './views/user/edit-project-page/edit-pr
         ChangePasswordModalComponent,
         CreateCategoryModalComponent,
         EditProjectPageComponent,
+        ReReplyModalComponent,
     ],
     imports: [
         BrowserModule,

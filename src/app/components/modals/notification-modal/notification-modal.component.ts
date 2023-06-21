@@ -4,7 +4,7 @@ import { ModalService } from 'src/app/modules/modal/services/modal.service';
 import { NotificationDto } from 'src/app/modules/notification/modules/notification-api/dtos/notification.dto';
 import { NotificationService } from 'src/app/modules/notification/services/notification.service';
 import { OrganizationMemberRole } from 'src/app/modules/organization/enums/organization-member-role.enum';
-import { MessageModalComponent } from '../message-modal/message-modal.component';
+import { ReReplyModalComponent } from '../rereply-modal/rereply-modal.component';
 import { NotificationType } from 'src/app/modules/notification/modules/notification-api/enums/notification-type.enum';
 
 @Component({
@@ -77,7 +77,7 @@ export class NotificationModalComponent implements OnInit {
 
     reply() {
         this.modalService.updateModalState(
-            MessageModalComponent.ModalName,
+            ReReplyModalComponent.ModalName,
             'open'
         );
     }
