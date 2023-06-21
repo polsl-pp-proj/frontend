@@ -5,17 +5,33 @@
     [closable]="true"
 >
     <div class="container">
-        <h3>Tytuł powiadomienia</h3>
+        <h3>{{ notification.subject }}</h3>
         <article>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deserunt,
-            fugit ratione? Ut natus quis nisi ratione aperiam quaerat quisquam
-            sunt at praesentium? Voluptate quibusdam, cupiditate voluptates
-            corporis possimus ut expedita.
+            {{ notification.message }}
         </article>
     </div>
     <div class="buttons-container">
-        <app-button type="color">Przeczytane</app-button>
-        <app-button type="danger">Usuń</app-button>
-        <app-button type="color">Odpowiedz</app-button>
+        <app-button type="color" (click)="toggleRead()">{{
+            notification.seen ? "Nieprzeczytane" : "Przeczytane"
+        }}</app-button>
+        <app-button
+            type="danger"
+            *ngIf="
+                isOwner || notification.type === NotificationType.MessageAnswer
+            "
+            (click)="remove()"
+            >Usuń</app-button
+        >
+        <app-button
+            type="color"
+            *ngIf="
+                notification.type ===
+                    NotificationType.ProjectDraftPublication ||
+                notification.type === NotificationType.ProjectDraftRejection
+            "
+            (click)="reply()"
+            >Odpowiedz</app-button
+        >
     </div>
 </app-base-modal>
+<app-message-modal [projectId]="notification.project.id"></app-message-modal>
