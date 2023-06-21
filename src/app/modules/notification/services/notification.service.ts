@@ -139,6 +139,10 @@ export class NotificationService {
         this.subscribeNotificationEvents();
     }
 
+    destroy() {
+        this.unsubscribeNotificationEvents();
+    }
+
     private getNotificationsSlice(page: number, pageSize: number) {
         const notifications: NotificationDto[] = Object.values(
             this.notifications

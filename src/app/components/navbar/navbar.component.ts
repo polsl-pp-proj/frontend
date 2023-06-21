@@ -139,6 +139,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
+        this.notificationService.destroy();
         this.subsink.forEach((sub) => sub.unsubscribe());
     }
 
