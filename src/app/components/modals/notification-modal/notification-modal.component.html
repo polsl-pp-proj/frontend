@@ -25,13 +25,13 @@
         <app-button
             type="color"
             *ngIf="
-                notification.type ===
-                    NotificationType.ProjectDraftPublication ||
-                notification.type === NotificationType.ProjectDraftRejection
+                notification.type !==
+                    NotificationType.ProjectDraftPublication &&
+                notification.type !== NotificationType.ProjectDraftRejection
             "
             (click)="reply()"
             >Odpowiedz</app-button
         >
     </div>
 </app-base-modal>
-<app-rereply-modal [projectId]="notification.project.id"></app-rereply-modal>
+<app-rereply-modal [notification]="notification"></app-rereply-modal>

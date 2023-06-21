@@ -2,6 +2,8 @@ import { Component, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ModalService } from 'src/app/modules/modal/services/modal.service';
+import { NotificationDto } from 'src/app/modules/notification/modules/notification-api/dtos/notification.dto';
+import { NotificationType } from 'src/app/modules/notification/modules/notification-api/enums/notification-type.enum';
 import { ProjectMessageDto } from 'src/app/modules/project/modules/project-api/dtos/project-message.dto';
 import { ProjectService } from 'src/app/modules/project/services/project.service';
 
@@ -17,7 +19,7 @@ export class ReReplyModalComponent {
     }
 
     @Input()
-    projectId!: number;
+    notification!: NotificationDto;
 
     messageMaxLength = 500;
 
@@ -50,32 +52,42 @@ export class ReReplyModalComponent {
 
     sendMessage() {
         this.inTransit = true;
-        this.projectService
-            .sendProjectMessage(
-                this.projectId,
-                new ProjectMessageDto({
-                    subject: this.messageForm.controls.subject.value,
-                    message: this.messageForm.controls.message.value,
-                })
-            )
-            .subscribe({
-                next: () => {
-                    this.toastrService.success(
-                        'Twoja wiadomość została wysłana do organizacji.',
-                        'Wiadomość wysłana'
-                    );
-                    this.modalSerivce.updateModalState(this.modalName, 'close');
+        if (
+            this.notification.type === NotificationType.ProjectMessage ||
+            this.notification.type === NotificationType.OpenPositionApplication
+        ) {
+            // Send User Message
+        } else {
+            this.projectService
+                .sendProjectMessage(
+                    this.notification.project.id,
+                    new ProjectMessageDto({
+                        subject: this.messageForm.controls.subject.value,
+                        message: this.messageForm.controls.message.value,
+                    })
+                )
+                .subscribe({
+                    next: () => {
+                        this.toastrService.success(
+                            'Twoja wiadomość została wysłana do organizacji.',
+                            'Wiadomość wysłana'
+                        );
+                        this.modalSerivce.updateModalState(
+                            this.modalName,
+                            'close'
+                        );
 
-                    this.inTransit = false;
-                },
-                error: () => {
-                    this.toastrService.error(
-                        'Podczas próby wysłania Twojej wiadomości wystąpił błąd. Spróbuj ponownie.',
-                        'Błąd wysyłania'
-                    );
-                    this.inTransit = false;
-                },
-            });
+                        this.inTransit = false;
+                    },
+                    error: () => {
+                        this.toastrService.error(
+                            'Podczas próby wysłania Twojej wiadomości wystąpił błąd. Spróbuj ponownie.',
+                            'Błąd wysyłania'
+                        );
+                        this.inTransit = false;
+                    },
+                });
+        }
     }
 
     modalClosed() {
