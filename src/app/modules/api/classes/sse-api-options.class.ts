@@ -1,6 +1,6 @@
-import * as EventSource from 'eventsource';
+import * as EventSource2 from 'eventsource';
 
-export class SseApiOptions implements EventSource.EventSourceInitDict {
+export class SseApiOptions implements EventSource2.EventSourceInitDict {
     headers?: { [key: string]: string };
     routeParams?: { [key: string]: string | number };
     addHost: boolean = true;

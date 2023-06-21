@@ -13,8 +13,9 @@ import {
     take,
     tap,
     throwError,
+    timer,
 } from 'rxjs';
-import * as EventSource from 'eventsource';
+import * as EventSource2 from 'eventsource';
 import { NotificationReceiver } from '../types/notification-receiver.type';
 import { NotificationType } from '../modules/notification-api/enums/notification-type.enum';
 import { AuthService } from '../../auth/services/auth.service';
@@ -30,7 +31,7 @@ export class NotificationService {
     //        notification identifier, notification
     private notifications: Map<string, NotificationDto> = new Map();
 
-    private eventSource!: EventSource;
+    private eventSource!: EventSource2;
     private notificationsChanged = new EventEmitter<boolean>(); // true = have to go to first page, false = don't have to go to first page
     private pageCount = new BehaviorSubject<number>(1);
 
@@ -177,31 +178,46 @@ export class NotificationService {
                     case NotificationEventType.CloseConnection: {
                         this.handleCloseConnection(
                             event as unknown as MessageEvent<string> & {
-                                eventSource: EventSource;
+                                eventSource: EventSource2;
                             }
                         );
                         break;
                     }
                     case NotificationEventType.NotificationCreated: {
                         this.handleNotificationCreated(
-                            event as EventStreamData<
-                                NotificationDto & {
-                                    receiver: NotificationReceiver;
-                                }
-                            >
+                            JSON.parse(
+                                event.data as string
+                            ) as NotificationDto & {
+                                receiver: NotificationReceiver;
+                            }
                         );
                         break;
                     }
                     case NotificationEventType.NotificationSeen: {
-                        this.handleNotificationSeen(event);
+                        this.handleNotificationSeen(
+                            JSON.parse(event.data as string) as {
+                                id: number;
+                                receiver: NotificationReceiver;
+                            }
+                        );
                         break;
                     }
                     case NotificationEventType.NotificationNotSeen: {
-                        this.handleNotificationNotSeen(event);
+                        this.handleNotificationNotSeen(
+                            JSON.parse(event.data as string) as {
+                                id: number;
+                                receiver: NotificationReceiver;
+                            }
+                        );
                         break;
                     }
                     case NotificationEventType.NotificationRemoved: {
-                        this.handleNotificationRemoved(event);
+                        this.handleNotificationRemoved(
+                            JSON.parse(event.data as string) as {
+                                id: number;
+                                receiver: NotificationReceiver;
+                            }
+                        );
                         break;
                     }
                 }
@@ -209,10 +225,11 @@ export class NotificationService {
     }
 
     private subscribeNotificationEvents() {
-        this.authenticatedSubscription = this.authService.authenticated
-            .pipe(skipWhile((auth) => auth === undefined))
-            .subscribe((auth) => {
-                if (auth) {
+        this.authenticatedSubscription = this.authService.authTokenPayload
+            .pipe(skipWhile((payload) => payload === undefined))
+            .subscribe((payload) => {
+                if (payload) {
+                    this.unsubscribeNotificationEvents();
                     this.setNotificationEventSubscriptionUp();
                     return;
                 }
@@ -227,30 +244,26 @@ export class NotificationService {
     }
 
     /* Notification Event Handlers */
-
     private handleCloseConnection(
         event: MessageEvent<string> & {
-            eventSource: EventSource;
+            eventSource: EventSource2;
         }
     ) {
         this.unsubscribeNotificationEvents(event.eventSource);
 
         if (event.data === 'reconnect') {
-            this.subscribeNotificationEvents();
+            timer(100).subscribe(() => {
+                this.subscribeNotificationEvents();
+            });
         }
     }
 
     private handleNotificationCreated(
-        event: EventStreamData<
-            NotificationDto & { receiver: NotificationReceiver }
-        >
+        data: NotificationDto & { receiver: NotificationReceiver }
     ) {
         this.notifications.set(
-            this.notificationIdentifierByReceiverAndId(
-                event.data.receiver,
-                event.data.id
-            ),
-            event.data
+            this.notificationIdentifierByReceiverAndId(data.receiver, data.id),
+            data
         );
 
         if (
@@ -262,14 +275,12 @@ export class NotificationService {
         this.notificationsChanged.emit(true);
     }
 
-    private handleNotificationSeen(
-        event: EventStreamData<{ id: number; receiver: NotificationReceiver }>
-    ) {
+    private handleNotificationSeen(data: {
+        id: number;
+        receiver: NotificationReceiver;
+    }) {
         const notification = this.notifications.get(
-            this.notificationIdentifierByReceiverAndId(
-                event.data.receiver,
-                event.data.id
-            )
+            this.notificationIdentifierByReceiverAndId(data.receiver, data.id)
         );
 
         if (notification) {
@@ -278,14 +289,12 @@ export class NotificationService {
         }
     }
 
-    private handleNotificationNotSeen(
-        event: EventStreamData<{ id: number; receiver: NotificationReceiver }>
-    ) {
+    private handleNotificationNotSeen(data: {
+        id: number;
+        receiver: NotificationReceiver;
+    }) {
         const notification = this.notifications.get(
-            this.notificationIdentifierByReceiverAndId(
-                event.data.receiver,
-                event.data.id
-            )
+            this.notificationIdentifierByReceiverAndId(data.receiver, data.id)
         );
 
         if (notification) {
@@ -294,14 +303,15 @@ export class NotificationService {
         }
     }
 
-    private handleNotificationRemoved(
-        event: EventStreamData<{ id: number; receiver: NotificationReceiver }>
-    ) {
+    private handleNotificationRemoved(data: {
+        id: number;
+        receiver: NotificationReceiver;
+    }) {
         if (
             this.notifications.delete(
                 this.notificationIdentifierByReceiverAndId(
-                    event.data.receiver,
-                    event.data.id
+                    data.receiver,
+                    data.id
                 )
             )
         ) {

@@ -39,15 +39,15 @@
             </div>
         </div>
         <div class="notif-phone" *ngIf="logged">
-            <div class="notif-icon-container">
+            <div class="notif-icon-container"
+                    (click)="
+                        openNotifications();
+                        expandedLeftMenu = expandedRightMenu = false
+                    ">
                 <app-button
                     class="notif-button"
                     type="clear"
                     [icon]="notifIcon"
-                    (click)="
-                        openNotifications();
-                        expandedLeftMenu = expandedRightMenu = false
-                    "
                 ></app-button>
                 <div
                     class="notif-counter"
@@ -58,15 +58,15 @@
             </div>
         </div>
         <div class="right-nav-container">
-            <div class="notif-icon-container" *ngIf="logged">
+            <div class="notif-icon-container" *ngIf="logged"
+                    (click)="
+                        openNotifications();
+                        expandedLeftMenu = expandedRightMenu = false
+                    ">
                 <app-button
                     class="notif-button"
                     type="clear"
                     [icon]="notifIcon"
-                    (click)="
-                        openNotifications();
-                        expandedLeftMenu = expandedRightMenu = false
-                    "
                 ></app-button>
                 <div
                     class="notif-counter"
