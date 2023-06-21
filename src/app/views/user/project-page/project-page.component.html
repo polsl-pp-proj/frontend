@@ -22,7 +22,7 @@
                     </swiper-container>
                 </div>
                 <div class="aside">
-                    <div class="button-container">
+                    <div class="button-container" *ngIf="isLogged">
                         <app-button
                             type="color"
                             (click)="makeDonation()"
