@@ -24,7 +24,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     categories: CategoryDto[] = [];
 
     searchQueryParams = new SearchQueryParamsDto({
-        sort: SearchSortBy.Favorites,
+        sort: SearchSortBy.Newest,
         query: '',
         category: undefined,
     });
