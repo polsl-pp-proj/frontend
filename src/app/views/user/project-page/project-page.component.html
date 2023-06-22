@@ -103,7 +103,10 @@
                 [innerHTML]="this.projectDto.fundingObjectives | markdown"
             ></article>
         </div>
-        <div class="open-positions" *ngIf="isStudent">
+        <div
+            class="open-positions"
+            *ngIf="isStudent && projectDto.openPositions.length"
+        >
             <h2>Dołącz do organizacji</h2>
             <h3>
                 Organizacja poszukuje osób, które pomogą w rozwinięciu projektu.
