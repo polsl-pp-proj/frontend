@@ -117,6 +117,7 @@ export class HomePageComponent implements OnInit {
                         'Twoje konto zostało zweryfikowane! Możesz teraz tworzyć organizacje studenckie i dodawać w ich imieniu projekty studenckie.',
                         'Konto zweryfikowane'
                     );
+                    this.authService.refresh().subscribe();
                 },
                 error: (err: HttpErrorResponse) => {
                     switch (err.status) {

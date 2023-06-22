@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { AuthService } from 'src/app/modules/auth/services/auth.service';
 import { ModalService } from 'src/app/modules/modal/services/modal.service';
 import { OrganizationService } from 'src/app/modules/organization/services/organization.service';
 
@@ -27,7 +28,8 @@ export class CreateOrganizationModalComponent implements OnInit {
     constructor(
         private readonly organizationService: OrganizationService,
         private readonly toastrService: ToastrService,
-        private readonly modalService: ModalService
+        private readonly modalService: ModalService,
+        private readonly authService: AuthService
     ) {}
 
     ngOnInit(): void {}
@@ -47,6 +49,7 @@ export class CreateOrganizationModalComponent implements OnInit {
                     );
                     this.createOrganizationForm.reset();
                     this.modalService.updateModalState(this.modalName, 'close');
+                    this.authService.refresh().subscribe();
                 },
                 error: (err: HttpErrorResponse) => {
                     this.inTransit = false;
