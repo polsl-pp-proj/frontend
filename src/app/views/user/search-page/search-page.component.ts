@@ -48,12 +48,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
         this.subsink.push(
             this.searchQueryParamsChange.pipe(debounceTime(500)).subscribe({
                 next: (params: SearchQueryParamsDto) => {
-                    this.projectService
-                        .searchProjects(params)
-                        .subscribe(
-                            (searchResults) =>
-                                (this.projectCards = searchResults.projects)
-                        );
+                    this.search(params);
                 },
             }),
             this.categoryService.getCategories().subscribe({
@@ -62,6 +57,15 @@ export class SearchPageComponent implements OnInit, OnDestroy {
                 },
             })
         );
+        this.search({});
+    }
+
+    search(params: SearchQueryParamsDto) {
+        this.projectService
+            .searchProjects(params)
+            .subscribe(
+                (searchResults) => (this.projectCards = searchResults.projects)
+            );
     }
 
     ngOnDestroy(): void {

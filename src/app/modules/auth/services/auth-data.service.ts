@@ -104,6 +104,7 @@ export class AuthDataService {
             expiryTimestamp * 1000 -
             (new Date().valueOf() + refreshBefore + this.leeway);
 
+        this.willExpireSoonTimerSubscription?.unsubscribe();
         this.willExpireSoonTimerSubscription = timer(
             willExpireSoonAt
         ).subscribe(() => {
