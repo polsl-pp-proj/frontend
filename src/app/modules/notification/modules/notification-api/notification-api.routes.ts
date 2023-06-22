@@ -11,6 +11,11 @@ export const notificationApiRoutes = {
         method: 'GET',
         path: 'v1/notification',
     },
+    POST_answerOrganizationNotificationToUser: {
+        authorized: true,
+        method: 'POST',
+        path: 'v1/notification/user/organization/:organizationId/:notificationId',
+    },
     PATCH_markOrganizationNotificationAsSeen: {
         authorized: true,
         method: 'PATCH',

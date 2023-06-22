@@ -149,6 +149,17 @@ export class NotificationService {
         }
     }
 
+    answerNotification(
+        notificationDto: NotificationDto,
+        answerMessage: string
+    ) {
+        return this.notificationApiService.answerOrganizationNotificationToUser(
+            notificationDto.organization.id,
+            notificationDto.id,
+            answerMessage
+        );
+    }
+
     // TO BE CALLED ON NOTIFICATION HUB INIT
     init() {
         this.subscribeNotificationEvents();

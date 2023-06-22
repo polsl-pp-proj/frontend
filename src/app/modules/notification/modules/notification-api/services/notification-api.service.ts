@@ -12,6 +12,7 @@ import { PaginationDto } from 'src/app/dtos/pagination.dto';
 import { NotificationsDto } from '../dtos/notifications.dto';
 import { NotificationReceiver } from '../../../types/notification-receiver.type';
 import { NotificationEventType } from '../../../enums/notification-event-type.enum';
+import { NotificationAnswerDto } from '../dtos/notification-answer.dto';
 
 @Injectable({
     providedIn: 'root',
@@ -38,6 +39,20 @@ export class NotificationApiService {
             notificationApiRoutes.GET_notifications,
             new ApiOptions({
                 params: new HttpParams({ fromObject: { ...paginationData } }),
+            }) as ApiOptionsBody
+        );
+    }
+
+    answerOrganizationNotificationToUser(
+        organizationId: number,
+        notificationId: number,
+        answerMessage: string
+    ) {
+        return this.apiService.request<NotificationAnswerDto, void>(
+            notificationApiRoutes.POST_answerOrganizationNotificationToUser,
+            new NotificationAnswerDto({ message: answerMessage }),
+            new ApiOptions({
+                routeParams: { organizationId, notificationId },
             }) as ApiOptionsBody
         );
     }
