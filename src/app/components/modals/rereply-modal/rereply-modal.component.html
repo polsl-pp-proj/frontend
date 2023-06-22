@@ -6,17 +6,6 @@
     (closed)="modalClosed()"
 >
     <form [formGroup]="messageForm">
-        <app-input
-            name="subject"
-            [formControl]="messageForm.controls.subject"
-            [errors]="messageForm.controls.subject.errors"
-            [errorMessages]="{
-                required: 'Pole nie może być puste',
-                minlength: 'Temat jest zbyt krótki',
-                maxlength: 'Temat jest zbyt długi'
-            }"
-            >Temat</app-input
-        >
         <div class="message-container">
             <app-input
                 name="message"
