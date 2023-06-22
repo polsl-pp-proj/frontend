@@ -119,7 +119,7 @@
                 </app-open-position-card>
             </div>
         </div>
-        <div class="recent-payments">
+        <div class="recent-payments" *ngIf="donationStats.lastFunders.length">
             <h2>Ostatnie wpłaty</h2>
             <div class="recent-payments-container">
                 <app-recent-payment-card
